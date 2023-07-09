@@ -6,7 +6,6 @@ export VISUAL=nvim
 export SUDO_EDITOR=nvim
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
-export DOCKER_HOST=unix:///mnt/wsl/shared-docker/docker.sock
 export ALACRITTY_CONFIG="$XDG_CONFIG_HOME/alacritty/alacritty.yml"
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export PYTHONSTARTUP="$XDG_CONFIG_HOME"/pythonstartup.py
