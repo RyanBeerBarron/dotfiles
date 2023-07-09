@@ -1,0 +1,9 @@
+[submodule "git"]
+	path = submodules/git
+	url = https://github.com/git/git
+[submodule "neovim"]
+	path = submodules/neovim
+	url = https://github.com/neovim/neovim
+[submodule "tmux"]
+	path = submodules/tmux
+	url = https://github.com/tmux/tmux
