@@ -1,0 +1,168 @@
+#!/bin/bash
+#
+# Script to install the different submodule to /usr/local
+# Basically prompt the user for each if he wants to install or not
+# And use the install procedure found in the README of that submodule
+# Does the installation in parallel, starting a child process for each
+# Finally, once installation is done, it creates a git tag "current-version"
+# for that submodule, so that we know which revision is installed on the machine
+# And we don't try to install a submodule that already has the tag checked out as 'HEAD'
+
+function usage {
+    echo "usage: $(basename $0) [-h]"
+    echo "  compile and install the different submodules to '/usr/local/'"
+    echo "  -h: Print help"
+}
+
+function die {
+    echo $1 >&2
+    exit 1
+}
+
+# Clean the submodule directory
+# Just run 'make clean' whether theres a Makefile or not
+# And remove all files that are ignored by git to have a fresh checkout 
+function clean {
+    local submodule=$1
+    make clean &>3
+    git clean -dfX &>3
+    echo "$submodule: directory cleaned" 
+}
+
+function install {
+    local submodule=$1
+    cd $submodule
+    echo "starting $submodule installation..."
+    case $submodule in
+            git)
+                    make -j 4 prefix=$install_dir NO_TCLTK=YesPlease all man >&3 2>&3 && 
+                        echo "$submodule make finished [1/2]" &&
+                        make -j 4 prefix=$install_dir NO_TCLTK=YesPlease install install-doc >&3 2>&3 && 
+                        echo "$submodule make install finished [2/2]"
+                    ;;
+            tmux)
+                    sh autogen.sh >&3 2>&3  &&
+                        echo "$submodule: autogen finished [1/4]" &&
+                        ./configure --prefix=$install_dir >&3 2>&3   &&
+                        echo "$submodule: configure done [2/4]" &&
+                        make -j 4 >&3 2>&3  && 
+                        echo "$submodule: make done [3/4]"  &&
+                        make -j 4 install >&3 2>&3  &&
+                        echo "$submodule: make install done [4/4]"
+                    ;;
+            neovim)
+                    make -j 4 CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=$install_dir >&3 2>&3  &&
+                        echo "$submodule: make finished [1/2]" &&
+                        make -j 4 install >&3 2>&3  &&
+                        echo "$submodule: make install finished [2/2]"
+                    ;;
+            dwm|ii)
+                    make clean install >&3 2>&3  && 
+                        echo "$submodule: make clean install done [1/1]"
+                    ;;
+    esac &&
+        git tag -f "current-version" &&
+        echo "$submodule DONE: tag created"
+    return $?
+}
+
+function spinner {
+    local spinner=("/" "-" "\\" "|")
+    i=0
+    echo -e "\x1b[?25l"
+    while kill -0 $@ &> /dev/null
+    do
+        printf "%c\r" ${spinner[i]}
+        let i=(i+1)%4
+        sleep .2
+    done
+    echo -e "\x1b[?25h"
+}
+
+# Check that 'HEAD' as the lightweight tag "current-version"
+function current-version {
+    git -C ./$1 tag --points-at HEAD | grep "current-version" &> /dev/null
+}
+
+# If the program is not at the 'current-version', ask user if he wants to install or not
+# If 'y', set that submodule to 'true' and if it's the first time installing it, add deps to packages to be installed.
+function prompt-installation {
+    local submodule=$1
+    if ! current-version $submodule
+    then
+        read -p "Install/update $submodule? [y/n]: " ans
+        if [[ "$ans" == y* ]]
+        then
+            install[$submodule]=true
+            # Need to check if the executable is already present
+            # Name of the submodule/repo is the same as the executable usually
+            # Except for 'Neovim' whose executable is 'nvim'
+            local bin=$(test $submodule = "neovim" && echo "nvim" || echo $submodule)
+            test -x "$install_dir/bin/$bin" || pkgs+=${deps[$submodule]}
+        fi
+    fi
+}
+
+install_dir="/usr/local"
+deps=""
+
+if test "$1" = "-h"
+then
+    usage
+    exit 0
+fi
+
+(( $EUID == 0 )) || die "Not running as root, please use sudo for this command"
+
+submodules=(git neovim tmux ii dwm)
+declare -A install
+
+declare -A deps
+deps[git]="libssl-dev libcurl4-gnutls-dev libexpat1-dev"
+deps[neovim]="ninja-build gettext cmake unzip curl"
+deps[tmux]="libevent-dev libncurses-dev"
+
+declare pid
+
+pkgs=""
+
+for submodule in ${submodules[@]}
+do
+    prompt-installation $submodule
+done
+
+if test "$pkgs"
+then
+    echo "installing dependencies: $pkgs"
+    sudo apt-get install $pkgs
+fi
+
+mkdir -p .install_logs
+for submodule in ${submodules[@]}
+do
+    if test "${install[$submodule]}" = true
+    then
+        log=".install_logs/${submodule}_logs"
+        ( install $submodule ; exit_code=$? ; clean $submodule ;  exit $exit_code; ) 3> $log &
+        pid[$!]=$submodule
+    fi
+done
+
+if (( ${#pid[@]} ))
+then
+    spinner ${!pid[@]} &
+    pid[$!]=spinner
+    echo "waiting on installation to finish..."
+    trap 'echo -e "\x1b[?25hInterrupted\nCleaning directories..."; for submodule in ${submodules}[@]; do clean $submodule 3> /dev/null &> /dev/null ; done;  exit 1' SIGINT
+    while test ${#pid[@]} -gt 0
+    do
+        if wait -n -p ended_pid ${!pid[@]}
+        then
+            :
+        else
+            submodule=${pid[ended_pid]}
+            printf 'Encountered a problem during %s installation... Check logs at "./.install_logs/%s_logs"\n' "$submodule" "$submodule"
+        fi
+        unset pid[ended_pid]
+    done
+fi

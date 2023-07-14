@@ -18,6 +18,8 @@
 !.gitmodules
 !submodules
 
+# submodules ignores
+submodules/.install_logs
 # .config whitelist
 !.config
 .config/*
