@@ -30,9 +30,9 @@ J: downcase-word
 K: upcase-word
 L: capitalize-word
 $if Bash
-    # Wrap/Unwrap word under cursor around $()
-    +: "Bi$(Ea)"
-    "-": "BxxEx"
+    # Wrap/Unwrap entire line around $()
+    +: "0i$($a)"
+    "-": "0xx$x"
     # Wrap/Unwrap word under cursor around quotes ""
     Control-J: "BxEx"
     Control-K: "Bi\"Ea\""
@@ -63,6 +63,7 @@ set colored-stats on
 set visible-stats on
 set colored-completion-prefix on
 set expand-tilde on
+set enable-bracketed-paste on
 
 set show-mode-in-prompt on
 set emacs-mode-string \1\e[31;1m\2(EMACS) >> \1\e[0m\2

@@ -60,14 +60,14 @@ schemes:
 
     # Normal colors
     normal:
-      black:   '0xededed'
+      black:   '0xffffff'
       red:     '0xd7005f'
       green:   '0x718c00'
       yellow:  '0xd75f00'
       blue:    '0x4271ae'
       magenta: '0x8959a8'
       cyan:    '0x3e999f'
-      white:   '0x4d4d4c'
+      white:   '0x404040'
 
     # Bright colors
     bright:
@@ -114,14 +114,14 @@ schemes:
 
     # Normal colors
     normal:
-      black:   '0x32344a'
+      black:   '0x1a1b26'
       red:     '0xf7768e'
       green:   '0x9ece6a'
       yellow:  '0xe0af68'
       blue:    '0x7aa2f7'
       magenta: '0xad8ee6'
       cyan:    '0x449dab'
-      white:   '0x787c99'
+      white:   '0xa9b1d6'
 
     # Bright colors
     bright:
@@ -142,14 +142,14 @@ schemes:
   
     # Normal colors
     normal:
-      black:   '0xe9e9ed'
+      black:   '0xe1e2e7'
       red:     '0xf52a65'
       green:   '0x587539'
       yellow:  '0x8c6c3e'
       blue:    '0x2e7de9'
       magenta: '0x9854f1'
       cyan:    '0x007197'
-      white:   '0x6172b0'
+      white:   '0x3760bf'
   
     # Bright colors
     bright:
@@ -175,14 +175,14 @@ schemes:
 
     # Normal colors
     normal:
-      black:   '0x32344a'
+      black:   '0x24283b'
       red:     '0xf7768e'
       green:   '0x9ece6a'
       yellow:  '0xe0af68'
       blue:    '0x7aa2f7'
       magenta: '0xad8ee6'
       cyan:    '0x449dab'
-      white:   '0x9699a8'
+      white:   '0xa9b1d6'
 
     # Bright colors
     bright:
@@ -194,7 +194,7 @@ schemes:
       magenta: '0xbb9af7'
       cyan:    '0x0db9d7'
       white:   '0xacb0d0'
-colors: *kanagawa
+colors: *tokyonight-storm
 window:
   opacity: 1.1
   padding:
