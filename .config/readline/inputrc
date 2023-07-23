@@ -1,0 +1,71 @@
+set editing-mode vi
+$if gdb
+    set editing-mode emacs
+$endif
+
+set keymap vi-insert
+TAB: menu-complete
+Control-l: clear-screen
+# CAN BE UNBINDED
+# C-j useless same as C-M/Enter
+# C-t does transpose ?? different from vim so might as well replace
+# Ctrl-D send EOF which seems to be the same as Enter for Bash / Unbinding still sends EOF to other programs
+
+# NOT USED / FREE
+# All / Almost all meta key combinations
+# CTRL-{A,E,F,G,K,L,N,O,Q,X,Z}
+# Ctrl-B is used by tmux
+# ctrl-c is SIGINT
+$if Bash
+$endif
+
+set keymap vi
+TAB: menu-complete
+Control-l: clear-screen
+s: re-read-init-file
+G: beginning-of-history
+g: end-of-history
+Control-T: transpose-words
+J: downcase-word
+K: upcase-word
+L: capitalize-word
+$if Bash
+    # Wrap/Unwrap entire line around $()
+    +: "0i$($a)"
+    "-": "0xx$x"
+    # Wrap/Unwrap word under cursor around quotes ""
+    Control-J: "BxEx"
+    Control-K: "Bi\"Ea\""
+
+$endif
+# CAN BE UNBINDED
+# +,- are duplicate of j and k
+# Ctrl-N and Ctrl-P are duplicate of j and k
+# s, S can remapped cause nobody uses it kekw
+# Ctrl-H useless, same as H
+# Ctrl-J useless same as Enter/Ctrl-M
+# Ctrl-K useless, kills from cursor to end of line => same as 'D'
+# Ctrl-Q useless
+# Ctrl-T useless
+# Ctrl-Y useless
+
+# think about upcase-word / downcase-word / capitalize-word
+# NOT USED / FREE
+# q / Q not used
+# o / O not used
+# H J K L not used
+
+
+set completion-ignore-case on
+set completion-map-case on
+set show-all-if-ambiguous on
+set colored-stats on
+set visible-stats on
+set colored-completion-prefix on
+set expand-tilde on
+set enable-bracketed-paste on
+
+set show-mode-in-prompt on
+set emacs-mode-string \1\e[31;1m\2(EMACS) >> \1\e[0m\2
+set vi-cmd-mode-string \1\e[33;1m\e[2 q\2::: \1\e[0m\2
+set vi-ins-mode-string \1\e[32;1m\e[6 q\2>>> \1\e[0m\2
