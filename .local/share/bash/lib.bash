@@ -29,11 +29,13 @@ chcolor () {
     else
         sed -i.bak 's/;CURRENT.*//' $FILE;
         sed -i.bak "/$1/s/$/;CURRENT/" $FILE;
-        # Can not use a pipe 'grep | mapfile' because pipe run each part in a subprocess
+        # Can not use a pipe 'grep | mapfile' because with pipes, each part is a subprocess
         # and so mapfile will create an array in a subprocess which is useless in a bash function
         mapfile -td";" ARRAY < <(grep "$1" $FILE);
         sed -i.bak "s/^colors: .*/colors: *${ARRAY[0]}/" $XDG_CONFIG_HOME/alacritty/alacritty.yml
-        create_alacritty_link;
+        if test "$WSL"; then
+            create_alacritty_link;
+        fi
         return 0;
     fi
 }
@@ -136,7 +138,7 @@ opacity () {
     fi
 }
 
-# dotfiles () {
+#() {
 #     if [ "$1" == "status" ]; then
 #         cd $HOME/dotfiles;
 #         git status;
@@ -324,7 +326,12 @@ function trim () {
 }
 export -f trim
  
+
+dotfiles () {
+    $HOME/.local/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME $@
+}
  
+# Java version manager
 jvm () {
     local USAGE="
     java version manager
@@ -338,6 +345,7 @@ jvm () {
         echo "$USAGE"
     elif test $1 -gt 0; then
         export PATH=${PATH/jdk-??/jdk-$1}
+        export JAVA_HOME=${JAVA_HOME/jdk-??/jdk-$1}
     fi
 }
  
@@ -366,3 +374,4 @@ jvm () {
 #         COMPREPLY[i++]="$path"
 #     done
 # }
+#
