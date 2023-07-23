@@ -326,11 +326,6 @@ function trim () {
 }
 export -f trim
  
-
-dotfiles () {
-    $HOME/.local/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME $@
-}
- 
 # Java version manager
 jvm () {
     local USAGE="
