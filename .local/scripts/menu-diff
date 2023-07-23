@@ -1,0 +1,29 @@
+#!/bin/bash
+
+local CACHED
+if [ "$1" = "--cached" ]; then
+    CACHED="--cached"
+fi
+mapfile -t diff_files < <(git diff $CACHED --name-only)
+printf "Choose which file to see diff\n"
+menu=""
+for i in "${!diff_files[@]}"; do
+    file_name=$(echo "${diff_files[$i]}" | rev | cut --delimiter="/" --fields=1 | rev)
+    printf -v menu "%s %s) %s\n" "$menu" "$i" "$file_name" 
+done
+printf -v menu "%s %s) quit\n" "$menu" "$(( ++i ))"  
+loop=true
+while [ "$loop" = true ]; do
+    printf "$menu"
+    printf "Select file: "
+    IFS= read -r opt
+    if [[ $opt =~  ^[0-9]+$ ]] && (( (opt >= 0) && (opt < "${#diff_files[@]}") )); then
+        git diff $CACHED "${diff_files[$opt]}"
+        printf -- "---\n\n"
+    elif ( [[ $opt =~ ^[0-9]+$ ]] && (( (opt == i) )) ) || [[ $opt =~ "quit" ]]; then
+        loop=false;
+    else
+        printf "Invalid option, try again\n"
+    fi
+done
+printf "exiting...\n"

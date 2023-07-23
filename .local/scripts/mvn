@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if test "$1" = "test"; then
+    tags=""
+    for arg in "${@:2}"
+    do
+        tags+="$arg and ";
+    done
+    tags=$(echo $tags | rev | cut -d" " -f2- | rev);
+    echo "new tags is: $tags"
+    "$M2"/mvn -gs "$XDG_CONFIG_HOME/maven/settings.xml" \
+        test -Dcucumber.filter.tags="$tags" \
+        -Dtest=CucumberTest \
+        -DfailIfNoTests=false
+else
+    "$M2"/mvn -gs "$XDG_CONFIG_HOME/maven/settings.xml" \
+        -DfailIfNoTests=false "$@"
+fi

@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Script to output the branch name of the current repo
+# If outside a repo, return nothing and exit (succesfully?)
+
+git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'

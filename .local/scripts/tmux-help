@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. $XDG_DATA_HOME/sh/ANSI.sh
+
+if test -z "$1"; then
+    echo "usage: $(basename $0) ${UNDERLINE}COMMAND${RESET}" >&2
+    exit 1;
+fi
+MANWIDTH=160 man tmux |
+    # Crazy regex
+    # TODO: Need to parse the raw groff text instead
+sed -n "/^[[:space:]]\+$1\( \[-[[:alnum:]]\+\]\)/,/^[[:space:]]\+[[:alnum:]-]\+\( \[-[[:alnum:]]\+\]\)\+/p" |
+head -n -1 
+exit 0;

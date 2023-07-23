@@ -1,0 +1,7 @@
+#!/bin/bash
+
+date=$(date "+%Y-%m %A,%d %H:%M")
+mapfile -td" " array <<< "$date"
+DIR="$XDG_DATA_HOME/notes/${array[0]}"
+mkdir -p "$DIR"
+nvim -s <(echo -e "Go\x0A#### $(date "+%H:%M")\x0A")  "$DIR/${array[1]}.md"

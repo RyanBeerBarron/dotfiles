@@ -1,0 +1,18 @@
+#!/bin/bash
+while read branch; do 
+    ans=""; 
+    while test "$ans" != "y" && test "$ans" != "n"; do 
+        read -p "Delete branch $branch? [y/n/log]  " ans; 
+        case "$ans" in 
+            "y") 
+                /usr/bin/git branch -D "$branch"; 
+                ;; 
+            "n") 
+                ;; 
+            "log") 
+                /usr/bin/git log "$branch"; 
+                ;; 
+        esac; 
+    done < /dev/tty; 
+done <<< $(git branch --merged develop | grep -v "develop" | sed "s/^.//") 
+exit 0

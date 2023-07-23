@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Script to output name of the current branch with Nerdfont icon
+# Mainly used for Tmux 
+
+git_branch () {
+    git -C "$1" branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+usage () {
+    cat << EOF
+usage: $(basename $0) directory
+    Output name of the current branch with branch icon
+    in a format to be used for PS1 prompt or Tmux
+EOF
+}
+
+if test "$#" = "0"; then
+    echo "0 arg received, expeceted one" >&2
+    usage
+    exit 1
+fi
+
+if test -n "$(git -C "$1" rev-parse --git-dir 2> /dev/null)"; then
+    echo "on $(git_branch "$1") "
+    exit 0
+fi
+exit 1

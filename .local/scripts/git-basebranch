@@ -1,0 +1,43 @@
+#!/bin/bash
+
+function usage() {
+echo "USAGE: $0 [options] [<branch>]"
+echo "    Git log between <branch> and its base branch"
+echo "    which is determined by the first commit it has"
+echo "    that is shared with another branch, using \`git show-branch\`"
+echo "    If <branch> is omitted, HEAD is used"
+echo "    Any options of \`git log\` is permitted, \`--oneline\` is used by default"
+}
+
+if test "$1" == "-h" || test "$1" == "--help"; then
+    usage
+    exit 0
+fi
+
+# Using 'rev-parse' just to check if we are in a git repo
+# Looking at the return value and if we're not return that same value
+if ! git rev-parse > /dev/null 2>&1; then
+    echo "Invalid usage: Not in a git repository"
+    usage
+    exit 1 
+fi
+local branch symbol
+# 1st argument is a branch name, default value is HEAD
+if test -z "$1"; then
+    branch=$(__git_ps1 %s)
+    symbol="*"
+else
+    branch=$1
+    symbol="+"
+fi
+
+num=$(git show-branch | grep $branch | sed 1q | grep -ob "*\|!" | sed 1q | cut -d: -f1) # Find the column number in 'show-branch' that correspond to our branch
+base=$(grep "^.\{$num\}[$symbol-]" <(git show-branch) | # Grep only the lines that contain commit for the branch we are searching for ( after `num` character it should contain a + or * )
+    sed -n '3,$p'       | # Remove the branch listing at the beginning of `show-branch`
+    grep -v "$branch"   | # Remove the commits that come from our branch
+    sed 1q              |
+    grep -o "\[.*\]"    | # Find the first branch branch, this is the base branch
+    sed 's/[][]//g'     | # Extract the name from inside the square brackets with some `sed` character class magic
+    cut -d" " -f1)
+git log --oneline "$base"^.."$branch"
+# vim:ft=bash
