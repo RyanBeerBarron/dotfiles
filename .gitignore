@@ -1,3 +1,31 @@
+# Script to check if tracked files are not ignored:
+# dotfiles ls-tree -r HEAD | tr "\t" " " | cut -d" " -f4 | 
+# dotfiles check-ignore --no-index --stdin
+#
+# This will print every files tracked by git and then check if its ignored or not
+# Result printed out are files that are ignored. If a file is not ignored, there is not output
 /*
 
-!.config/*
+!.gitignore
+*.bak
+# .config whitelist
+!.config
+.config/*
+!.config/alacritty
+!.config/dircolors
+!.config/gdb
+!.config/git
+!.config/htop
+!.config/newsboat
+!.config/npm
+!.config/nvim
+!.config/pg
+.config/pg/pgpass 
+!.config/pythonstartup.py
+!.config/readline
+!.config/themes
+!.config/tmux
+
+!.local
+.local/*
+!.local/scripts
