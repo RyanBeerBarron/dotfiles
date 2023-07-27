@@ -1,0 +1,19 @@
+#!/bin/bash
+
+usage () {
+    echo "usage: $(basename $0) <rev> <file>"
+    echo "  shows file as is in the given revision"
+}
+
+if test "$#" -ne 2; then
+    usage
+    exit 1
+fi
+BLOB=$(git ls-tree -r "$1" | grep "$2" | tr '\t' ' ' | cut -d' ' -f3 )
+if test -z "$BLOB"
+then echo "error: file does not exist at given reference" >&2
+    exit 1
+fi
+git show $BLOB
+
+# vim:ft=bash
