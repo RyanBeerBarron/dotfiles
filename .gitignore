@@ -16,7 +16,6 @@
 !.config/dircolors
 !.config/gdb
 !.config/git
-!.config/htop
 !.config/newsboat
 !.config/npm
 !.config/nvim
