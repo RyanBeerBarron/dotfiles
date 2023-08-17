@@ -9,6 +9,12 @@
 # double check to ignore .ssh folder :)
 /.ssh
 
+# root whitelist
+!.gitignore
+!.bashrc
+!.bash_profile
+!.bash_logout
+
 # .config whitelist
 !.config
 .config/*

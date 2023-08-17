@@ -288,4 +288,82 @@ jvm () {
     fi
 }
 
+dotfiles_sync () {
+    # `diff HEAD` checks in worktree and index for any uncommitted changes
+    # `diff @{u}...HEAD` checks for any difference between upstream/remote and HEAD,
+    # i.e. if there is any unpushed commits
+    # They return 0 if there are no differences
+    if ! (dotfiles diff --quiet HEAD && dotfiles diff --quiet @{u}...HEAD); then
+        echo "Dotfiles repository is not clean, do you still wish to logout? [y/n]"
+        read -p "> " ANS
+        case $ANS in
+            y*)
+                return 0
+                ;;
+            n*)
+                return 1
+                ;;
+        esac
+    fi
+    return 0;
+}
+ 
+# For 'logout' and 'exit', a function is required and this cannot be put inside '.bash_logout'
+# Once '.bash_logout' is executed by bash, we can not revert the end of process
+#
+# Having a function is AFAIK the only known way to execute commands on bash's  exit
+# and potientally prevent or revert the exit process
+logout () {
+    if test "$SHLVL" = 1 && shopt -q login_shell ; then
+        if ! dotfiles_sync; then
+            return 0
+        fi
+    fi
+    unset -f logout
+    logout
+}
+
+exit () {
+    if test "$SHLVL" = 1 && shopt -q login_shell ; then
+        if ! dotfiles_sync; then
+            return 0
+        fi
+    fi
+    unset -f exit
+    exit
+}
+
+shutdown () {
+    if test "$SHLVL" = 1; then
+        if ! dotfiles_sync; then
+            return 0
+        fi
+    fi
+    command shutdown $@
+}
+
+environ () {
+    cat /proc/$1/environ | tr '\0' '\n'
+}
+
+neovide () {
+    if test -S /tmp/neovide; then
+        # Removing the +[linenum] from the command arguments
+        # and converting it to a 'remote-send' command 
+        for arg do
+            shift
+            if [[ "$arg" =~ \+([0-9]+) ]]; then
+                local num=${BASH_REMATCH[1]}
+                continue
+            fi
+            set -- "$@" "$arg"
+        done
+        nvim --server /tmp/neovide --remote $@
+        nvim --server /tmp/neovide --remote-send "<Cmd>$num<CR>"
+        wmctrl -xa neovide
+    else
+        command neovide --notabs -- --listen /tmp/neovide $@
+    fi
+}
+
 # vim: ft=bash
