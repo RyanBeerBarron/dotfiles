@@ -12,6 +12,7 @@
 \encoding unicode
 \timing
 \conninfo
+\x auto
 
 \pset null 'NULL'
 \set PROMPT1 '\n':RED[:BOLD_BLUE%M:GREY::BOLD_YELLOW%>:RED]' ':BOLD_BLUE%n:GREY@:BOLD_YELLOW%/'\n'

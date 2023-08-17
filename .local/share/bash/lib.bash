@@ -138,68 +138,6 @@ opacity () {
     fi
 }
 
-#() {
-#     if [ "$1" == "status" ]; then
-#         cd $HOME/dotfiles;
-#         git status;
-#         cd -;
-#         return 0;
-#     fi
-#     # TODO: Try for a rebase still approach
-#     # instead of removing '/home/ryan' and concatenating paths
-#     # rebase given pathname onto $HOME/dotfiles
-#     #
-#     # /----home/-----ryan/-----dotfiles/
-#     #                    \
-#     #                     path/----to/----file/
-#     if [ "$1" == "add" ] && [ -e $2 ]; then
-#         abs_path=$(get_absolute_path "$2")
-#         # cut -d/ -f4- is to remove '/home/#username/...' from the absolute path
-#         # 1st field is empty '^' just the start of the line
-#         # 2nd field is 'home'
-#         # 3rd field is '#username' 
-#         # Also append a '/' at the end of the dirname, useful for consistency
-#         dirname=$(echo "$(dirname $(readlink -f $2 | cut -d/ -f4-))/");
-#         # If the file is in home directory, i.e. dirname is "." after removing /home/#username/
-#         # replace it by the empty string, otherwise leave as is //TODO check for a better way to do this?
-#         # Since we appended a forward slash, we check for "./" 
-#         dirname=$( [ "$dirname" == "./" ] && echo "" || echo $dirname );
-#         basename=$(basename $(readlink -f $2 | cut -d/ -f4-));
-#         echo "dirname is: $dirname"
-#         echo "basename is: $basename"
-#         if [ -n "$dirname" ];
-#         then
-#             echo "mkdir -p $HOME/dotfiles/$dirname"
-#             mkdir -p $HOME/dotfiles/$dirname
-#         fi
-#         echo "cp $2 $HOME/dotfiles/$dirname"
-#         cp -f $2 $HOME/dotfiles/$dirname
-#         echo "rm $2"
-#         rm -f $2
-#         echo "ln -s $HOME/dotfiles/${dirname}$basename $2"
-#         ln -fs $HOME/dotfiles/${dirname}$basename $2
-#         unset basename
-#         unset dirname
-#         return 0
-#     fi
-#     echo "1st arg is: $1"
-#     echo "2nd arg is: $2"
-#     if [ "$1" == "remove" ] && [ -h $2 ]; then
-#         echo "hello"
-#         dirname=$(echo "$(dirname $(readlink -f $2 | cut -d/ -f4-))/");
-#         dirname=$( [ "$dirname" == "./" ] && echo "" || echo $dirname );
-#         basename=$(basename $(readlink -f $2 | cut -d/ -f4-));
-#         echo "dirname is: $dirname"
-#         echo "basename is: $basename"
-#         echo "testing for $HOME/dotfiles/$dirname$basename" 
-#         if [ -e $HOME/dotfiles/$dirname$basename ]; then
-#             rm $2
-#             mv $HOME/dotfiles/$dirname$basename $(dirname $2)
-#         fi
-#         return 0
-#     fi
-# }
-
 abs_path () {
     echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
 }
@@ -275,7 +213,7 @@ curljson () {
     curl -s -w "\n%{http_code}" -H 'Content-type: application/json' $@ | jq
 }
 
-function opt () {
+opt () {
     man $1 | awk '{ print NR "\t" $0 }' | sed -n "/^[[:digit:]]\+\t[[:space:]]\+$2\($\|[[:space:]]\|,\)/,/^[[:digit:]]\+\t$/p"
 }
 
@@ -321,7 +259,7 @@ _tmux-option_completion () {
     }
 complete -F _tmux-option_completion tmux-option
 
-function trim () {
+trim () {
     sed "s/^[[:space:]]*\([[:graph:]].*[[:graph:]]\)[[:space:]]*$/\1/"
 }
 export -f trim
@@ -343,30 +281,5 @@ jvm () {
         export JAVA_HOME=${JAVA_HOME/jdk-??/jdk-$1}
     fi
 }
- 
-# _fuzzy_cd () {
-#     compopt -o filenames
-#     if test -z "$2"; then
-#         COMPREPLY=($(compgen -d -- ""));
-#         return 0;
-#     fi
-#     local i=${#COMPREPLY[@]}
-#     local prefix=$( dirname "$2" )
-#     local suffix=$( basename "$2" ) 
-#    local arr=$(compgen -d "$suffix")
-#    local res=$?
-#    echo -e "\nprefix and suffix are: $prefix / $suffix"
-#    echo "the result is $res"
-#    echo "arr is: ${arr[@]}"
-#    echo "arr length is: ${#arr[@]}"
-#    if test 1 -eq ${#arr[@]} && test $res -eq 0; then
-#        echo "if succeed" 
-#        COMPREPLY[i]="${arr[0]}"
-#        return 0
-#    fi
-#     for path in $(compgen -d | fuzzy "$suffix"); do
-#         echo "adding $path to reply"
-#         COMPREPLY[i++]="$path"
-#     done
-# }
-#
+
+# vim: ft=bash

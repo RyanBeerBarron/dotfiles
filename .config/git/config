@@ -1,6 +1,6 @@
 [core]
-	editor = nvim
     pager = delta --line-numbers --syntax-theme=gruvbox-dark
+    editor = nvim
 [user]
     name = Ryan Barron
 [push]
@@ -18,8 +18,6 @@
     # Show conflicted files ( can be piped into nvim )
 	conflicts = diff --name-only --diff-filter=U --relative
     copy-title = "!bash -c 'git log -1 --oneline | awk \"{\\$1=\\\"\\\"; print \\$0}\" | tr \"\\n\" \" \" | win32yank.exe -i --crlf'"
-    # TODO: see whats up
-    diff-files = menu_diff
     # Git log but highlight merge commit in a different color. Experimental
     plog = "!logo(){ git log --pretty='format:%h <<%p>> %s %D' $@ | sed -e 's/<<[0-9a-f]* [0-9a-f]*\\( [0-9a-f]*\\)*>>/\\x1B[31m Merge commit/' -e 's/<<[0-9a-f]*>>//' -e 's/$/\\x1B[0m/' | less -FRSX;  }; logo"
     # Print to system clipboard commit refered by $1 in reference format

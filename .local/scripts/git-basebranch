@@ -1,12 +1,12 @@
 #!/bin/bash
 
 function usage() {
-echo "USAGE: $0 [options] [<branch>]"
-echo "    Git log between <branch> and its base branch"
-echo "    which is determined by the first commit it has"
-echo "    that is shared with another branch, using \`git show-branch\`"
-echo "    If <branch> is omitted, HEAD is used"
-echo "    Any options of \`git log\` is permitted, \`--oneline\` is used by default"
+    echo "USAGE: $0 [options] [<branch>]"
+    echo "    Git log between <branch> and its base branch"
+    echo "    which is determined by the first commit it has"
+    echo "    that is shared with another branch, using \`git show-branch\`"
+    echo "    If <branch> is omitted, HEAD is used"
+    echo "    Any options of \`git log\` is permitted, \`--oneline\` is used by default"
 }
 
 if test "$1" == "-h" || test "$1" == "--help"; then

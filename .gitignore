@@ -5,9 +5,10 @@
 # This will print every files tracked by git and then check if its ignored or not
 # Result printed out are files that are ignored. If a file is not ignored, there is not output
 /*
-
-!.gitignore
 *.bak
+# double check to ignore .ssh folder :)
+/.ssh
+
 # .config whitelist
 !.config
 .config/*
@@ -26,6 +27,12 @@
 !.config/themes
 !.config/tmux
 
+# .local whitelist
 !.local
 .local/*
 !.local/scripts
+!.local/share
+.local/share/*
+!.local/share/bash
+!.local/share/sh
+!.local/share/notes

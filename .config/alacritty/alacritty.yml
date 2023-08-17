@@ -8,7 +8,7 @@ font:
   italic:
     family: IosevkaTerm Nerd Font
     style: Italic
-  size: 12
+  size: 16
 
 schemes:
   kanagawa: &kanagawa

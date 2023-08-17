@@ -16,3 +16,4 @@ while read branch; do
     done < /dev/tty; 
 done <<< $(git branch --merged develop | grep -v "develop" | sed "s/^.//") 
 exit 0
+# vim:ft=bash

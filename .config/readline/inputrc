@@ -56,16 +56,18 @@ $endif
 # H J K L not used
 
 
+set colored-completion-prefix on
+set colored-stats on
 set completion-ignore-case on
 set completion-map-case on
-set show-all-if-ambiguous on
-set colored-stats on
-set visible-stats on
-set colored-completion-prefix on
-set expand-tilde on
 set enable-bracketed-paste on
+set expand-tilde on
+set show-all-if-ambiguous on
+set visible-stats on
 
 set show-mode-in-prompt on
 set emacs-mode-string \1\e[31;1m\2(EMACS) >> \1\e[0m\2
 set vi-cmd-mode-string \1\e[33;1m\e[2 q\2::: \1\e[0m\2
 set vi-ins-mode-string \1\e[32;1m\e[6 q\2>>> \1\e[0m\2
+
+# readline

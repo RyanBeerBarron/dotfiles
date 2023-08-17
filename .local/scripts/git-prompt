@@ -1,0 +1,11 @@
+#!/bin/sh
+
+git_branch () {
+    git -C $1 branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+if test -n "$(git -C $1 rev-parse --git-dir 2> /dev/null)"; then
+    echo "on $(git_branch $1) "
+    exit 0
+fi
+exit 1
