@@ -19,6 +19,14 @@ vim.keymap.set("n", "<M-m>", "<Cmd>make<CR>")
 vim.keymap.set("n", "<F5>", "<Cmd>cnext<CR>")
 vim.keymap.set("n", "<F4>", "<Cmd>cprev<CR>")
 
+vim.keymap.set("i", "(", "()<Left>", {noremap = true})
+vim.keymap.set("i", "{", "{}<Left>", {noremap = true})
+vim.keymap.set("i", "{<cr>", "{<cr>}<ESC>O", {noremap = true})
+vim.keymap.set("i", "[", "[]<Left>", {noremap = true})
+vim.keymap.set("i", "'", "''<Left>", {noremap = true})
+vim.keymap.set("i", "\"", "\"\"<Left>", {noremap = true})
+
+
 -- TODO: Replace the path with a relative path / variable
 -- vim.keymap.set("n", ",build", "<Cmd>-1read /home/ryan/scripts/tool.c.template<CR>", {noremap = true})
 
