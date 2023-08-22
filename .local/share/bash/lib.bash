@@ -12,8 +12,10 @@ create_alacritty_link () {
 
 # terminal config
 tconf () {
-    nvim ~/.config/alacritty/alacritty.yml
-    create_alacritty_link
+    $EDITOR ~/.config/alacritty/alacritty.yml
+    if test -v WHOME; then
+        create_alacritty_link
+    fi
 }
 
 # Function to modify the color of alacritty
@@ -165,7 +167,7 @@ conf () {
     elif test "$1" == "ssh"; then
         $EDITOR $HOME/.ssh/config
     else
-        find "$XDG_CONFIG_HOME/$1/" -type f  | xargs $EDITOR
+        $EDITOR $(find "$XDG_CONFIG_HOME/$1/" -type f)
     fi
 }
 
@@ -180,17 +182,17 @@ complete -F _conf_comp conf
 
 fn () {
     if test -z $1; then
-        nvim $FUNCTION_HOME
+        $EDITOR $FUNCTION_HOME
     elif test -x "$HOME/.local/scripts/$1"; then
-        nvim "$HOME/.local/scripts/$1"
+        $EDITOR "$HOME/.local/scripts/$1"
     else
         # Using grep with '-n' to find the line number of the bash function
         # Then using Bash parameter expansion with '%' to extract the line number
         # and passing it to neovim.
         # Neovim accepts a line number prefixed with '+' and will open the file at the line number
         # The parameter expansion uses '%' to remove a suffix, which matches the pattern ':*'
-        local STRING=$(grep -n "$1 ()" $FUNCTION_HOME/lib.bash);
-        nvim $FUNCTION_HOME/lib.bash  +${STRING%:*}
+        local STRING=$(grep -n "^$1 ()" $FUNCTION_HOME/lib.bash);
+        $EDITOR $FUNCTION_HOME/lib.bash  +${STRING%:*}
     fi
 }
 
