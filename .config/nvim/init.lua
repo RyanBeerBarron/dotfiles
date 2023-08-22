@@ -6,11 +6,8 @@ vim.api.nvim_create_user_command("Config", "edit " .. config_path .. "/init.lua"
 
 -- MAPPING
 vim.g.mapleader = " "
--- vim.keymap.set("i", "<TAB>", "<C-n>")
 vim.keymap.set("n", "<C-e>", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>cc", "<Cmd>Config<CR>") 
--- vim.keymap.set("n", "<S-Tab>", "<C-O>")
--- vim.keymap.set("n", "<C-6>", "<C-^>")
 
 vim.keymap.set("n", "<leader>tc", "<Cmd>tabclose<CR>")
 vim.keymap.set("n", "<leader>tn", "<Cmd>tabnew<CR>")
@@ -37,7 +34,7 @@ options = {
     foldclose = "all",
     foldcolumn = "2",
     foldopen = "all",
-    hlsearch = false,
+    hlsearch = true,
     incsearch = true,
     number = true,
     scrolloff = 8,
