@@ -62,7 +62,7 @@ if test "$PS1"; then
     alias info="info --vi-keys"
     alias gdb="gdb -q -tui"
     alias diff="colordiff"
-    alias dotfiles="$HOME/.local/bin/git --git-dir=$HOME/dotfiles/"
+    alias dotfiles="git --git-dir=$HOME/dotfiles/"
 
     # Sourcing bash/sh functions and setting completions
     for FILE in $FUNCTION_HOME/*; do source "$FILE"; done

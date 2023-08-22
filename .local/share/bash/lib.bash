@@ -52,7 +52,7 @@ start-session () {
         for REPO in $(find $DIR -maxdepth 1 -type d); do
             if git -C "$REPO" rev-parse 2> /dev/null; then
                 git -C "$REPO" worktree list | cut -d" " -f1 >> $TMPFILE 2> /dev/null;
-            else 
+            else
                 echo "$REPO" >> $TMPFILE 2> /dev/null
             fi
         done;
@@ -97,18 +97,19 @@ glca () {
 }
 
 
-git_find_parent_branch () {
+git-find-parent-branch () {
     git show-branch 2> /dev/null |
         sed "s/].*//" |
         grep "\*" |
         grep -v "$(git rev-parse --abbrev-ref HEAD)" |
         head -n1 |
-        sed "s/^.*\[//" 
+        sed "s/^.*\[//"
 }
 
+# Change opacity of Alacritty
 opacity () {
     if test -z "$1"; then
-        echo "Press '+' to increase opacity, '-' to reduce or 'q' to quit." 
+        echo "Press '+' to increase opacity, '-' to reduce or 'q' to quit."
         local OPACITY=""
         while true
         do
@@ -143,14 +144,13 @@ opacity () {
 abs_path () {
     echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
 }
-export -f __git_ps1
 
-# Last field 
+# Last field
 lf () {
-    local USAGE="   
+    local USAGE="  
     lf - Last field
     File input needs to come from stdin, usually from a pipe
-    Usage: 
+    Usage:
         lf <delimiter>
 "
     # First argument should be a single char since it is passed to `cut`
@@ -198,30 +198,11 @@ fn () {
 
 _fn_comp () {
     local fn_list=$(declare -F | cut -d" " -f3 | grep -v "^_.\+$" )
-    local script_list=$(find $HOME/.local/scripts/ -executable -type f -exec basename {} \;) 
+    local script_list=$(find $HOME/.local/scripts/ -executable -type f -exec basename {} \;)
     fn_list+=("${script_list[@]}")
     COMPREPLY=($(compgen -W "${fn_list[*]}" -- $2))
 }
 complete -F _fn_comp fn
-
-idea () {
-    local IDEA_PATH=$HOME/.local/share/JetBrains/Toolbox/scripts
-    if test -z $IDEA_PID || ! ps -p $IDEA_PID > /dev/null; then
-        nohup $IDEA_PATH/idea &> $IDEA_PATH/log.out &
-        IDEA_PID=$!
-        echo "starting IntelliJ..."
-    else
-        echo "already running with pid:" $IDEA_PID
-    fi
-}
-
-curljson () {
-    curl -s -w "\n%{http_code}" -H 'Content-type: application/json' $@ | jq
-}
-
-opt () {
-    man $1 | awk '{ print NR "\t" $0 }' | sed -n "/^[[:digit:]]\+\t[[:space:]]\+$2\($\|[[:space:]]\|,\)/,/^[[:digit:]]\+\t$/p"
-}
 
 vis () {
     sed -e "s/ /^S/g" -e "s/\t/^T/g" -e "s/\n/^N/g"
@@ -233,7 +214,7 @@ _tmux-help_completion () {
          TMUX_HELP_COMPLETION=$(MANWIDTH=160 man tmux |
                 grep "^[[:space:]]\+[[:alnum:]-]\+\( \[-[[:alnum:]]\+\]\)\+" |
                 trim |
-                cut -d" " -f1) 
+                cut -d" " -f1)
     fi
     COMPREPLY=($(compgen -W "${TMUX_HELP_COMPLETION[*]}" -- "$2"))
 }
@@ -269,7 +250,7 @@ trim () {
     sed "s/^[[:space:]]*\([[:graph:]].*[[:graph:]]\)[[:space:]]*$/\1/"
 }
 export -f trim
- 
+
 # Java version manager
 jvm () {
     local USAGE="
@@ -307,7 +288,7 @@ dotfiles_sync () {
     fi
     return 0;
 }
- 
+
 # For 'logout' and 'exit', a function is required and this cannot be put inside '.bash_logout'
 # Once '.bash_logout' is executed by bash, we can not revert the end of process
 #
@@ -349,7 +330,7 @@ environ () {
 neovide () {
     if test -S /tmp/neovide; then
         # Removing the +[linenum] from the command arguments
-        # and converting it to a 'remote-send' command 
+        # and converting it to a 'remote-send' command
         for arg do
             shift
             if [[ "$arg" =~ \+([0-9]+) ]]; then
