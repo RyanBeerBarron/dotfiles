@@ -158,8 +158,11 @@ lf () {
     fi
     rev | cut -d"$1" -f1 | rev
 }
+
 conf () {
-    if test "$1" == "ssh"; then
+    if test "$1" == "bash"; then
+        $EDITOR $HOME/.bashrc $HOME/.bash_profile $HOME/.bash_logout
+    elif test "$1" == "ssh"; then
         $EDITOR $HOME/.ssh/config
     else
         find "$XDG_CONFIG_HOME/$1/" -type f  | xargs $EDITOR
@@ -170,6 +173,7 @@ _conf_comp () {
     # auto complete for directories ("^d") and using last field which is the directory itself
     local conf_dirs=$(ls -l "$XDG_CONFIG_HOME/" | grep "^d" | lf " ")
     conf_dirs+=" ssh"
+    conf_dirs+=" bash"
     COMPREPLY=($(compgen -W "${conf_dirs[*]}" -- $2))
 }
 complete -F _conf_comp conf
