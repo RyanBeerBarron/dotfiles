@@ -17,15 +17,7 @@
 	blv = branch --sort=committerdate --list -vv
     # Show conflicted files ( can be piped into nvim )
 	conflicts = diff --name-only --diff-filter=U --relative
-    copy-title = "!bash -c 'git log -1 --oneline | awk \"{\\$1=\\\"\\\"; print \\$0}\" | tr \"\\n\" \" \" | win32yank.exe -i --crlf'"
-    # Git log but highlight merge commit in a different color. Experimental
-    plog = "!logo(){ git log --pretty='format:%h <<%p>> %s %D' $@ | sed -e 's/<<[0-9a-f]* [0-9a-f]*\\( [0-9a-f]*\\)*>>/\\x1B[31m Merge commit/' -e 's/<<[0-9a-f]*>>//' -e 's/$/\\x1B[0m/' | less -FRSX;  }; logo"
-    # Print to system clipboard commit refered by $1 in reference format
-    reference = "!f(){ git log --pretty=reference -1 $1 | win32yank.exe -i --crlf; }; f"
     lopm = log --oneline --merge --left-right 
-    # Next blame. Show git blame for next conflicting issue in file
-    nb = blame -L '/<<<<</,/>>>>>/' 
-	lop = log -p
     reword = "!f(){ git commit --fixup=reword:$1; }; f"
 [diff]
     colorMoved = default
