@@ -18,6 +18,27 @@ tconf () {
     fi
 }
 
+ll () {
+    {
+        printf "PERMISSIONS,LINKS,OWNER,GROUP,SIZE,MONTH,DAY,HH:MM/YEAR,NAME\n";
+        if test -z "$*"
+        then set -- "."
+        fi
+        for ARGS do
+            if test -f "$ARGS"
+            then ls -l --color=always $ARGS
+            elif test -d "$ARGS"
+            then ls -l --color=always $ARGS | sed 1d
+            fi
+        done
+     } |
+        # Setting the separator to ',' to prevent files with a space in it to screw the 'column' command
+        # Assuming that 'ls -l' won't output a comma ever
+        # Could not use a ';' as a separator because the removes the color from ls, as escape code contain one
+        awk 'BEGIN { OFS = "," } NF <= 9 { $1 = $1; print } NF > 9 { for(i = 10; i <= NF; i++) { $9 = $9 " " $i} NF = 9;  $9 = "\047" $9 "\047"; print $0 } '|
+        column -t -s ","  
+}
+
 # Function to modify the color of alacritty
 chcolor () {
     local FILE=${XDG_CONFIG_HOME:-$HOME/.config/}"/themes"

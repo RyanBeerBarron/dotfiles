@@ -54,8 +54,7 @@ if test "$PS1"; then
 
     # ALIASES
     # creating aliases before sourcing functions, functions might depend on aliases
-    alias ls='ls -tX'
-    alias ll=' { printf "PERM LINKS OWNER GROUP SIZE MONTH DAY HH:MM/YEAR NAME\n" ; ls -l --color=always -tX | sed 1d; } | column -t '
+    alias ls='ls -FtX'
     alias la='ls -A'
     alias l='ls -CF'
     alias colo='colorscheme'
@@ -63,6 +62,15 @@ if test "$PS1"; then
     alias gdb="gdb -q -tui"
     alias diff="colordiff"
     alias dotfiles="git --git-dir=$HOME/dotfiles/"
+
+    DIRCOLORS="$XDG_CONFIG_HOME"/dircolors
+    if [ -x "$DIRCOLORS" ]; then
+        test -r "$DIRCOLORS" && eval "$(dircolors -b $DIRCOLORS)" || eval "$(dircolors -b)"
+        alias ls='ls --color=auto -FtX'
+        alias grep='grep --color=auto'
+        alias fgrep='fgrep --color=auto'
+        alias egrep='egrep --color=auto'
+    fi
 
     # Sourcing bash/sh functions and setting completions
     for FILE in $FUNCTION_HOME/*; do source "$FILE"; done
@@ -125,14 +133,6 @@ if test "$PS1"; then
     PROMPT_COMMAND='echo_time'
     export PS1
 
-    DIRCOLORS="$XDG_CONFIG_HOME"/dircolors
-    if [ -x "$DIRCOLORS" ]; then
-        test -r "$DIRCOLORS" && eval "$(dircolors -b $DIRCOLORS)" || eval "$(dircolors -b)"
-        alias ls='ls --color=auto -tX'
-        alias grep='grep --color=auto'
-        alias fgrep='fgrep --color=auto'
-        alias egrep='egrep --color=auto'
-    fi
 
     # Bind configuration
     # It is better to use bash built-in bind instead of readline
