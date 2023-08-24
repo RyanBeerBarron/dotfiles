@@ -171,15 +171,5 @@ if test "$PS1"; then
     set -o ignoreeof
     # Prevents Ctrl-S from freezing the terminal...
     stty -ixon
-
-    # WSL specific config
-    if grep -i Microsoft /proc/version > /dev/null && test -z "$WHOME"; then
-        export WHOME=$(wslpath "$(wslvar USERPROFILE)")
-        alias cdw='cd "$WHOME"'
-        alias gcloud='/mnt/c/Windows/System32/cmd.exe /c gcloud'
-        export DISPLAY=$(ip route list default | awk '{print $3}'):0
-        export LIBGL_ALWAYS_INDIRECT=0
-    fi
-
 fi
 # vim: ft=bash

@@ -1,23 +1,6 @@
 . $XDG_DATA_HOME/sh/man-pattern.sh
 . $XDG_DATA_HOME/sh/ANSI.sh
 
-# Should probably be a script instead of a function
-# so I can use it with Perl / Python
-# But only useful for WSL, so I will soon ditch this(?)
-create_alacritty_link () {
-    pushd "$WHOME"/AppData/Roaming/alacritty > /dev/null
-    cp -f $XDG_CONFIG_HOME/alacritty/alacritty.yml alacritty.yml
-    popd > /dev/null
-}
-
-# terminal config
-tconf () {
-    $EDITOR ~/.config/alacritty/alacritty.yml
-    if test -v WHOME; then
-        create_alacritty_link
-    fi
-}
-
 ll () {
     {
         printf "PERMISSIONS,LINKS,OWNER,GROUP,SIZE,MONTH,DAY,HH:MM/YEAR,NAME\n";
@@ -56,9 +39,6 @@ chcolor () {
         # and so mapfile will create an array in a subprocess which is useless in a bash function
         mapfile -td";" ARRAY < <(grep "$1" $FILE);
         sed -i.bak "s/^colors: .*/colors: *${ARRAY[0]}/" $XDG_CONFIG_HOME/alacritty/alacritty.yml
-        if test "$WSL"; then
-            create_alacritty_link;
-        fi
         return 0;
     fi
 }
@@ -154,11 +134,9 @@ opacity () {
                     ;;
             esac
             sed -i "s/\([ \t]\)opacity: .*/\1opacity: $NEX_VAL/" $ALACRITTY_CONFIG;
-            create_alacritty_link
         done
     else
         sed -i "s/\([ \t]\)opacity: .*/\1opacity: $1/" $ALACRITTY_CONFIG;
-        create_alacritty_link
     fi
 }
 
