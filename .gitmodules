@@ -7,3 +7,9 @@
 [submodule "tmux"]
 	path = submodules/tmux
 	url = https://github.com/tmux/tmux
+[submodule "dwm"]
+	path = submodules/dwm
+	url = git@github.com:ryanbeerbarron/dwm
+[submodule "ii"]
+	path = submodules/ii
+	url = https://git.suckless.org/ii
