@@ -13,3 +13,6 @@
 [submodule "ii"]
 	path = submodules/ii
 	url = https://git.suckless.org/ii
+[submodule ".config/nvim/pack/git-modules"]
+	path = .config/nvim/pack/git-modules
+    url = git@github.com:ryanbeerbarron/neovim-packages
