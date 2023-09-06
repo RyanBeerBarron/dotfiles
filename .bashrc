@@ -62,6 +62,7 @@ if test "$PS1"; then
     alias gdb="gdb -q -tui"
     alias diff="colordiff"
     alias dotfiles="git --git-dir=$HOME/dotfiles/"
+    alias df="dotfiles"
 
     DIRCOLORS="$XDG_CONFIG_HOME"/dircolors
     if [ -x "$DIRCOLORS" ]; then
