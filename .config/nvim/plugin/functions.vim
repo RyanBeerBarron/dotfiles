@@ -10,3 +10,9 @@ function! FoldBashFunction(lnum)
     endif
     return '='
 endfunction
+
+" Return the character on the cursor, or in front for insert mode
+function! Get_char()
+    let [_, l:lnum, l:col, _, _] = getcurpos()
+    return getline('.')[l:col-1]
+endfunction
