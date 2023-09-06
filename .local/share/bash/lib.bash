@@ -4,14 +4,23 @@
 ll () {
     {
         printf "PERMISSIONS,LINKS,OWNER,GROUP,SIZE,MONTH,DAY,HH:MM/YEAR,NAME\n";
+        OPTIND=1
+        local ARG OPTS
+        getopts "a" ARG
+        case $ARG in
+            a)
+                OPTS="-a"
+                ;;
+        esac
+        shift $(( OPTIND - 1))
         if test -z "$*"
         then set -- "."
         fi
         for ARGS do
             if test -f "$ARGS"
-            then ls -l --color=always $ARGS
+            then ls -l --color=always $OPTS $ARGS
             elif test -d "$ARGS"
-            then ls -l --color=always $ARGS | sed 1d
+            then ls -l --color=always $OPTS $ARGS | sed 1d
             fi
         done
      } |
