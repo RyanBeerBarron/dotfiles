@@ -17,6 +17,7 @@
 !.profile
 !.gitmodules
 !submodules
+!gitconfig
 
 # submodules ignores
 submodules/.install_logs

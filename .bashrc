@@ -61,7 +61,7 @@ if test "$PS1"; then
     alias info="info --vi-keys"
     alias gdb="gdb -q -tui"
     alias diff="colordiff"
-    alias dotfiles="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"
+    alias dotfiles="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME -c include.path=~/gitconfig"
     alias df="dotfiles"
 
     DIRCOLORS="$XDG_CONFIG_HOME"/dircolors

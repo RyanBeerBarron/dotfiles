@@ -1,0 +1,3 @@
+[alias]
+   dog = log --format='%C(bold yellow)%h%C(reset) - %C(bold green)%ae %C(blue)%as%Creset - %s%C(auto)%d' --graph
+   adog = dog --all
