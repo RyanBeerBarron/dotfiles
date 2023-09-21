@@ -56,7 +56,7 @@ function install {
                         make -j 4 install >&3 2>&3  &&
                         echo "$submodule: make install finished [2/2]"
                     ;;
-            dwm|ii)
+            dmenu|dwm|ii)
                     make clean install >&3 2>&3  && 
                         echo "$submodule: make clean install done [1/1]"
                     ;;
@@ -114,7 +114,7 @@ fi
 
 (( $EUID == 0 )) || die "Not running as root, please use sudo for this command"
 
-submodules=(git neovim tmux ii dwm)
+submodules=(git neovim tmux ii dwm dmenu)
 declare -A install
 
 declare -A deps
