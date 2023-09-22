@@ -5,22 +5,24 @@ ll () {
     {
         printf "PERMISSIONS,LINKS,OWNER,GROUP,SIZE,MONTH,DAY,HH:MM/YEAR,NAME\n";
         OPTIND=1
-        local ARG OPTS
-        getopts "a" ARG
-        case $ARG in
-            a)
-                OPTS="-a"
-                ;;
-        esac
-        shift $(( OPTIND - 1))
-        if test -z "$*"
-        then set -- "."
-        fi
-        for ARGS do
-            if test -f "$ARGS"
-            then ls -l --color=always $OPTS $ARGS
-            elif test -d "$ARGS"
-            then ls -l --color=always $OPTS $ARGS | sed 1d
+        local arg opts
+        while getopts "ad" arg
+        do
+            case "$arg" in
+                a)
+                opts="$opts -a";;
+                d)
+                opts="$opts -d";;
+            esac
+        done
+        shift $(( OPTIND - 1 ))
+        test -z "$*" && set -- "."
+        for args do
+            if test -d "$args" && ! test -h "$args"
+            then
+                ls -l --color=always $opts $args | sed 1d
+            else
+                ls -l --color=always $opts $args
             fi
         done
      } |
