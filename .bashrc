@@ -131,7 +131,8 @@ if test "$PS1"; then
 
     trap 'timer_start' DEBUG
 
-    PROMPT_COMMAND='echo_time'
+    which prompt &> /dev/null && PROMPT_COMMAND='echo_time' || PROMPT_COMMAND=''
+    PS1="[\u@\h] \W \$ "
     export PS1
 
 
