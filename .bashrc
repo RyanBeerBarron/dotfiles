@@ -4,7 +4,7 @@
 # But .bashrc needs .bash_profile to be sourced
 if test "$PS1"; then
 
-    # ENV VAR
+    # ENV VAR{{{
     unset EDITOR;
     if test -v XDG_CURRENT_DESKTOP; then
          EDITOR="neovide"
@@ -38,8 +38,9 @@ if test "$PS1"; then
     export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
     export PGPASSFILE="$XDG_CONFIG_HOME/pg/pgpass"
     export PGSERVICEFILE="$XDG_CONFIG_HOME/pg/pg_service.conf"
+    # }}}
 
-    ### Setting up the PATH
+    ### Setting up the PATH{{{
     PATH=""
     PATH="/usr/local/bin:/usr/bin:/bin"
     PATH=$PATH:"/usr/local/sbin:/usr/sbin:/sbin"
@@ -51,8 +52,9 @@ if test "$PS1"; then
     PATH=$PATH:/usr/games
     PATH=$PATH:/snap/bin
     export PATH
+    # }}}
 
-    # ALIASES
+    # ALIASES{{{
     # creating aliases before sourcing functions, functions might depend on aliases
     alias ls='ls -FtX'
     alias la='ls -A'
@@ -63,7 +65,9 @@ if test "$PS1"; then
     alias diff="colordiff"
     alias dotfiles="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME -c include.path=~/gitconfig"
     alias df="dotfiles"
+    # }}}
 
+    # Setting colors{{{
     DIRCOLORS="$XDG_CONFIG_HOME"/dircolors
     if [ -x "$DIRCOLORS" ]; then
         test -r "$DIRCOLORS" && eval "$(dircolors -b $DIRCOLORS)" || eval "$(dircolors -b)"
@@ -72,8 +76,9 @@ if test "$PS1"; then
         alias fgrep='fgrep --color=auto'
         alias egrep='egrep --color=auto'
     fi
+    # }}}
 
-    # Sourcing bash/sh functions and setting completions
+    # Sourcing bash/sh functions and setting completions {{{
     for FILE in $FUNCTION_HOME/*; do source "$FILE"; done
     source /usr/share/bash-completion/completions/git
     __git_complete glca _git_log
@@ -82,8 +87,9 @@ if test "$PS1"; then
     if test -r /usr/share/bash-completion/bash_completion
         then source /usr/share/bash-completion/bash_completion
     fi
+    # }}}
 
-    # Prompt
+    # PS1 Prompt {{{
     function timer_now {
         date +%s%N # seconds and nanoseconds
     }
@@ -134,9 +140,9 @@ if test "$PS1"; then
     which prompt &> /dev/null && PROMPT_COMMAND='echo_time' || PROMPT_COMMAND=''
     PS1="[\u@\h] \W \$ "
     export PS1
+    # }}}
 
-
-    # Bind configuration
+    # Bind configuration {{{
     # It is better to use bash built-in bind instead of readline
     # even with conditional config inside readline '$if Bash'
     # because these command are executed when the keyseq is done
@@ -154,8 +160,9 @@ if test "$PS1"; then
 
     bind -m vi -x '"\C-n": start-session'
     bind -m vi-insert -x '"\C-n": start-session'
+    # }}}
 
-    # Shell/Term options
+    # Shell/Term options {{{
     shopt -s \
         cdable_vars \
         cdspell \
@@ -169,10 +176,10 @@ if test "$PS1"; then
         globstar \
         no_empty_cmd_completion \
         nocaseglob \
-        progcomp_alias \
-
+        progcomp_alias
     set -o ignoreeof
     # Prevents Ctrl-S from freezing the terminal...
     stty -ixon
+    # }}}
 fi
-# vim: ft=bash
+# vim: ft=bash foldmethod=marker
