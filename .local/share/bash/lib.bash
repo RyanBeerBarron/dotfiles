@@ -1,7 +1,7 @@
 . $XDG_DATA_HOME/sh/man-pattern.sh
 . $XDG_DATA_HOME/sh/ANSI.sh
 
-ll () {
+function ll {
     {
         printf "PERMISSIONS,LINKS,OWNER,GROUP,SIZE,MONTH,DAY,HH:MM/YEAR,NAME\n";
         OPTIND=1
@@ -33,8 +33,8 @@ ll () {
         column -t -s ","  
 }
 
+function chcolor {
 # Function to modify the color of alacritty
-chcolor () {
     local FILE=${XDG_CONFIG_HOME:-$HOME/.config/}"/themes"
     if test "$1" = "list"; then
         cut -d';' -f1 $FILE;
@@ -53,10 +53,8 @@ chcolor () {
         return 0;
     fi
 }
-complete -W "list $(cut -d";" -f1 ${XDG_CONFIG_HOME:-$HOME/.config/}"/themes")" chcolor
 
-
-start-session () {
+function start-session {
     echo "starting session...";
     local TMPFILE=$(mktemp /tmp/start-session.script.XXXXXX);
     local DIR=""
@@ -79,7 +77,7 @@ start-session () {
     create-session $SESSION_NAME $TMUX_DIR
 }
 
-create-session () {
+function create-session {
     if test -z "$1"; then
         >2& printf "error, missing arguments, need session name and directory\n";
         return 1;
@@ -92,12 +90,12 @@ create-session () {
     fi
 }
 
-start-session-here () {
+function start-session-here {
     echo "starting session here";
     create-session $(basename $PWD) $PWD;
 }
 
-glca () {
+function glca {
     if [ $# -eq 1 ]
     then
         branch=HEAD;
@@ -108,8 +106,7 @@ glca () {
         # lca = "!f(){ if [ $# -eq 1 ]; then branch=HEAD; else branch=$2; fi; git log --graph --oneline $1 $branch ^$(git merge-base $1 $branch)^; }; f"
 }
 
-
-git-find-parent-branch () {
+function git-find-parent-branch {
     git show-branch 2> /dev/null |
         sed "s/].*//" |
         grep "\*" |
@@ -118,8 +115,8 @@ git-find-parent-branch () {
         sed "s/^.*\[//"
 }
 
+function opacity {
 # Change opacity of Alacritty
-opacity () {
     if test -z "$1"; then
         echo "Press '+' to increase opacity, '-' to reduce or 'q' to quit."
         local OPACITY=""
@@ -151,18 +148,18 @@ opacity () {
     fi
 }
 
-abs_path () {
+function abs_path {
     echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
 }
 
+function lf {
 # Last field
-lf () {
     local USAGE="  
     lf - Last field
     File input needs to come from stdin, usually from a pipe
     Usage:
         lf <delimiter>
-"
+    "
     # First argument should be a single char since it is passed to `cut`
     if test ${#1} -ne 1; then
         printf "$USAGE"
@@ -171,7 +168,7 @@ lf () {
     rev | cut -d"$1" -f1 | rev
 }
 
-conf () {
+function conf {
     if test "$1" == "bash"; then
         $EDITOR $HOME/.bashrc $HOME/.bash_profile $HOME/.bash_logout
     elif test "$1" == "ssh"; then
@@ -181,16 +178,15 @@ conf () {
     fi
 }
 
-_conf_comp () {
+function _conf_comp {
     # auto complete for directories ("^d") and using last field which is the directory itself
     local conf_dirs=$(ls -l "$XDG_CONFIG_HOME/" | grep "^d" | lf " ")
     conf_dirs+=" ssh"
     conf_dirs+=" bash"
     COMPREPLY=($(compgen -W "${conf_dirs[*]}" -- $2))
 }
-complete -F _conf_comp conf
 
-fn () {
+function fn {
     if test -z $1; then
         $EDITOR $FUNCTION_HOME
     elif test -x "$HOME/.local/scripts/$1"; then
@@ -206,20 +202,18 @@ fn () {
     fi
 }
 
-_fn_comp () {
+function _fn_comp {
     local fn_list=$(declare -F | cut -d" " -f3 | grep -v "^_.\+$" )
     local script_list=$(find $HOME/.local/scripts/ -executable -type f -exec basename {} \;)
     fn_list+=("${script_list[@]}")
     COMPREPLY=($(compgen -W "${fn_list[*]}" -- $2))
 }
-complete -F _fn_comp fn
 
-vis () {
+function vis {
     sed -e "s/ /^S/g" -e "s/\t/^T/g" -e "s/\n/^N/g"
 }
 
-
-_tmux-help_completion () {
+function _tmux-help_completion {
     if test -z "$TMUX_HELP_COMPLETION"; then
          TMUX_HELP_COMPLETION=$(MANWIDTH=160 man tmux |
                 grep "^[[:space:]]\+[[:alnum:]-]\+\( \[-[[:alnum:]]\+\]\)\+" |
@@ -228,10 +222,8 @@ _tmux-help_completion () {
     fi
     COMPREPLY=($(compgen -W "${TMUX_HELP_COMPLETION[*]}" -- "$2"))
 }
-complete -F _tmux-help_completion tmux-help
 
-
-tmux-option () {
+function tmux-option {
     if test -n "$1"; then
     MANWIDTH=160 man tmux |
         sed -n "/^OPTIONS$/,/$SECTIONS/p" |
@@ -241,7 +233,7 @@ tmux-option () {
     fi
 }
 
-_tmux-option_completion () {
+function _tmux-option_completion {
     if test -z "$TMUX_OPTION_COMPLETION"; then
          TMUX_OPTION_COMPLETION=$(
          MANWIDTH=160 man tmux |
@@ -253,16 +245,14 @@ _tmux-option_completion () {
             )
     fi
     COMPREPLY=($(compgen -W "${TMUX_OPTION_COMPLETION[*]}" -- "$2"))
-    }
-complete -F _tmux-option_completion tmux-option
+}
 
-trim () {
+function trim {
     sed "s/^[[:space:]]*\([[:graph:]].*[[:graph:]]\)[[:space:]]*$/\1/"
 }
-export -f trim
 
+function jvm {
 # Java version manager
-jvm () {
     local USAGE="
     java version manager
       usage: jvm [version_number]
@@ -279,7 +269,7 @@ jvm () {
     fi
 }
 
-dotfiles_sync () {
+function dotfiles_sync {
     # `diff HEAD` checks in worktree and index for any uncommitted changes
     # `diff @{u}...HEAD` checks for any difference between upstream/remote and HEAD,
     # i.e. if there is any unpushed commits
@@ -299,12 +289,11 @@ dotfiles_sync () {
     return 0;
 }
 
-# For 'logout' and 'exit', a function is required and this cannot be put inside '.bash_logout'
-# Once '.bash_logout' is executed by bash, we can not revert the end of process
-#
-# Having a function is AFAIK the only known way to execute commands on bash's  exit
-# and potientally prevent or revert the exit process
-logout () {
+function logout {
+    # For 'logout' and 'exit', a function is required and this cannot be put inside '.bash_logout'
+    # Once '.bash_logout' is executed by bash, we can not revert the end of process
+    # Having a function is AFAIK the only known way to execute commands on bash's  exit
+    # and potientally prevent or revert the exit process
     if test "$SHLVL" = 1 && shopt -q login_shell ; then
         if ! dotfiles_sync; then
             return 0
@@ -314,7 +303,7 @@ logout () {
     logout
 }
 
-exit () {
+function exit {
     if test "$SHLVL" = 1 && shopt -q login_shell ; then
         if ! dotfiles_sync; then
             return 0
@@ -324,7 +313,7 @@ exit () {
     exit
 }
 
-shutdown () {
+function shutdown {
     if test "$SHLVL" = 1; then
         if ! dotfiles_sync; then
             return 0
@@ -333,11 +322,11 @@ shutdown () {
     command shutdown $@
 }
 
-environ () {
+function environ {
     cat /proc/$1/environ | tr '\0' '\n'
 }
 
-neovide () {
+function neovide {
     if test -S /tmp/neovide; then
         # Removing the +[linenum] from the command arguments
         # and converting it to a 'remote-send' command
@@ -357,4 +346,11 @@ neovide () {
     fi
 }
 
-# vim: ft=bash
+complete -W "list $(cut -d";" -f1 "${XDG_CONFIG_HOME:-$HOME/.config/}/themes")" chcolor
+complete -F _conf_comp conf
+complete -F _fn_comp fn
+complete -F _tmux-help_completion tmux-help
+complete -F _tmux-option_completion tmux-option
+export -f trim
+
+# vim: ft=bash foldmethod=expr fde=FoldBashFunction(v\:lnum)
