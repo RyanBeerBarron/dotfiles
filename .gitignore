@@ -47,3 +47,4 @@ submodules/.install_logs
 !.local/share/bash
 !.local/share/sh
 !.local/share/notes
+!.local/share/fonts
