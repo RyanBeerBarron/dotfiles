@@ -27,24 +27,5 @@ vnoremap > >gv
 vnoremap < <gv
 
 
-" readline/emacs mappings
-cnoremap <C-f> <Right>
-cnoremap <C-b> <Left>
-cnoremap <M-f> <S-Right>
-cnoremap <M-b> <S-Left>
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-"this mapping does not work as expected if inside a word, it will delete it al
-"when it should delete the part in front of the cursor, like :normal dw
-"cnoremap <M-d> <S-Right><C-w>
-inoremap <C-f> <Right>
-inoremap <C-b> <Left>
-inoremap <M-f> <S-Right>
-inoremap <M-b> <S-Left>
-inoremap <C-a> <Home>
-inoremap <C-e> <End>
-inoremap <C-d> <Del>
-inoremap <M-d> <C-o>dvw
-
 
 " vim: foldmethod=expr
