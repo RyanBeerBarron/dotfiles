@@ -98,7 +98,7 @@ function prompt-installation {
             # Name of the submodule/repo is the same as the executable usually
             # Except for 'Neovim' whose executable is 'nvim'
             local bin=$(test $submodule = "neovim" && echo "nvim" || echo $submodule)
-            test -x "$install_dir/bin/$bin" || pkgs+=${deps[$submodule]}
+            test -x "$install_dir/bin/$bin" || pkgs+=${deps[$submodule]}' '
         fi
     fi
 }
@@ -118,9 +118,11 @@ submodules=(git neovim tmux ii dwm dmenu)
 declare -A install
 
 declare -A deps
-deps[git]="libssl-dev libcurl4-gnutls-dev libexpat1-dev"
+deps[git]="libssl-dev libcurl4-gnutls-dev libexpat1-dev asciidoc"
 deps[neovim]="ninja-build gettext cmake unzip curl"
 deps[tmux]="libevent-dev libncurses-dev"
+deps[dwm]="libx11-dev libxinerama-dev libxft-dev"
+deps[dmenu]="libx11-dev libxinerama-dev libxft-dev"
 
 declare pid
 
