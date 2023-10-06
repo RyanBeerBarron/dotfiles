@@ -9,13 +9,13 @@
 	url = https://github.com/tmux/tmux
 [submodule "dwm"]
 	path = submodules/dwm
-	url = git@github.com:ryanbeerbarron/dwm
+	url = https://github.com/ryanbeerbarron/dwm
 [submodule "ii"]
 	path = submodules/ii
 	url = https://git.suckless.org/ii
 [submodule ".config/nvim/pack/git-modules"]
 	path = .config/nvim/pack/git-modules
-    url = git@github.com:ryanbeerbarron/neovim-packages
+    url = https://github.com/ryanbeerbarron/neovim-packages
 [submodule "dmenu"]
 	path = submodules/dmenu
 	url = https://git.suckless.org/dmenu
