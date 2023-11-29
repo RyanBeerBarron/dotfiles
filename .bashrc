@@ -110,8 +110,8 @@ if test "$PS1"; then
     bind -m vi-insert -x '"\e\C-e": start-session-here'
     bind -m vi -x '"\e\C-e": start-session-here'
 
-    bind -m vi -x '"\C-n": start-session'
-    bind -m vi-insert -x '"\C-n": start-session'
+    bind -m vi -x '"\e\C-w": start-session'
+    bind -m vi-insert -x '"\e\C-w": start-session'
     # }}}
 
     # Shell/Term options {{{
