@@ -1,7 +1,7 @@
 function s:matchBracket(arg)
     let char = g:Get_char()
     if char == a:arg
-        call feedkeys("\<Right>")
+       call feedkeys("\<Right>")
     else
         call feedkeys(a:arg, 'n')
     endif
@@ -33,3 +33,7 @@ inoremap ) <cmd>call <SID>matchBracket(")")<cr>
 inoremap ] <cmd>call <SID>matchBracket("]")<cr>
 inoremap ' <cmd>call <SID>matchQuote("'")<cr>
 inoremap " <cmd>call <SID>matchQuote("\"")<cr>
+augroup typing
+    autocmd!
+    autocmd FileType vim iunmap "
+augroup END
