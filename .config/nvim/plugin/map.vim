@@ -14,6 +14,10 @@ nnoremap <M-t> <cmd>tag<cr>
 nnoremap <leader>tc <Cmd>tabclose<CR>
 nnoremap <leader>tn <Cmd>tabnew<CR>
 nnoremap <leader>f <Cmd>execute \"find\" expand(\"<cword>\")<CR>
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+nnoremap <leader>y "+y
+nnoremap <leader>Y "+Y
 
 
 " Insert mode mapping
@@ -23,6 +27,9 @@ inoremap {<cr> {<cr>}<ESC>O
 " Visual mode mappings
 vnoremap > >gv
 vnoremap < <gv
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+vnoremap <leader>y "+y
 
 
 
