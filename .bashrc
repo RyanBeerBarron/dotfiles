@@ -15,6 +15,8 @@ if test "$PS1"; then
     alias diff="colordiff"
     alias dotfiles="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME -c include.path=~/gitconfig"
     alias df="dotfiles"
+    alias wget="wget --hsts-file=$XDG_CACHE_HOME/wget_hsts"
+    alias gpg="gpg --homedir $XDG_DATA_HOME/gnupg"
     # }}}
 
     # Setting colors{{{
