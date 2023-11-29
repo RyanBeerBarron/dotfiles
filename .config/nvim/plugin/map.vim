@@ -14,8 +14,6 @@ nnoremap <M-t> <cmd>tag<cr>
 nnoremap <leader>tc <Cmd>tabclose<CR>
 nnoremap <leader>tn <Cmd>tabnew<CR>
 nnoremap <leader>f <Cmd>execute \"find\" expand(\"<cword>\")<CR>
-nnoremap <leader>cc <Cmd>Config<CR>
-nnoremap <leader>cd <Cmd>Cdb<CR>
 
 
 " Insert mode mapping
