@@ -3,12 +3,18 @@ function! FoldBashFunction(lnum)
     let line = getline(a:lnum)
     let prevline = getline(a:lnum-1)
     if line =~ '^function'
-        return 1
+       return 1
     endif
     if prevline =~ '^}'
         return 0
     endif
     return '='
+endfunction
+
+" Function to fold paragraph of texts
+function! FoldParagraphs(lnum)
+    let line = getline(a:lnum)
+    return line =~ '\S'? 1 : '<1'
 endfunction
 
 " Return the character on the cursor, or in front for insert mode

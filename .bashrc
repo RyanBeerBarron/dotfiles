@@ -134,4 +134,4 @@ if test "$PS1"; then
     stty -ixon
     # }}}
 fi
-# vim: ft=bash foldmethod=marker
+# vim: ft=bash foldmethod=marker foldlevel=0

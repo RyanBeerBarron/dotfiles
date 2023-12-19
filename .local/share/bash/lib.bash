@@ -353,4 +353,4 @@ complete -F _tmux-help_completion tmux-help
 complete -F _tmux-option_completion tmux-option
 export -f trim
 
-# vim: ft=bash foldmethod=expr fde=FoldBashFunction(v\:lnum)
+# vim: ft=bash foldexpr=FoldBashFunction(v\:lnum) foldlevel=0

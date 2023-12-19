@@ -137,5 +137,3 @@ inoremap <C-w> <cmd>call <SID>InsertBackwardKillWord()<cr>
 inoremap <C-k> <cmd>call <SID>InsertKillLine()<cr>
 inoremap <C-u> <cmd>call <SID>InsertBackwardKillLine()<cr>
 inoremap <C-y> <C-R>"
-
-" vim: foldmethod=expr

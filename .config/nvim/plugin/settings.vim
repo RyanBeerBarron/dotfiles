@@ -10,8 +10,9 @@ set cursorline
 set expandtab
 set foldclose&
 set foldcolumn=4
-set foldexpr=getline(v:lnum)=~'\\S'?1:'<1'
-set foldopen&
+set foldexpr=FoldParagraphs(v\:lnum)
+set foldlevel=2
+set foldmethod=expr
 set guifont=CaskaydiaCove\ Nerd\ Font\ Propo:h16
 "set guifont=IosevkaTerm\ Nerd\ Font\ Propo:h16
 set incsearch
@@ -50,4 +51,5 @@ let g:neovide_transparency=0.8
 " Global variables
 let loaded_matchit = 1
 
-" vim: foldmethod=expr
+
+" vim: foldlevel=0

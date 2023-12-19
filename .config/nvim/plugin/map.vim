@@ -38,5 +38,3 @@ vnoremap <leader>P "+P
 vnoremap <leader>y "+y
 
 
-
-" vim: foldmethod=expr
