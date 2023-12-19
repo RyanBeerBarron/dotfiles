@@ -13,8 +13,8 @@ set foldcolumn=4
 set foldexpr=FoldParagraphs(v\:lnum)
 set foldlevel=2
 set foldmethod=expr
-set guifont=CaskaydiaCove\ Nerd\ Font\ Propo:h16
-"set guifont=IosevkaTerm\ Nerd\ Font\ Propo:h16
+"set guifont=CaskaydiaCove\ Nerd\ Font:h18
+set guifont=IosevkaTerm\ Nerd\ Font:h20
 set incsearch
 set laststatus=2
 set linebreak
