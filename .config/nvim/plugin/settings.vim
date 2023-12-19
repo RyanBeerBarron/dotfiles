@@ -47,6 +47,7 @@ highlight Normal ctermbg=none
 highlight NoneText ctermbg=none
 let g:neovide_transparency=0.8
 
+autocmd FileType java,lua,bash,sh,c,vim,json setlocal foldexpr=nvim_treesitter#foldexpr()
 autocmd BufReadPost *.bak execute "doautocmd BufReadPost " .. expand("<afile>:r")
 
 " Global variables
