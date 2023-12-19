@@ -11,7 +11,7 @@ nnoremap <F3> <cmd>lprev<cr>
 nnoremap <F4> <cmd>lnext<cr>
 nnoremap <C-j> <cmd>bprevious<cr>
 nnoremap <C-k> <cmd>bnext<cr>
-
+nnoremap <S-j> j
 
 " Normal mode mappings with leader key
 nnoremap <leader>tc <Cmd>tabclose<CR>
@@ -28,13 +28,18 @@ nnoremap ,cc <cmd>cclose<cr>
 
 " Insert mode mapping
 inoremap {<cr> {<cr>}<ESC>O
+inoremap <C-p> <Up>
+inoremap <C-n> <Down>
 
 
 " Visual mode mappings
 vnoremap > >gv
 vnoremap < <gv
+vnoremap <S-j> j
+vnoremap <S-k> k
 vnoremap <leader>p "+p
 vnoremap <leader>P "+P
 vnoremap <leader>y "+y
 
 
+cnoremap <C-x> <C-a>

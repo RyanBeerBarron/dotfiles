@@ -47,9 +47,10 @@ highlight Normal ctermbg=none
 highlight NoneText ctermbg=none
 let g:neovide_transparency=0.8
 
+autocmd BufReadPost *.bak execute "doautocmd BufReadPost " .. expand("<afile>:r")
 
 " Global variables
-let loaded_matchit = 1
+let g:loaded_matchit = 1
 
 
 " vim: foldlevel=0
