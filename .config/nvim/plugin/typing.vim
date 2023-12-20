@@ -1,30 +1,21 @@
-function s:matchBracket(arg)
+function s:matchBracket(bracket)
     let char = g:Get_char()
-    if char == a:arg
-       call feedkeys("\<Right>")
+    if char == a:bracket
+       return "\<Right>"
     else
-        call feedkeys(a:arg, 'n')
+        return a:bracket
     endif
 endfunction
 
-function s:matchSingle()
-    call <SID>matchQuote("'")
-endfunction
-
-function s:matchDouble()
-    call <SID>matchQuote("\"")
-endfunction
-
-function s:matchQuote(arg)
-    if a:arg == '"' && &ft == "vim"
-        call feedkeys('"', 'n')
-        return
+function s:matchQuote(quote)
+    if a:quote == '"' && &ft == "vim"
+        return '"'
     endif
     let char = g:Get_char()
-    if char == a:arg
-        call feedkeys("\<Right>")
+    if char == a:quote
+        return "\<Right>"
     else
-        call feedkeys(a:arg .. a:arg .. "\<Left>", 'n')
+        return a:quote .. a:quote .. "\<Left>"
     endif
 endfunction
 
@@ -40,10 +31,10 @@ inoremap { {}<Left>
 inoremap [ []<Left>
 inoremap ( ()<Left>
 
-inoremap } <cmd>call <SID>matchBracket("}")<cr>
-inoremap ) <cmd>call <SID>matchBracket(")")<cr>
-inoremap ] <cmd>call <SID>matchBracket("]")<cr>
-inoremap ' <cmd>call <SID>matchQuote("'")<cr>
-inoremap " <cmd>call <SID>matchQuote("\"")<cr>
+inoremap <silent> } <C-R>=<SID>matchBracket("}")<cr>
+inoremap <silent> ) <C-R>=<SID>matchBracket(")")<cr>
+inoremap <silent> ] <C-R>=<SID>matchBracket("]")<cr>
+inoremap <silent> ' <C-R>=<SID>matchQuote("'")<cr>
+inoremap <silent> " <C-R>=<SID>matchQuote("\"")<cr>
 
 inoremap <silent> <Tab> <C-R>=<SID>cleverTab()<CR>
