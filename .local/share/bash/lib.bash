@@ -188,17 +188,17 @@ function _conf_comp {
 
 function fn {
     if test -z $1; then
-        $EDITOR $FUNCTION_HOME
+        nvim $FUNCTION_HOME
     elif test -x "$HOME/.local/scripts/$1"; then
-        $EDITOR "$HOME/.local/scripts/$1"
+        nvim "$HOME/.local/scripts/$1"
     else
         # Using grep with '-n' to find the line number of the bash function
         # Then using Bash parameter expansion with '%' to extract the line number
         # and passing it to neovim.
         # Neovim accepts a line number prefixed with '+' and will open the file at the line number
         # The parameter expansion uses '%' to remove a suffix, which matches the pattern ':*'
-        local STRING=$(grep -n "^$1 ()" $FUNCTION_HOME/lib.bash);
-        $EDITOR $FUNCTION_HOME/lib.bash  +${STRING%:*}
+        local STRING=$(grep -n "^function $1" $FUNCTION_HOME/lib.bash);
+        nvim $FUNCTION_HOME/lib.bash  +${STRING%:*} -c "foldopen" -c "normal zz"
     fi
 }
 
