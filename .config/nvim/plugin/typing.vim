@@ -16,6 +16,10 @@ function s:matchDouble()
 endfunction
 
 function s:matchQuote(arg)
+    if a:arg == '"' && &ft == "vim"
+        call feedkeys('"', 'n')
+        return
+    endif
     let char = g:Get_char()
     if char == a:arg
         call feedkeys("\<Right>")
@@ -43,8 +47,3 @@ inoremap ' <cmd>call <SID>matchQuote("'")<cr>
 inoremap " <cmd>call <SID>matchQuote("\"")<cr>
 
 inoremap <silent> <Tab> <C-R>=<SID>cleverTab()<CR>
-
-augroup typing
-    autocmd!
-    autocmd FileType vim iunmap "
-augroup END
