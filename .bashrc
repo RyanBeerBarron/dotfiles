@@ -31,14 +31,14 @@ if test "$PS1"; then
     # }}}
 
     # Sourcing bash/sh functions and setting completions {{{
-    for FILE in $FUNCTION_HOME/*; do source "$FILE"; done
-    source /usr/share/bash-completion/completions/git
-    __git_complete glca _git_log
-    __git_complete gl_bb.bash _git_log
-    complete -W "clean debug release install test" ./build
     if test -r /usr/share/bash-completion/bash_completion
         then source /usr/share/bash-completion/bash_completion
     fi
+    source /usr/share/bash-completion/completions/git
+    for FILE in $FUNCTION_HOME/*; do source "$FILE"; done
+    __git_complete glca _git_log
+    __git_complete gl_bb.bash _git_log
+    complete -W "clean debug release install test" ./build
     # }}}
 
     # PS1 Prompt {{{
