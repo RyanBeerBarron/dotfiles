@@ -1,13 +1,14 @@
 \set ON_ERROR_ROLLBACK interactive
 \set COMP_KEYWORD_CASE upper
 \set HISTFILE ~/.local/state/pg/psql_history- :HOST - :DBNAME
+\set IGNOREEOF 10
 
-\set CLEAR '%[%033[0m%]'
-\set RED '%[%033[31m%]'
-\set BOLD_RED '%[%033[1;31m%]'
-\set BOLD_BLUE '%[%033[1;34m%]'
-\set BOLD_YELLOW '%[%033[1;33m%]'
-\set GREY '%[%033[1;35m%]'
+\set clear '%[%033[0m%]'
+\set red '%[%033[31m%]'
+\set bold_red '%[%033[1;31m%]'
+\set bold_blue '%[%033[1;34m%]'
+\set bold_yellow '%[%033[1;33m%]'
+\set grey '%[%033[1;35m%]'
 
 \encoding unicode
 \timing
@@ -15,5 +16,5 @@
 \x auto
 
 \pset null 'NULL'
-\set PROMPT1 '\n':RED[:BOLD_BLUE%M:GREY::BOLD_YELLOW%>:RED]' ':BOLD_BLUE%n:GREY@:BOLD_YELLOW%/'\n'
+\set PROMPT1 '\n':red[:bold_blue%M:grey::bold_yellow%>:red]' ':bold_blue%n:grey@:bold_yellow%/'\n'
 \set recent 'order by created_at desc'
