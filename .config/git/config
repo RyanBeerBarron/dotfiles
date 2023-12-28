@@ -19,6 +19,7 @@
 	conflicts = diff --name-only --diff-filter=U --relative
     lopm = log --oneline --merge --left-right 
     reword = "!f(){ git commit --fixup=reword:$1; }; f"
+    lor = log --oneline --reverse
 [diff]
     colorMoved = default
     submodule = log
