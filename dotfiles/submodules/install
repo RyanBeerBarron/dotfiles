@@ -72,6 +72,12 @@ function install
             echo "$passwd" | sudo -S make clean install
             echo "$submodule: sudo make clean install done [1/1]" >&3
             ;;
+        gf2)
+            ./build.sh
+            echo "$submodule: running ./build.sh [1/2]" >&3
+            echo "$passwd" | sudo -S install gf2 $install_dir
+            echo "$submodule: installing gf2 to $install_dir [2/2]" >&3
+            ;;
     esac
     git tag -f "installed"
     echo "$submodule: DONE tag created" >&3
@@ -135,7 +141,7 @@ echo "$passwd" | sudo -S true || { echo "Password given is incorrect"; exit 1;}
 # Stdout will be redirected to a log file for the forked installations
 exec 3>&1
 
-submodules=(git neovim neovide alacritty tmux ii dwm dmenu)
+submodules=(git neovim neovide alacritty gf2 tmux ii dwm dmenu)
 declare -A install
 
 declare -A deps

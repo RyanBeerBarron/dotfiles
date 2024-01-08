@@ -31,3 +31,6 @@
 [submodule "dotfiles/prompt"]
 	path = dotfiles/prompt
 	url = https://github.com/ryanbeerbarron/prompt
+[submodule "dotfiles/submodules/gf2"]
+	path = dotfiles/submodules/gf2
+	url = https://github.com/nakst/gf/
