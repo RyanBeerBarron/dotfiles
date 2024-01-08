@@ -9,6 +9,7 @@ if test "$PS1"; then
     alias ls='ls -FtX'
     alias la='ls -A'
     alias l='ls -CF'
+    alias man='man --encoding=us-ascii'
     alias colo='colorscheme'
     alias info="info --vi-keys"
     alias gdb="gdb -q -tui"
