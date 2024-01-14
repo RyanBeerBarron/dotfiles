@@ -104,11 +104,8 @@ if test "$PS1"; then
     # no matter whats already written in the current line
     # With readline, you'd have to resort to simply outputting the macro
     # to clear the line, type in the command, and enter
-    bind -m vi -x '"\e\C-R": source $HOME/.bashrc'
-    bind -m vi-insert -x '"\e\C-R": source $HOME/.bashrc'
-
-    bind -m vi -x '":": tmux command-prompt'
-    bind -m vi-insert -x '"\e:": tmux command-prompt'
+    bind -m vi -x '"\er": source $HOME/.bashrc; echo reloaded!'
+    bind -m vi-insert -x '"\er": source $HOME/.bashrc; echo reloaded!'
 
     bind -m vi-insert -x '"\e\C-e": start-session-here'
     bind -m vi -x '"\e\C-e": start-session-here'
