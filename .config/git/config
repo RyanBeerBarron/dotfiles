@@ -3,6 +3,7 @@
     editor = nvim
 [user]
     name = Ryan Barron
+    email = ryanbar1997@gmail.com
 [push]
     default = upstream
     autoSetupRemote = true
