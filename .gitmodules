@@ -25,3 +25,6 @@
 [submodule "alacritty"]
 	path = submodules/alacritty
 	url = https://github.com/alacritty/alacritty
+[submodule "dwmblocks"]
+	path = submodules/dwmblocks
+	url = https://github.com/torrinfail/dwmblocks.git

@@ -1,0 +1,69 @@
+#!/bin/bash
+
+function set_bg {
+    local bg=$1
+    local link=$2
+    echo "bg is $bg and link is $link"
+    test -z "$bg" -o -z "$link" && exit 1
+    feh --no-fehbg --bg-fill $bg
+    ln --force $bg $link
+}
+
+wallpaper_dir=$HOME/img
+hardlink=$XDG_CACHE_HOME/fehbg
+test -r $hardlink && currentbg=$hardlink
+echo "currentbg is $currentbg"
+# Keeping the trailing new line for dmenu
+mapfile files < <(find $HOME/img -type f)
+
+if test $# -eq 0
+then
+    set_bg $(echo "${files[@]}" | dmenu)
+    exit 0
+fi
+
+if test $1 != "next" && test $1 != "prev"
+then
+    if test -r $1
+    then
+        set_bg $1 $hardlink
+        exit 0
+    else
+        echo "Could not open/read $1" >&2
+        exit 1
+    fi
+fi
+
+if test -z "$currentbg"
+then
+    set_bg "${files[0]}"
+    exit 0
+fi
+
+length="${#files[@]}"
+let bg_index=0
+case $1 in
+    next)
+        for (( i=0; i<length; i++ ))
+        do
+            # Remove the last char which is a trailing new line
+            if test "${files[i]:0:-1}" -ef "$currentbg"
+            then
+                let bg_index=(i+1)%length
+            fi
+        done
+        ;;
+    prev)
+        for (( i=0; i<length; i++ ))
+        do
+            # Remove the last char which is a trailing new line
+            if test "${files[i]:0:-1}" -ef "$currentbg"
+            then
+                let bg_index=(i-1+length)%length
+            fi
+        done
+        ;;
+esac
+new_bg="${files[$bg_index]}"
+set_bg $new_bg .cache/fehbg
+exit 0

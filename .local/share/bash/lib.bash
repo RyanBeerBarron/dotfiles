@@ -173,6 +173,8 @@ function conf {
         $EDITOR $HOME/.bashrc $HOME/.bash_profile $HOME/.bash_logout
     elif test "$1" == "ssh"; then
         $EDITOR $HOME/.ssh/config
+    elif test "$1" == "dwm"; then
+        nvim $HOME/submodules/dwm/config.h
     else
         $EDITOR "$XDG_CONFIG_HOME/$1/"
     fi
@@ -183,6 +185,7 @@ function _conf_comp {
     local conf_dirs=$(ls -l "$XDG_CONFIG_HOME/" | grep "^d" | lf " ")
     conf_dirs+=" ssh"
     conf_dirs+=" bash"
+    conf_dirs+=" dwm"
     COMPREPLY=($(compgen -W "${conf_dirs[*]}" -- $2))
 }
 

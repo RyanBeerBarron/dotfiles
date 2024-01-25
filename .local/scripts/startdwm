@@ -1,0 +1,16 @@
+#!/bin/sh
+# vim: foldlevel=99
+
+test -r ~/.bash_profile && . ~/.bash_profile
+test -r $XDG_CACHE_HOME/fehbg || ln --force $(ls $HOME/img | head -1) $XDG_CACHE_HOME/fehbg
+feh --no-fehbg --bg-fill $XDG_CACHE_HOME/fehbg
+xcompmgr &
+dunst &
+( while true; do dwmblocks; done; ) &
+setxkbmap -layout us,fr -variant ,azerty -option grp:alt_space_toggle,ctrl:nocaps,terminate:ctrl_alt_bksp
+xset r rate 250 50
+mkdir -p $XDG_RUNTIME_DIR/dwm/
+while true
+do
+    dwm 2> $XDG_RUNTIME_DIR/dwm/log
+done
