@@ -56,3 +56,4 @@ submodules/logs
 !.local/share/sh
 !.local/share/notes
 !.local/share/fonts
+!.local/share/themes
