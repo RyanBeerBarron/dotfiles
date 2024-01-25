@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if test -S /tmp/neovide
+then
+    # Removing the +[linenum] from the command arguments
+    # and converting it to a 'remote-send' command
+    for arg
+    do
+        shift
+        if [[ "$arg" =~ \+([0-9]+) ]]
+        then
+            num=${BASH_REMATCH[1]}
+            set -- "$@"
+            break
+        fi
+        set -- "$@" "$arg"
+    done
+    nvim --server /tmp/neovide --remote-send "<Cmd>silent lcd $PWD<CR>"
+    nvim --server /tmp/neovide --remote "$@"
+    test "$num" && nvim --server /tmp/neovide --remote-send "<Cmd>$num<CR>"
+    wmctrl -xa neovide
+else
+    /usr/local/bin/neovide --no-fork $@ -- --listen /tmp/neovide
+fi

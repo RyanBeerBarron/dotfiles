@@ -326,26 +326,6 @@ function environ {
     cat /proc/$1/environ | tr '\0' '\n'
 }
 
-function neovide {
-    if test -S /tmp/neovide; then
-        # Removing the +[linenum] from the command arguments
-        # and converting it to a 'remote-send' command
-        for arg do
-            shift
-            if [[ "$arg" =~ \+([0-9]+) ]]; then
-                local num=${BASH_REMATCH[1]}
-                continue
-            fi
-            set -- "$@" "$arg"
-        done
-        nvim --server /tmp/neovide --remote $@
-        nvim --server /tmp/neovide --remote-send "<Cmd>$num<CR>"
-        wmctrl -xa neovide
-    else
-        command neovide --frame none --no-tabs $@ -- --listen /tmp/neovide
-    fi
-}
-
 complete -W "list $(cut -d";" -f1 "${XDG_CONFIG_HOME:-$HOME/.config/}/themes")" chcolor
 complete -F _conf_comp conf
 complete -F _fn_comp fn
