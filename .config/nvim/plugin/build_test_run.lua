@@ -19,13 +19,22 @@ local function create_win(bufnr)
                 vim.cmd("sbuffer " .. bufnr)
                 local cur_win = vim.api.nvim_get_current_win()
                 vim.fn.setwinvar(cur_win, "&wrap", true)
-                goto restore_win
+                vim.api.nvim_set_current_win(original_win)
+                return
             end
         end
     end
-    vim.cmd("vertical botright sbuffer " .. bufnr)
-    ::restore_win::
+    local columns = math.floor(vim.o.columns * 0.33)
+    vim.cmd("botright " .. columns .. "vsplit")
+    local winid = vim.api.nvim_get_current_win()
+    vim.wo[winid].number = false
+    vim.wo[winid].foldcolumn = "0"
+    vim.wo[winid].wrap = true
+    vim.wo[winid].cursorline = false
+    vim.wo[winid].cursorcolumn = false
+    vim.cmd("buffer " .. bufnr)
     vim.api.nvim_set_current_win(original_win)
+    return
 end
 
 local function close_wins()
