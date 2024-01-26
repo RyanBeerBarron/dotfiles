@@ -17,4 +17,6 @@ if has("gui_running")
     nnoremap <silent> <C-=> <Cmd>IncreaseFontSize 1<cr>
     nnoremap <silent> <C--> <Cmd>IncreaseFontSize -1<cr>
 
+    inoremap <silent> <C-S-v> <C-r>+<cr>
+    inoremap <silent> <C-v> <C-r>+<cr>
 endif
