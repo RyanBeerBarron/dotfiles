@@ -27,6 +27,7 @@ submodules/logs
 .config/alacritty/local.toml
 .config/dconf
 .config/discord/
+.config/nvim/after/plugin/local.vim
 .config/docker/
 .config/evolution
 .config/go/telemetry
