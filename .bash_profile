@@ -54,9 +54,5 @@ export PATH
 if [ -f "$HOME/.bashrc" ]
     then source "$HOME/.bashrc" 
 fi
-if test "$SHLVL" -eq 1
-    # TODO :In case of an error on `pull` should send a motd
-    then git --git-dir=$HOME/dotfiles --work-tree=$HOME pull -q 2> /dev/null
-fi
 
 # vim: foldmethod=marker
