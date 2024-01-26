@@ -37,6 +37,8 @@ submodules/logs
 !.config/readline
 !.config/themes
 !.config/tmux
+!.config/go
+.config/go/telemetry
 
 # .local whitelist
 !.local

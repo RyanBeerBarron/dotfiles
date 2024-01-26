@@ -37,8 +37,8 @@ export PGPASSFILE="$XDG_CONFIG_HOME/pg/pgpass"
 export PGSERVICEFILE="$XDG_CONFIG_HOME/pg/pg_service.conf"
 
 # Setting up the PATH
-PATH=""
-PATH="/usr/local/bin:/usr/bin:/bin"
+PATH="/usr/local/go/bin"
+PATH=$PATH:"/usr/local/bin:/usr/bin:/bin"
 PATH=$PATH:"/usr/local/sbin:/usr/sbin:/sbin"
 PATH="$CARGO_HOME/bin":$PATH
 PATH="$HOME/.local/bin":$PATH
