@@ -71,6 +71,7 @@ set visible-stats on
 set keyseq-timeout 0
 
 set show-mode-in-prompt on
-set emacs-mode-string \1\e[31;1m\2(EMACS) >> \1\e[0m\2
-set vi-cmd-mode-string \1\e[33;49;1m\e[2 q\2::: \1\e[0m\2
-set vi-ins-mode-string \1\e[32;49;1m\e[6 q\2>>> \1\e[0m\2
+set emacs-mode-string "\1\e[31m\2emacs "
+# For cursor color, copy value from OSC 4 ; 13 ; ? ^[ \\
+set vi-cmd-mode-string "\1\e[1 q\e]12;rgb:7e/9c/d8\e\a\e[0;1;34m\2(cmd) \1\e[22;39m\2"
+set vi-ins-mode-string "\1\e[3 q\e]12;rgb:98/bb/6c\e\a\e[0;1;92m\2(ins) \1\e[22;39m\2"

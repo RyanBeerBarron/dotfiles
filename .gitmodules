@@ -28,3 +28,6 @@
 [submodule "dwmblocks"]
 	path = dotfiles/submodules/dwmblocks
 	url = https://github.com/torrinfail/dwmblocks.git
+[submodule "dotfiles/prompt"]
+	path = dotfiles/prompt
+	url = https://github.com/ryanbeerbarron/prompt

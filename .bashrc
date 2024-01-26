@@ -44,7 +44,7 @@ then
     complete -W "clean debug release install test" ./build
     # }}}
 
-    # PS1 Prompt {{{
+    # Timer functions {{{
     function timer_now {
         date +%s%N # seconds and nanoseconds
     }
@@ -80,21 +80,39 @@ then
             else timer_show=${us}us
             fi
     }
+    # }}}
 
-    function echo_time {
+    # PS1 Prompt {{{
+    function generate_prompt {
+        local exit_code=$?
         timer_stop
-        local len=$(( COLUMNS - ${#timer_show} ))
-        PS1="\[\e[s\e[${len}C\]$timer_show\[\e[u\]"
-        PS1+='$(prompt $? \! "\W" )\n'
+        local hist_num="\!"
+        hist_num=${hist_num@P}
+        hist_num=$(( hist_num + 1 ))
+        local len=$(( ${#timer_show} -1 ))
+        local git_branch=$(__git_ps1)
+        declare -a PS1_pattern
+        PS1_pattern+=("-d" "$distro")
+        PS1_pattern+=("-u" "\u")
+        PS1_pattern+=("-H" "\h")
+        PS1_pattern+=("-w" "\W")
+        PS1_pattern+=("-g" "$git_branch")
+        if git rev-parse --is-inside-work-tree &> /dev/null
+        then
+          shortstat=$(set -eo pipefail; git diff --numstat HEAD 2> /dev/null | awk -f $XDG_DATA_HOME/awk/sum-gitstat.awk)
+          PS1_pattern+=("-s" "$shortstat")
+        fi
+        # PS1_pattern+=("-n" "$hist_num")
+        # PS1_pattern+=("-t" "$timer_show")
+        PS1_pattern+=("-c" "$exit_code")
+        export PS1=$(prompt "${PS1_pattern[@]@P}")
         # echo "stoping timer"
         unset timer_start
     }
 
     trap 'timer_start' DEBUG
-
-    which prompt &> /dev/null && PROMPT_COMMAND='echo_time' || PROMPT_COMMAND=''
-    PS1="[\u@\h] \W \$ "
-    export PS1
+    distro=$(sed -En 's/NAME="(\w+)"/\1/p' /etc/os-release)
+    which prompt &> /dev/null && PROMPT_COMMAND='generate_prompt' || PROMPT_COMMAND=''
     # }}}
 
     # Bind configuration {{{
