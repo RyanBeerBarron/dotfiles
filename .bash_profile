@@ -36,6 +36,8 @@ export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
 export PGPASSFILE="$XDG_CONFIG_HOME/pg/pgpass"
 export PGSERVICEFILE="$XDG_CONFIG_HOME/pg/pg_service.conf"
 
+export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+
 # Setting up the PATH
 PATH="/usr/local/go/bin"
 PATH=$PATH:"/usr/local/bin:/usr/bin:/bin"
