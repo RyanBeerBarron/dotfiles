@@ -13,8 +13,7 @@ if test "$PS1"; then
     alias info="info --vi-keys"
     alias gdb="gdb -q -tui"
     alias diff="colordiff"
-    alias dotfiles="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME -c include.path=~/gitconfig"
-    alias df="dotfiles"
+    alias dot="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME -c include.path=~/gitconfig"
     alias wget="wget --hsts-file=$XDG_CACHE_HOME/wget_hsts"
     alias gpg="gpg --homedir $XDG_DATA_HOME/gnupg"
     # }}}

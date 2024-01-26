@@ -274,7 +274,7 @@ function dotfiles_sync {
     # `diff @{u}...HEAD` checks for any difference between upstream/remote and HEAD,
     # i.e. if there is any unpushed commits
     # They return 0 if there are no differences
-    if ! (dotfiles diff --quiet HEAD && dotfiles diff --quiet @{u}...HEAD); then
+    if ! (dot diff --quiet HEAD && dot diff --quiet @{u}...HEAD); then
         echo "Dotfiles repository is not clean, do you still wish to logout? [y/n]"
         read -p "> " ANS
         case $ANS in
