@@ -2,18 +2,20 @@
 . $XDG_DATA_HOME/sh/ANSI.sh
 
 function ll {
-    ls -l --color "$@" | pretty_ll
+    ls -lh --color "$@" | pretty_ll
 }
 
 function pretty_ll {
-# Function to prettify the output of 'ls -l'
-# Setting the separator to ',' to prevent files with a space in it to screw the 'column' command
-# Assuming that 'ls -l' won't output a comma ever
+  #
+# Function to prettify the output of 'ls -lh'
+# Setting the separator to '\\' to prevent files with a space in it to screw the 'column' command
+# Assuming that 'ls -lh' won't output a backslash ever
 # Could not use a ';' as a separator because the removes the color from ls, as escape code contain one
+# Neither a ',' since the size value can contain one, e.g. "4,3M"
         awk '
         BEGIN {
-            OFS = ",";
-            printf "PERMISSIONS,LINKS,OWNER,GROUP,SIZE,MONTH,DAY,HH:MM/YEAR,NAME\n"
+            OFS = "\\"
+            printf "PERMISSIONS\\LINKS\\OWNER\\GROUP\\SIZE\\MONTH\\DAY\\HH:MM/YEAR\\NAME\n"
         }
         /^total [0-9]+/ { next }
         NF <= 9 { $1 = $1; print }
@@ -26,7 +28,7 @@ function pretty_ll {
             $9 = "\047" $9 "\047";
             print $0
         }' |
-        column -t -s ","
+        column -t -s "\\"
 }
 
 function chcolor {
