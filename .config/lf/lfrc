@@ -1,0 +1,13 @@
+set hidden
+cmd mu :{{
+    cd /media/ryan/android/Music
+}}
+
+map <c-l> ${{
+  if test "$TMUX"
+  then
+    tmux split-pane -h mpv --gapless-audio=yes --audio-display=no "$fx"
+  else
+    alacritty -e mpv --gapless-audio=yes --audio-display=no "$fx" &
+  fi
+}}

@@ -21,24 +21,26 @@
 
 # submodules ignores
 submodules/logs
-# .config whitelist
+
+# .config ignore list
 !.config
-.config/*
-!.config/alacritty
-!.config/dircolors
-!.config/gdb
-!.config/git
-!.config/newsboat
-!.config/npm
-!.config/nvim
-!.config/pg
-.config/pg/pgpass 
-!.config/pythonstartup.py
-!.config/readline
-!.config/themes
-!.config/tmux
-!.config/go
+.config/alacritty/local.toml
+.config/dconf
+.config/discord/
+.config/docker/
+.config/evolution
 .config/go/telemetry
+.config/ibus
+.config/java/
+.config/JetBrains/
+.config/libreoffice
+.config/maven/
+.config/pki/
+.config/pulse
+.config/QtProject.conf
+.config/htop
+.config/remind/
+.config/monitors.xml
 
 # .local whitelist
 !.local
