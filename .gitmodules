@@ -1,30 +1,30 @@
 [submodule "git"]
-	path = submodules/git
+	path = dotfiles/submodules/git
 	url = https://github.com/git/git
 [submodule "neovim"]
-	path = submodules/neovim
+	path = dotfiles/submodules/neovim
 	url = https://github.com/neovim/neovim
 [submodule "tmux"]
-	path = submodules/tmux
+	path = dotfiles/submodules/tmux
 	url = https://github.com/tmux/tmux
 [submodule "dwm"]
-	path = submodules/dwm
+	path = dotfiles/submodules/dwm
 	url = https://github.com/ryanbeerbarron/dwm
 [submodule "ii"]
-	path = submodules/ii
+	path = dotfiles/submodules/ii
 	url = https://git.suckless.org/ii
 [submodule ".config/nvim/pack/git-modules"]
 	path = .config/nvim/pack/git-modules
     url = https://github.com/ryanbeerbarron/neovim-packages
 [submodule "dmenu"]
-	path = submodules/dmenu
+	path = dotfiles/submodules/dmenu
 	url = https://git.suckless.org/dmenu
 [submodule "neovide"]
-	path = submodules/neovide
+	path = dotfiles/submodules/neovide
 	url = https://github.com/neovide/neovide
 [submodule "alacritty"]
-	path = submodules/alacritty
+	path = dotfiles/submodules/alacritty
 	url = https://github.com/alacritty/alacritty
 [submodule "dwmblocks"]
-	path = submodules/dwmblocks
+	path = dotfiles/submodules/dwmblocks
 	url = https://github.com/torrinfail/dwmblocks.git

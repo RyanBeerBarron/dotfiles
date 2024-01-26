@@ -16,12 +16,10 @@
 !.bash_logout
 !.profile
 !.gitmodules
-!submodules
-!gitconfig
-!/img
+!dotfiles
 
 # submodules ignores
-submodules/logs
+dotfiles/submodules/logs
 
 # .config ignore list
 !.config

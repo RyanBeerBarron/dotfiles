@@ -9,12 +9,12 @@ function set_bg {
     ln --force $bg $link
 }
 
-wallpaper_dir=$HOME/img
+wallpaper_dir=$HOME/dotfiles/img
 hardlink=$XDG_CACHE_HOME/fehbg
 test -r $hardlink && currentbg=$hardlink
 echo "currentbg is $currentbg"
 # Keeping the trailing new line for dmenu
-mapfile files < <(find $HOME/img -type f)
+mapfile files < <(find $HOME/dotfiles/img -type f)
 
 if test $# -eq 0
 then

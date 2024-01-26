@@ -27,7 +27,7 @@ fi
 # Java stuff
 export JAVA_HOME=$HOME/.local/jdks/jdk-17
 export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
-export M2_HOME="$HOME/.local/apache-maven-3.9.0"
+export M2_HOME="$HOME/dotfiles/tools/"apache-maven-*
 export M2=$M2_HOME/bin
 
 # Postgres stuff

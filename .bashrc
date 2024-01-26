@@ -2,8 +2,8 @@
 # In case of a SSH connection, a non-login, non-interactive shell
 # might still source .bashrc but not .bash_profile.
 # But .bashrc needs .bash_profile to be sourced
-if test "$PS1"; then
-
+if test "$PS1"
+then
     # ALIASES{{{
     # creating aliases before sourcing functions, functions might depend on aliases
     alias ls='ls -FtX'
@@ -14,7 +14,7 @@ if test "$PS1"; then
     alias info="info --vi-keys"
     alias gdb="gdb -q -tui"
     alias diff="colordiff"
-    alias dot="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME -c include.path=~/gitconfig"
+    alias dot="git -c include.path=~/dotfiles/gitconfig"
     alias wget="wget --hsts-file=$XDG_CACHE_HOME/wget_hsts"
     alias gpg="gpg --homedir $XDG_DATA_HOME/gnupg"
     # }}}
