@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for (( i=0x1f300; i <= 0x1f973; i++ ))
+do
+    hex=$(printf "%08x" $i)
+    echo -e "\U$hex\tU+$hex"
+    read -sn 1
+done

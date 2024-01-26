@@ -42,6 +42,8 @@ submodules/logs
 .config/htop
 .config/remind/
 .config/monitors.xml
+.config/font-manager/
+.config/fontconfig/conf.d/
 
 # .local whitelist
 !.local
