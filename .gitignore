@@ -20,7 +20,7 @@
 !gitconfig
 
 # submodules ignores
-submodules/.install_logs
+submodules/logs
 # .config whitelist
 !.config
 .config/*
