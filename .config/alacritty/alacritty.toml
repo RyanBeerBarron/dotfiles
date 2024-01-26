@@ -1,9 +1,8 @@
 import = [
-	"~/.config/alacritty/kanagawa.toml"
+	"~/.config/alacritty/kanagawa.toml",
+    "~/.config/alacritty/local.toml"
 ]
 [font]
-size = 14
-
 [font.bold]
 family = "IosevkaTerm Nerd Font"
 style = "Bold"
@@ -154,7 +153,6 @@ style = "Regular"
 history = 5000
 
 [window]
-opacity = 1.0
 title = "Alacritty"
 
 [window.padding]

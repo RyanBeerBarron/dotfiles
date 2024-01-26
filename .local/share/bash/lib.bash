@@ -114,35 +114,37 @@ function git-find-parent-branch {
 }
 
 function opacity {
-# Change opacity of Alacritty
+   # Change opacity of Alacritty
+    local alacritty_localconfig=$XDG_CONFIG_HOME/alacritty/local.toml
     if test -z "$1"; then
         echo "Press '+' to increase opacity, '-' to reduce or 'q' to quit."
-        local OPACITY=""
+        local opacity=""
         while true
         do
-            # Read first characters without delimiter or newline, silently (does not echo back to terminal)
-            read -sn 1 OPACITY
-            local OPC_VAL=$(sed -n "/opacity/ s/.*=[ \t]*//p" $ALACRITTY_CONFIG)
-            local NEX_VAL=""
-            case "$OPACITY" in
+            # read first characters without delimiter or newline, silently (does not echo back to terminal)
+            read -sn 1 input
+            local opacity=$(sed -En "/opacity/s/.*([[:digit:]]+\.[[:digit:]]+)/\1/p" $alacritty_localconfig)
+            local nextval=""
+            case "$input" in
                 +)
-                    NEX_VAL=$(echo "$OPC_VAL + 0.1" | bc | sed 's/^\./0./')
+                    nextval=$(echo "$opacity + 0.05" | bc | sed 's/^\./0./')
                     ;;
                 -)
-                    NEX_VAL=$(echo "$OPC_VAL - 0.1" | bc | sed 's/^\./0./')
+                    nextval=$(echo "$opacity - 0.05" | bc | sed 's/^\./0./')
                     ;;
                 q)
+		    echo "new opacity value is: $opacity"
                     return 0;
                     ;;
                 *)
                     # keep next value the same as current
-                    NEX_VAL=$OPC_VAL
+                    nextval=$opacity
                     ;;
             esac
-            sed -i "s/opacity =.*/opacity = $NEX_VAL/" $ALACRITTY_CONFIG;
+            sed -i "/opacity/s/.*/opacity = $nextval/" $alacritty_localconfig;
         done
     else
-        sed -i "s/opacity =.*/opacity = $1/" $ALACRITTY_CONFIG;
+        sed -i "/opacity/s/.*/opacity = $1/" $alacritty_localconfig;
     fi
 }
 
@@ -172,7 +174,7 @@ function conf {
     elif test "$1" == "ssh"; then
         $EDITOR $HOME/.ssh/config
     else
-        $EDITOR $(find "$XDG_CONFIG_HOME/$1/" -type f)
+        $EDITOR "$XDG_CONFIG_HOME/$1/"
     fi
 }
 
