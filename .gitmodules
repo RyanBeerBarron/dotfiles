@@ -19,3 +19,6 @@
 [submodule "dmenu"]
 	path = submodules/dmenu
 	url = https://git.suckless.org/dmenu
+[submodule "alacritty"]
+	path = submodules/alacritty
+	url = https://github.com/alacritty/alacritty

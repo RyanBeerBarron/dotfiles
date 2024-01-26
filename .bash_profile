@@ -14,7 +14,7 @@ export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 export LESS="FgMrRS j.25 --mouse"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/pythonstartup.py"
 export FUNCTION_HOME=$XDG_DATA_HOME/bash
-export ALACRITTY_CONFIG="$XDG_CONFIG_HOME/alacritty/alacritty.yml"
+export ALACRITTY_CONFIG="$XDG_CONFIG_HOME/alacritty/alacritty.toml"
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 
 # Rust stuff

@@ -35,6 +35,9 @@ if test "$PS1"; then
         then source /usr/share/bash-completion/bash_completion
     fi
     source /usr/share/bash-completion/completions/git
+    if test -r ~/submodules/alacritty/extra/completions/alacritty.bash
+        then source ~/submodules/alacritty/extra/completions/alacritty.bash
+    fi
     for FILE in $FUNCTION_HOME/*; do source "$FILE"; done
     __git_complete glca _git_log
     __git_complete gl_bb.bash _git_log

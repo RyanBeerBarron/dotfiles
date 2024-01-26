@@ -30,6 +30,8 @@ function pretty_ll {
 }
 
 function chcolor {
+# TODO: Import the other themes for toml-style alacritty config
+#       and change this to correctly change the colorscheme
 # Function to modify the color of alacritty
     local FILE=${XDG_CONFIG_HOME:-$HOME/.config/}"/themes"
     if test "$1" = "list"; then
@@ -45,7 +47,7 @@ function chcolor {
         # Can not use a pipe 'grep | mapfile' because with pipes, each part is a subprocess
         # and so mapfile will create an array in a subprocess which is useless in a bash function
         mapfile -td";" ARRAY < <(grep "$1" $FILE);
-        sed -i.bak "s/^colors: .*/colors: *${ARRAY[0]}/" $XDG_CONFIG_HOME/alacritty/alacritty.yml
+        sed -i.bak "s/^colors: .*/colors: *${ARRAY[0]}/" $ALACRITTY_CONFIG
         return 0;
     fi
 }
@@ -120,14 +122,14 @@ function opacity {
         do
             # Read first characters without delimiter or newline, silently (does not echo back to terminal)
             read -sn 1 OPACITY
-            local OPC_VAL=$(sed -n "/opacity/ s/.*:[ \t]*//p" $ALACRITTY_CONFIG)
+            local OPC_VAL=$(sed -n "/opacity/ s/.*=[ \t]*//p" $ALACRITTY_CONFIG)
             local NEX_VAL=""
             case "$OPACITY" in
                 +)
-                    NEX_VAL=$(echo "$OPC_VAL + 0.1" | bc)
+                    NEX_VAL=$(echo "$OPC_VAL + 0.1" | bc | sed 's/^\./0./')
                     ;;
                 -)
-                    NEX_VAL=$(echo "$OPC_VAL - 0.1" | bc)
+                    NEX_VAL=$(echo "$OPC_VAL - 0.1" | bc | sed 's/^\./0./')
                     ;;
                 q)
                     return 0;
@@ -137,10 +139,10 @@ function opacity {
                     NEX_VAL=$OPC_VAL
                     ;;
             esac
-            sed -i "s/\([ \t]\)opacity: .*/\1opacity: $NEX_VAL/" $ALACRITTY_CONFIG;
+            sed -i "s/opacity =.*/opacity = $NEX_VAL/" $ALACRITTY_CONFIG;
         done
     else
-        sed -i "s/\([ \t]\)opacity: .*/\1opacity: $1/" $ALACRITTY_CONFIG;
+        sed -i "s/opacity =.*/opacity = $1/" $ALACRITTY_CONFIG;
     fi
 }
 
