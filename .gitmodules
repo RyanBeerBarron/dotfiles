@@ -19,6 +19,9 @@
 [submodule "dmenu"]
 	path = submodules/dmenu
 	url = https://git.suckless.org/dmenu
+[submodule "neovide"]
+	path = submodules/neovide
+	url = https://github.com/neovide/neovide
 [submodule "alacritty"]
 	path = submodules/alacritty
 	url = https://github.com/alacritty/alacritty

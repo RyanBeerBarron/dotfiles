@@ -52,6 +52,12 @@ function install
             echo "$passwd" | sudo -S make -j 4 install
             echo "$submodule: sudo make install finished [2/2]" >&3
             ;;
+        neovide)
+	    cargo build --release
+            echo "$submodule: cargo build --release finished [1/2]" >&3
+            echo "$passwd" | sudo -S install target/release/neovide "${install_dir}/bin"
+            echo "$submodule: sudo install to ${install_dir}/bin finished [2/2]" >&3
+            ;;
         alacritty)
             cargo build --release
             echo "$submodule: cargo build --release finished [1/4]" >&3
@@ -129,12 +135,15 @@ echo "$passwd" | sudo -S true || { echo "Password given is incorrect"; exit 1;}
 # Stdout will be redirected to a log file for the forked installations
 exec 3>&1
 
-submodules=(git neovim alacritty tmux ii dwm dmenu)
+submodules=(git neovim neovide alacritty tmux ii dwm dmenu)
 declare -A install
 
 declare -A deps
 deps[git]="libssl-dev libcurl4-gnutls-dev libexpat1-dev asciidoc"
 deps[neovim]="ninja-build gettext cmake unzip curl"
+deps[neovide]="gcc-multilib g++-multilib libssl-dev libfreetype6-dev libasound2-dev libexpat1-dev \
+               libxcb-composite0-dev libbz2-dev libsndio-dev freeglut3-dev libxi-dev \
+               libfontconfig1-dev libxcursor-dev"
 deps[tmux]="libevent-dev libncurses-dev yacc"
 deps[dwm]="libx11-dev libxinerama-dev libxft-dev"
 deps[dmenu]="libx11-dev libxinerama-dev libxft-dev"

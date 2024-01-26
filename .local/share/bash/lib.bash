@@ -340,7 +340,7 @@ function neovide {
         nvim --server /tmp/neovide --remote-send "<Cmd>$num<CR>"
         wmctrl -xa neovide
     else
-        command neovide --notabs -- --listen /tmp/neovide $@
+        command neovide --frame none --no-tabs $@ -- --listen /tmp/neovide
     fi
 }
 
