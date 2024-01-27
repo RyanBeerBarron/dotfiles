@@ -14,13 +14,15 @@ nnoremap <C-k> <cmd>bnext<cr>
 nnoremap <S-j> j
 
 " Normal mode mappings with leader key
-nnoremap <leader>tc <Cmd>tabclose<CR>
-nnoremap <leader>tn <Cmd>tabnew<CR>
 nnoremap <leader>f <Cmd>execute \"find\" expand(\"<cword>\")<CR>
 nnoremap <leader>p "+p
 nnoremap <leader>P "+P
 nnoremap <leader>y "+y
 nnoremap <leader>Y "+Y
+
+" Normal mode mappings for tab, to mimic Ctrl-w mapping for windows
+nnoremap <C-t>n <cmd>tabnew<cr>
+nnoremap <C-t>c <cmd>tabclose<cr>
 
 " Normal mode mappings starting with ','
 nnoremap ,bd <cmd>bdel<cr>
@@ -30,7 +32,7 @@ nnoremap ,cc <cmd>cclose<cr>
 inoremap {<cr> {<cr>}<ESC>O
 inoremap <C-p> <Up>
 inoremap <C-n> <Down>
-
+imap <C-Space> <Nop>
 
 " Visual mode mappings
 vnoremap > >gv
@@ -40,6 +42,5 @@ vnoremap <S-k> k
 vnoremap <leader>p "+p
 vnoremap <leader>P "+P
 vnoremap <leader>y "+y
-
 
 cnoremap <C-x> <C-a>

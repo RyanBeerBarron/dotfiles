@@ -11,3 +11,13 @@ nnoremap <leader>lcd <cmd>Lcd<cr>
 command! -nargs=1 Mksession execute "mksession" stdpath('cache') .. "/<args>.vim"
 
 command! -nargs=0 Trim %substitute/\s\+$//e <bar> %substitute/\($\n\s*\)\+\%$//e
+
+command! -nargs=1 MoveWin call <SID>moveWinToTab(<args>)
+nnoremap <C-t>m <cmd>execute "MoveWin " .. v:count1<cr>
+
+function! s:moveWinToTab(tabnum)
+    let bufnr = bufnr()
+    wincmd c
+    execute "normal " .. a:tabnum .. "gt"
+    execute "sbuffer " .. bufnr
+endfunction

@@ -16,8 +16,10 @@ set foldmethod=expr
 set guifont=CaskaydiaCove\ Nerd\ Font:h16
 "set guifont=IosevkaTerm\ Nerd\ Font:h16
 set incsearch
-set laststatus=2
+set laststatus=3
 set linebreak
+set list
+set listchars=tab:󰌒\ \ ,eol:↲,trail:.,extends:<,precedes:>,nbsp:␣
 set matchtime=1
 set modelineexpr
 set noshowmode

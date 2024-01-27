@@ -38,3 +38,6 @@ inoremap <silent> ' <C-R>=<SID>matchQuote("'")<cr>
 inoremap <silent> " <C-R>=<SID>matchQuote("\"")<cr>
 
 inoremap <silent> <Tab> <C-R>=<SID>cleverTab()<CR>
+
+cnoremap <expr> <C-p> pumvisible()?"<C-p>":"<Up>"
+cnoremap <expr> <C-n> pumvisible()?"<C-n>":"<Down>"
