@@ -1,14 +1,12 @@
 [core]
     pager = delta --line-numbers --syntax-theme=gruvbox-dark
-    editor = nvim
+    editor = $SUDO_EDITOR
 [user]
     name = Ryan Barron
     email = ryanbar1997@gmail.com
 [push]
     default = upstream
     autoSetupRemote = true
-[default]
-	editor = nvim
 [alias]
     adog = log --all --decorate --oneline --graph
     dog = log --decorate --oneline --graph

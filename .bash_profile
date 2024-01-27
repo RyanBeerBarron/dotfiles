@@ -6,9 +6,9 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XDG_CACHE_HOME=$HOME/.cache
 
 # Linux stuff
-export EDITOR=nvim
-export VISUAL=$EDITOR
-export SUDO_EDITOR=nvim
+export EDITOR=neovide
+export VISUAL=neovide
+export SUDO_EDITOR="neovide --no-fork"
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 export LESS="FgMrRS j.25 --mouse"
