@@ -1,0 +1,4 @@
+#!/bin/sh
+
+timestamp=$(git log -1 --no-walk --date=unix --pretty="%cd")
+git for-each-ref --format="%(refname:short) %(if:equals=tag)%(objecttype)%(then)%(*committerdate:unix)%(else)%(committerdate:unix)%(end)" refs/tags | awk -v timestamp=$timestamp '$2 > timestamp { print }' | sort -g -k 2,2 | cut -d' ' -f1
