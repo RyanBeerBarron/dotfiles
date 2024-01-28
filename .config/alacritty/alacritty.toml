@@ -164,7 +164,3 @@ y = 0
 key = "f"
 mods = "Super"
 action = "ToggleFullscreen"
-[[keyboard.bindings]]
-key = "v"
-mods = "Control"
-action = "Paste"

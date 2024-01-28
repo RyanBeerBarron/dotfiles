@@ -331,6 +331,13 @@ function environ {
     cat /proc/$1/environ | tr '\0' '\n'
 }
 
+function _rl_paste {
+    clipboard=$(xclip -o -sel clipboard)
+    let length=${#clipboard}
+    READLINE_LINE="${READLINE_LINE}${clipboard}"
+    let READLINE_POINT=READLINE_POINT+length
+}
+
 complete -W "list $(cut -d";" -f1 "${XDG_CONFIG_HOME:-$HOME/.config/}/themes")" chcolor
 complete -F _conf_comp conf
 complete -F _fn_comp fn
