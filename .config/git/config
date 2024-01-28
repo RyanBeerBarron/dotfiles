@@ -1,6 +1,5 @@
 [core]
     pager = delta --line-numbers --syntax-theme=gruvbox-dark
-    editor = $SUDO_EDITOR
 [user]
     name = Ryan Barron
     email = ryanbar1997@gmail.com
