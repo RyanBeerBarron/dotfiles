@@ -159,8 +159,3 @@ startup_mode = "Windowed"
 [window.padding]
 x = 1
 y = 0
-
-[[keyboard.bindings]]
-key = "f"
-mods = "Super"
-action = "ToggleFullscreen"

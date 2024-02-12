@@ -23,8 +23,6 @@ if exists("g:neovide")
   let g:neovide_cursor_vfx_particle_phase = 3.5
   let g:neovide_cursor_vfx_particle_speed = 10.0
 
-  " super f to toggle fullscreen
-  nnoremap <D-f> <cmd>let g:neovide_fullscreen = g:neovide_fullscreen == v:true ? v:false : v:true<cr>
   " toggle profiler
   nnoremap <space>pf <cmd>let g:neovide_profiler = g:neovide_profiler == v:true ? v:false : v:true<cr>
 
