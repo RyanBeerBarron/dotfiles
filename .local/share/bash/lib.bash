@@ -207,12 +207,7 @@ function fn {
     fi
 }
 
-function _fn_comp {
-    local fn_list=$(declare -F | cut -d" " -f3 | grep -v "^_.\+$" )
-    local script_list=$(find $HOME/.local/scripts/ -executable -type f -exec basename {} \;)
-    fn_list+=("${script_list[@]}")
-    COMPREPLY=($(compgen -W "${fn_list[*]}" -- $2))
-}
+
 
 function vis {
     sed -e "s/ /^S/g" -e "s/\t/^T/g" -e "s/\n/^N/g"
@@ -338,11 +333,14 @@ function _rl_paste {
     let READLINE_POINT=READLINE_POINT+length
 }
 
+__fn_comp_list=$(declare -F | cut -d" " -f3 | grep -v "^_.\+$"; find $HOME/.local/scripts/ -executable -type f -exec basename {} \;)
+__setbackground_comp_list=$(find $HOME/dotfiles/img -type f -exec basename {} \; ; echo "next"; echo "prev")
 complete -W "list $(cut -d";" -f1 "${XDG_CONFIG_HOME:-$HOME/.config/}/themes")" chcolor
 complete -F _conf_comp conf
-complete -F _fn_comp fn
+complete -W "$__fn_comp_list" fn
 complete -F _tmux-help_completion tmux-help
 complete -F _tmux-option_completion tmux-option
+complete -W "$__setbackground_comp_list" setbackground
 export -f trim
 
 # vim: ft=bash foldexpr=FoldBashFunction(v\:lnum) foldlevel=0

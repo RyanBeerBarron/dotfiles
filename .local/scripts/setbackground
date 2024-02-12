@@ -3,7 +3,6 @@
 function set_bg {
     local bg=$1
     local link=$2
-    echo "bg is $bg and link is $link"
     test -z "$bg" -o -z "$link" && exit 1
     feh --no-fehbg --bg-fill $bg
     ln --force $bg $link
@@ -12,7 +11,6 @@ function set_bg {
 wallpaper_dir=$HOME/dotfiles/img
 hardlink=$XDG_CACHE_HOME/fehbg
 test -r $hardlink && currentbg=$hardlink
-echo "currentbg is $currentbg"
 # Keeping the trailing new line for dmenu
 mapfile files < <(find $HOME/dotfiles/img -type f)
 
@@ -24,12 +22,12 @@ fi
 
 if test $1 != "next" && test $1 != "prev"
 then
-    if test -r $1
+    if test -r "$wallpaper_dir/$1"
     then
-        set_bg $1 $hardlink
+        set_bg "$wallpaper_dir/$1" $hardlink
         exit 0
     else
-        echo "Could not open/read $1" >&2
+        echo "Could not open/read $wallpaper_dir/$1" >&2
         exit 1
     fi
 fi
