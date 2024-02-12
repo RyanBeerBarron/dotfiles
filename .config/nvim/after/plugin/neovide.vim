@@ -49,7 +49,7 @@ if exists("g:neovide")
 
   nunmap <C-=>
   nunmap <C-->
-  nnoremap <C-=> <cmd>call <SID>changeScale(0.05)<cr>
-  nnoremap <C--> <cmd>call <SID>changeScale(-0.05)<cr>
+  nnoremap <C-=> <cmd>call <SID>changeScale(0.05)<cr><C-l>
+  nnoremap <C--> <cmd>call <SID>changeScale(-0.05)<cr><C-l>
 
 endif
