@@ -1,0 +1,3 @@
+#!/bin/sh
+
+$HOME/tools/lua-language-server-*/bin/lua-language-server "$@"
