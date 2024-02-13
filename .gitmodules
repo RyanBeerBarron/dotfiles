@@ -34,3 +34,6 @@
 [submodule "dotfiles/submodules/gf2"]
 	path = dotfiles/submodules/gf2
 	url = https://github.com/nakst/gf/
+[submodule "dotfiles/submodules/xcwd"]
+	path = dotfiles/submodules/xcwd
+	url = https://github.com/schischi/xcwd
