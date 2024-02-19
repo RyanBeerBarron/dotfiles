@@ -38,6 +38,7 @@ then
     if test -r ~/submodules/alacritty/extra/completions/alacritty.bash
         then source ~/submodules/alacritty/extra/completions/alacritty.bash
     fi
+    test -x /usr/local/bin/kubectl && eval "$(kubectl completion bash)"
     for FILE in $FUNCTION_HOME/*; do source "$FILE"; done
     __git_complete glca _git_log
     __git_complete gl_bb.bash _git_log
