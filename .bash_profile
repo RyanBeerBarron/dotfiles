@@ -30,6 +30,9 @@ export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
 export M2_HOME="$HOME/tools/"apache-maven-*
 export M2=$M2_HOME/bin
 
+# Node stuff
+export NODE_HOME=$HOME/.local/node/current
+
 # Postgres stuff
 export PSQLRC="$XDG_CONFIG_HOME/pg/psqlrc"
 export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
@@ -47,6 +50,7 @@ PATH="$HOME/.local/bin":$PATH
 PATH="$HOME/.local/scripts":$PATH
 PATH=$M2:$PATH
 PATH=$JAVA_HOME/bin:$PATH
+PATH=$NODE_HOME/bin:$PATH
 PATH=$PATH:/usr/games
 PATH=$PATH:/snap/bin
 export PATH
