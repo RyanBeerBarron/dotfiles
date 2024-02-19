@@ -11,17 +11,17 @@
     dog = log --decorate --oneline --graph
     # List untracked
     lu = ls-files --others --exclude-standard
-    # Branch list verbose ( sorted by date )
 	blv = branch --sort=committerdate --list -vv
     # Show conflicted files ( can be piped into nvim )
 	conflicts = diff --name-only --diff-filter=U --relative
-    lopm = log --oneline --merge --left-right 
     reword = "!f(){ git commit --fixup=reword:$1; }; f"
     lor = log --oneline --reverse
+	app = apply --reject --whitespace=fix
 [diff]
     colorMoved = default
     submodule = log
 	tool = nvimdiff
+	algorithm = histogram
 [interactive]
     difffilter = delta --color-only --syntax-theme=gruvbox-dark
 [delta]
@@ -42,3 +42,9 @@
 	prompt = false
 [difftool "nvimdiff"]
 	cmd = nvim -f -d -c \"wincmd l\" -c 'cd \"$GIT_PREFIX\"' \"$LOCAL\" \"$REMOTE\"
+[help]
+	autoCorrect = 10
+[url "git@github.com:"]
+    pushInsteadOf = "https://github.com/"
+[includeIf "gitdir:~/"]
+    path = "~/dotfiles/gitconfig"
