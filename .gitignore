@@ -1,6 +1,5 @@
 # Script to check if tracked files are not ignored:
-# dotfiles ls-tree -r HEAD | tr "\t" " " | cut -d" " -f4 | 
-# dotfiles check-ignore --no-index --stdin
+# git ls-tree --name-only -r HEAD | git check-ignore --no-index --stdin
 #
 # This will print every files tracked by git and then check if its ignored or not
 # Result printed out are files that are ignored. If a file is not ignored, there is not output
@@ -43,6 +42,15 @@ dotfiles/submodules/logs
 .config/monitors.xml
 .config/font-manager/
 .config/fontconfig/conf.d/
+.config/cef_user_data/
+.config/ideavim/
+.config/MongoDB\ Compass/
+.config/aws/
+.config/Slack/
+.config/gtk-3.0/bookmarks
+.config/.gsd-keyboard.settings-ported
+.config/gnome-initial-setup-done
+.config/.gsd-keyboard.settings-ported
 
 # .local whitelist
 !.local
