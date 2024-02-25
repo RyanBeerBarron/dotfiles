@@ -1,0 +1,57 @@
+#!/bin/bash
+
+help () {
+    echo "$(basename $0): change alacritty opacity"
+    echo "USAGE: $(basename $0) [-h] [opacity value]"
+}
+
+while test "$#" -gt 0
+do
+    case "$1" in
+        -h|--help)
+            help
+            exit 0
+            ;;
+        -?*)
+            echo "$(basename $0): error unknown option '$1'" >&2
+            help
+            exit 1
+            ;;
+        *)
+            break
+            ;;
+    esac
+    shift
+done
+# Change opacity of Alacritty
+alacritty_localconfig=$XDG_CONFIG_HOME/alacritty/local.toml
+if test -z "$1"
+then
+    echo "Press '+' to increase opacity, '-' to reduce or 'q' to quit."
+    opacity=""
+    while true
+    do
+        # read first characters without delimiter or newline, silently (does not echo back to terminal)
+        read -sn 1 input
+        opacity=$(sed -En "/opacity/s/.*([[:digit:]]+\.[[:digit:]]+)/\1/p" $alacritty_localconfig)
+        nextval=""
+        case "$input" in
+            +)
+                nextval=$(echo "$opacity + 0.05" | bc | sed 's/^\./0./')
+                ;;
+            -)
+                nextval=$(echo "$opacity - 0.05" | bc | sed 's/^\./0./')
+                ;;
+            q)
+                echo "new opacity value is: $opacity"
+                exit 0;
+                ;;
+            *)
+                nextval=$opacity
+                ;;
+        esac
+        sed -i "/opacity/s/.*/opacity = $nextval/" $alacritty_localconfig;
+    done
+else
+    sed -i "/opacity/s/.*/opacity = $1/" $alacritty_localconfig;
+fi

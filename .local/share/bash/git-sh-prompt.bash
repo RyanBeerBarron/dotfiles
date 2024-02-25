@@ -231,7 +231,7 @@ __git_ps1_show_upstream ()
 	fi
 
 }
-export -f __git_ps1_show_upstream 
+# export -f __git_ps1_show_upstream
 
 # Helper function that is meant to be called from __git_ps1.  It
 # injects color codes into the appropriate gitstring variables used
@@ -278,7 +278,7 @@ __git_ps1_colorize_gitstring ()
 	fi
 	r="$c_clear$r"
 }
-export -f __git_ps1_colorize_gitstring 
+# export -f __git_ps1_colorize_gitstring
 
 # Helper function to read the first line of a file into a variable.
 # __git_eread requires 2 arguments, the file path and the name of the
@@ -287,7 +287,7 @@ __git_eread ()
 {
 	test -r "$1" && IFS=$'\r\n' read "$2" <"$1"
 }
-export -f __git_eread
+# export -f __git_eread
 
 # see if a cherry-pick or revert is in progress, if the user has committed a
 # conflict resolution with 'git commit' in the middle of a sequence of picks or
@@ -319,7 +319,7 @@ __git_sequencer_status ()
 	fi
 	return 1
 }
-export -f __git_sequencer_status 
+# export -f __git_sequencer_status
 
 # __git_ps1 accepts 0 or 1 arguments (i.e., format string)
 # when called from PS1 using command substitution
@@ -566,4 +566,4 @@ __git_ps1 ()
 
 	return $exit
 }
-export -f __git_ps1 
+# export -f __git_ps1

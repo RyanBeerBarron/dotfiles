@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# Java version manager
+help () {
+    echo "Java Version Manager"
+    echo "Usage: $(basename \"$0\") [-h | --help]"
+    echo "   or: $(basename \"$0\") [-h | --help] (-l|--list)"
+    echo "   or: $(basename \"$0\") [-h | --help] <version_number>"
+    echo ""
+    echo "      With no arguments, print the current java version"
+    echo "      -l, --list: print the installed java versions"
+    echo "      <version_number>: Will create a symlink to this version of the jdk"
+}
+jdks_path="$HOME/.local/jdks"
+while test "$#" -gt 0
+do
+    case "$1" in
+        -l|--list)
+            cd "$jdks_path"
+            echo jdk-*
+            exit 0
+            ;;
+        -h|--help)
+            help
+            ;;
+        [1-2][0-9])
+            ln -fs "$jdks_path/jdk-$1" "$jdks_path/current"
+            exit 0
+            ;;
+        *)
+            echo "Unknown paramater $1" >&2
+            help
+            exit 1
+            ;;
+    esac
+    shift
+done
+java --version

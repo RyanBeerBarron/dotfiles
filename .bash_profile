@@ -13,7 +13,7 @@ export HISTFILE="$XDG_STATE_HOME/bash/history"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 export LESS="FgMrRS j.25 --mouse"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/pythonstartup.py"
-export FUNCTION_HOME=$XDG_DATA_HOME/bash
+export BASH_LIBRARY_PATH=$XDG_DATA_HOME/bash
 export ALACRITTY_CONFIG="$XDG_CONFIG_HOME/alacritty/alacritty.toml"
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 
@@ -64,7 +64,7 @@ export PATH
 
 # include .bashrc if it exists
 if [ -f "$HOME/.bashrc" ]
-    then source "$HOME/.bashrc" 
+    then source "$HOME/.bashrc"
 fi
 
 # vim: foldmethod=marker

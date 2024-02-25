@@ -1,6 +1,3 @@
-. $XDG_DATA_HOME/sh/man-pattern.sh
-. $XDG_DATA_HOME/sh/ANSI.sh
-
 function ll {
     ls -lh --color "$@" | pretty_ll
 }
@@ -54,47 +51,6 @@ function chcolor {
     fi
 }
 
-function start-session {
-    echo "starting session...";
-    local TMPFILE=$(mktemp /tmp/start-session.script.XXXXXX);
-    local DIR=""
-    for DIR in $HOME/Work/* ; do
-        for REPO in $(find $DIR -maxdepth 1 -type d); do
-            if git -C "$REPO" rev-parse 2> /dev/null; then
-                git -C "$REPO" worktree list | cut -d" " -f1 >> $TMPFILE 2> /dev/null;
-            else
-                echo "$REPO" >> $TMPFILE 2> /dev/null
-            fi
-        done;
-    done;
-    echo $HOME >> $TMPFILE;
-    TMUX_DIR=$(sort $TMPFILE | uniq | fzf );
-    if test -z "$TMUX_DIR"; then
-        printf "No directory chosen, creating no session. Exiting...\n";
-        return;
-    fi;
-    SESSION_NAME=$(basename $TMUX_DIR 2> /dev/null );
-    create-session $SESSION_NAME $TMUX_DIR
-}
-
-function create-session {
-    if test -z "$1"; then
-        >2& printf "error, missing arguments, need session name and directory\n";
-        return 1;
-    fi
-    if [ '' = "$TMUX" ]; then
-        tmux new -A -s $1 -c $2;
-    else
-        tmux new -A -s $1 -c $2 -d &> /dev/null;
-        tmux switch-client -t $1 &> /dev/null;
-    fi
-}
-
-function start-session-here {
-    echo "starting session here";
-    create-session $(basename $PWD) $PWD;
-}
-
 function glca {
     if [ $# -eq 1 ]
     then
@@ -115,85 +71,9 @@ function git-find-parent-branch {
         sed "s/^.*\[//"
 }
 
-function opacity {
-   # Change opacity of Alacritty
-    local alacritty_localconfig=$XDG_CONFIG_HOME/alacritty/local.toml
-    if test -z "$1"; then
-        echo "Press '+' to increase opacity, '-' to reduce or 'q' to quit."
-        local opacity=""
-        while true
-        do
-            # read first characters without delimiter or newline, silently (does not echo back to terminal)
-            read -sn 1 input
-            local opacity=$(sed -En "/opacity/s/.*([[:digit:]]+\.[[:digit:]]+)/\1/p" $alacritty_localconfig)
-            local nextval=""
-            case "$input" in
-                +)
-                    nextval=$(echo "$opacity + 0.05" | bc | sed 's/^\./0./')
-                    ;;
-                -)
-                    nextval=$(echo "$opacity - 0.05" | bc | sed 's/^\./0./')
-                    ;;
-                q)
-		    echo "new opacity value is: $opacity"
-                    return 0;
-                    ;;
-                *)
-                    # keep next value the same as current
-                    nextval=$opacity
-                    ;;
-            esac
-            sed -i "/opacity/s/.*/opacity = $nextval/" $alacritty_localconfig;
-        done
-    else
-        sed -i "/opacity/s/.*/opacity = $1/" $alacritty_localconfig;
-    fi
-}
-
-function abs_path {
-    echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
-}
-
-function lf {
-# Last field
-    local USAGE="  
-    lf - Last field
-    File input needs to come from stdin, usually from a pipe
-    Usage:
-        lf <delimiter>
-    "
-    # First argument should be a single char since it is passed to `cut`
-    if test ${#1} -ne 1; then
-        printf "$USAGE"
-        return 1;
-    fi
-    rev | cut -d"$1" -f1 | rev
-}
-
-function conf {
-    if test "$1" == "bash"; then
-        $EDITOR $HOME/.bashrc $HOME/.bash_profile $HOME/.bash_logout
-    elif test "$1" == "ssh"; then
-        $EDITOR $HOME/.ssh/config
-    elif test "$1" == "dwm"; then
-        nvim $HOME/submodules/dwm/config.h
-    else
-        $EDITOR "$XDG_CONFIG_HOME/$1/"
-    fi
-}
-
-function _conf_comp {
-    # auto complete for directories ("^d") and using last field which is the directory itself
-    local conf_dirs=$(ls -l "$XDG_CONFIG_HOME/" | grep "^d" | lf " ")
-    conf_dirs+=" ssh"
-    conf_dirs+=" bash"
-    conf_dirs+=" dwm"
-    COMPREPLY=($(compgen -W "${conf_dirs[*]}" -- $2))
-}
-
 function fn {
     if test -z $1; then
-        nvim $FUNCTION_HOME
+        nvim $BASH_LIBRARY_PATH
     elif test -x "$HOME/.local/scripts/$1"; then
         nvim "$HOME/.local/scripts/$1"
     else
@@ -202,12 +82,10 @@ function fn {
         # and passing it to neovim.
         # Neovim accepts a line number prefixed with '+' and will open the file at the line number
         # The parameter expansion uses '%' to remove a suffix, which matches the pattern ':*'
-        local STRING=$(grep -n "^function $1" $FUNCTION_HOME/lib.bash);
-        nvim $FUNCTION_HOME/lib.bash  +${STRING%:*} -c "foldopen" -c "normal zz"
+        local STRING=$(grep -n "^function $1" $BASH_LIBRARY_PATH/lib.bash);
+        nvim $BASH_LIBRARY_PATH/lib.bash  +${STRING%:*} -c "foldopen" -c "normal zz"
     fi
 }
-
-
 
 function vis {
     sed -e "s/ /^S/g" -e "s/\t/^T/g" -e "s/\n/^N/g"
@@ -251,30 +129,12 @@ function trim {
     sed "s/^[[:space:]]*\([[:graph:]].*[[:graph:]]\)[[:space:]]*$/\1/"
 }
 
-function jvm {
-# Java version manager
-    local USAGE="
-    java version manager
-      usage: jvm [version_number]
-      Print current versions available on the path if version_number is not specified
-      Otherwise will replace current jdk on the path to the one specified
-      "
-    if test -z $1; then
-        grep -o "jdk-.." <<< $PATH
-    elif test "$1" = "-h"; then
-        echo "$USAGE"
-    elif test $1 -gt 0; then
-        export PATH=${PATH/jdk-??/jdk-$1}
-        export JAVA_HOME=${JAVA_HOME/jdk-??/jdk-$1}
-    fi
-}
-
 function dotfiles_sync {
     # `diff HEAD` checks in worktree and index for any uncommitted changes
     # `diff @{u}...HEAD` checks for any difference between upstream/remote and HEAD,
     # i.e. if there is any unpushed commits
     # They return 0 if there are no differences
-    if ! (dot diff --quiet HEAD && dot diff --quiet @{u}...HEAD); then
+    if ! (git -C $HOME diff --quiet HEAD && git -C $HOME diff --quiet @{u}...HEAD); then
         echo "Dotfiles repository is not clean, do you still wish to logout? [y/n]"
         read -p "> " ANS
         case $ANS in
@@ -322,25 +182,19 @@ function shutdown {
     command shutdown $@
 }
 
-function environ {
-    cat /proc/$1/environ | tr '\0' '\n'
-}
+comp_list_conf=$(find "$XDG_CONFIG_HOME" -maxdepth 1 -type d -exec basename {} \; ; echo "ssh bash dwm")
+comp_list_fn=$(declare -F | cut -d" " -f3 | grep -v "^_.\+$"; find $HOME/.local/scripts/ -executable -type f -exec basename {} \;)
+comp_list_setbackground=$(find $HOME/dotfiles/img -type f -exec basename {} \; ; echo "next"; echo "prev")
 
-function _rl_paste {
-    clipboard=$(xclip -o -sel clipboard)
-    let length=${#clipboard}
-    READLINE_LINE="${READLINE_LINE}${clipboard}"
-    let READLINE_POINT=READLINE_POINT+length
-}
+complete -W "$comp_list_conf" conf
+complete -W "$comp_list_fn" fn
+complete -W "$comp_list_setbackground" setbackground
 
-__fn_comp_list=$(declare -F | cut -d" " -f3 | grep -v "^_.\+$"; find $HOME/.local/scripts/ -executable -type f -exec basename {} \;)
-__setbackground_comp_list=$(find $HOME/dotfiles/img -type f -exec basename {} \; ; echo "next"; echo "prev")
 complete -W "list $(cut -d";" -f1 "${XDG_CONFIG_HOME:-$HOME/.config/}/themes")" chcolor
-complete -F _conf_comp conf
-complete -W "$__fn_comp_list" fn
+
 complete -F _tmux-help_completion tmux-help
 complete -F _tmux-option_completion tmux-option
-complete -W "$__setbackground_comp_list" setbackground
-export -f trim
 
+__git_complete glca _git_log
+__git_complete gl_bb.bash _git_log
 # vim: ft=bash foldexpr=FoldBashFunction(v\:lnum) foldlevel=0

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+case "$1" in
+    bash)
+        $EDITOR $HOME/.bashrc $HOME/.bash_profile $HOME/.bash_logout ;;
+    ssh)
+        $EDITOR $HOME/.ssh/config ;;
+    dwm)
+        $EDITOR $HOME/submodules/dwm/config.h ;;
+    *)
+        $EDITOR "$XDG_CONFIG_HOME/$1/" ;;
+esac
