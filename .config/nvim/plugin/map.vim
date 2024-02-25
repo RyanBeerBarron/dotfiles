@@ -1,24 +1,31 @@
 " Normal mode mappings
-nnoremap <C-e> <Cmd>edit .<CR>
 nnoremap [[  ?{<CR>w99[{
 nnoremap ]]  j0[[%/{<CR>
 nnoremap ][  /}<CR>b99]}
 nnoremap []  k$][%?}<CR>
-nnoremap <C-b> <cmd>tag<cr>
-nnoremap <F1> <cmd>cprev<cr>
-nnoremap <F2> <cmd>cnext<cr>
-nnoremap <F3> <cmd>lprev<cr>
-nnoremap <F4> <cmd>lnext<cr>
-nnoremap <C-j> <cmd>bprevious<cr>
-nnoremap <C-k> <cmd>bnext<cr>
+nnoremap q: <nop>
 nnoremap <S-j> j
+nnoremap <M-,> <cmd>pop<cr>
+nnoremap <M-.> <cmd>tag<cr>
+nnoremap <C-x><C-x> <cmd>call RunInTerm()<cr>
+nnoremap <space>rn :<cmd>call <SID>rename()<cr>
+
+function s:rename()
+    let word = expand("<cword>")
+    let prefix = "%s/\\<" .. word .. "\\>/"
+    let suffix = "/g"
+    let prefix_len = len(prefix)
+    call setcmdline(prefix .. suffix, prefix_len+1)
+endfunction
 
 " Normal mode mappings with leader key
-nnoremap <leader>f <Cmd>execute \"find\" expand(\"<cword>\")<CR>
 nnoremap <leader>p "+p
 nnoremap <leader>P "+P
 nnoremap <leader>y "+y
 nnoremap <leader>Y "+Y
+nnoremap <leader>D "+D
+nnoremap <leader>dd "+dd
+nnoremap <leader>e <Cmd>Explore<CR><CR>
 
 " Normal mode mappings for tab, to mimic Ctrl-w mapping for windows
 nnoremap <C-t>n <cmd>tabnew<cr>
@@ -26,12 +33,9 @@ nnoremap <C-t>c <cmd>tabclose<cr>
 
 " Normal mode mappings starting with ','
 nnoremap ,bd <cmd>bdel<cr>
-nnoremap ,cc <cmd>cclose<cr>
 
 " Insert mode mapping
 inoremap {<cr> {<cr>}<ESC>O
-inoremap <C-p> <Up>
-inoremap <C-n> <Down>
 imap <C-Space> <Nop>
 
 " Visual mode mappings
@@ -42,5 +46,6 @@ vnoremap <S-k> k
 vnoremap <leader>p "+p
 vnoremap <leader>P "+P
 vnoremap <leader>y "+y
+vnoremap <leader>d "+d
 
 cnoremap <C-x> <C-a>

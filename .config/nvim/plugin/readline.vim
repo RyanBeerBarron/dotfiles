@@ -129,11 +129,11 @@ inoremap <C-B> <Left>
 inoremap <M-f> <C-o>e<Right>
 inoremap <M-b> <S-Left>
 inoremap <C-A> <Home>
-inoremap <C-E> <End>
+inoremap <expr> <C-E> pumvisible()?"<C-E>":"<End>"
 inoremap <C-D> <Del>
 "inoremap <C-h> backward-delete-char is a Vim default
 inoremap <M-d> <cmd>call <SID>InsertKillWord()<cr>
 inoremap <C-w> <cmd>call <SID>InsertBackwardKillWord()<cr>
 inoremap <C-k> <cmd>call <SID>InsertKillLine()<cr>
 inoremap <C-u> <cmd>call <SID>InsertBackwardKillLine()<cr>
-inoremap <C-y> <C-R>"
+inoremap <expr> <C-y> pumvisible()?"<C-y>":"<C-R>\""

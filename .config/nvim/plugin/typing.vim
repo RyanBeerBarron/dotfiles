@@ -19,13 +19,6 @@ function s:matchQuote(quote)
     endif
 endfunction
 
-function s:cleverTab()
-	   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-	      return "\<Tab>"
-	   else
-	      return "\<C-N>"
-	   endif
-endfunction
 
 inoremap { {}<Left>
 inoremap [ []<Left>
@@ -37,7 +30,8 @@ inoremap <silent> ] <C-R>=<SID>matchBracket("]")<cr>
 inoremap <silent> ' <C-R>=<SID>matchQuote("'")<cr>
 inoremap <silent> " <C-R>=<SID>matchQuote("\"")<cr>
 
-inoremap <silent> <Tab> <C-R>=<SID>cleverTab()<CR>
 
 cnoremap <expr> <C-p> pumvisible()?"<C-p>":"<Up>"
 cnoremap <expr> <C-n> pumvisible()?"<C-n>":"<Down>"
+cnoremap <expr> <C-b> pumvisible()?"<Up>":"<Left>"
+cnoremap <expr> <C-f> pumvisible()?"<Down>":"<Right>"

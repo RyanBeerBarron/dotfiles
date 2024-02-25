@@ -6,17 +6,18 @@ set cmdwinheight=12
 set concealcursor=
 set conceallevel=0
 set cursorcolumn
+set completeopt=menu
 set cursorline
 set expandtab
 set foldclose&
-set foldcolumn=4
+set foldcolumn=0
 set foldexpr=FoldParagraphs(v\:lnum)
 set foldlevel=2
 set foldmethod=expr
 set guifont=CaskaydiaCove\ Nerd\ Font:h16
 "set guifont=IosevkaTerm\ Nerd\ Font:h16
 set incsearch
-set laststatus=3
+set laststatus=2
 set linebreak
 set list
 set listchars=tab:󰌒\ \ ,eol:↲,trail:.,extends:<,precedes:>,nbsp:␣
@@ -25,17 +26,20 @@ set modelineexpr
 set noshowmode
 set nowrap
 set number
-set path+=**
-set path+=/usr/include/x86_64-linux-gnu
+set path=.,,**
 set scrolloff=8
 set shiftwidth=4
 set showmatch
+set signcolumn=number
 set smartindent
 set softtabstop=4
+set spell
+set spelllang=en,fr
 set tabstop=4
 set tildeop
 set wildignore+=*.class
 set wildignore+=**/target/**
+set wildoptions=fuzzy,pum,tagfile
 
 "netrw settings
 let g:netrw_banner=0
