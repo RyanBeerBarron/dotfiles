@@ -182,13 +182,22 @@ function shutdown {
     command shutdown $@
 }
 
-comp_list_conf=$(find "$XDG_CONFIG_HOME" -maxdepth 1 -type d -exec basename {} \; ; echo "ssh bash dwm")
-comp_list_fn=$(declare -F | cut -d" " -f3 | grep -v "^_.\+$"; find $HOME/.local/scripts/ -executable -type f -exec basename {} \;)
-comp_list_setbackground=$(find $HOME/dotfiles/img -type f -exec basename {} \; ; echo "next"; echo "prev")
+function rl-fzf-git-files {
+    file=$(git ls-files-root | fzf-popup-pipe)
+    let length=${#file}
+    READLINE_LINE="${READLINE_LINE}${file}"
+    let READLINE_POINT=READLINE_POINT+length
+}
 
-complete -W "$comp_list_conf" conf
-complete -W "$comp_list_fn" fn
-complete -W "$comp_list_setbackground" setbackground
+function rl-fzf-git-tree {
+    local directory=$(git ls-tree-root -dr --name-only HEAD | fzf-popup-pipe)
+    test "$directory" && cd "$(git rev-parse --show-toplevel)/$directory"
+}
+
+function rl-fzf-dir {
+    local directory=$(find -maxdepth 5 -type d | fzf-popup-pipe)
+    test "$directory" && cd "$directory"
+}
 
 function cd {
     command cd "$@";
@@ -197,6 +206,15 @@ function cd {
         jumplist_push
     fi
 }
+
+comp_list_conf=$(find "$XDG_CONFIG_HOME" -maxdepth 1 -type d -exec basename {} \; ; echo "ssh bash dwm")
+comp_list_fn=$(declare -F | cut -d" " -f3 | grep -v "^_.\+$"; find $HOME/.local/scripts/ -executable -type f -exec basename {} \;)
+comp_list_setbackground=$(find $HOME/dotfiles/img -type f -exec basename {} \; ; echo "next"; echo "prev")
+
+complete -W "$comp_list_conf" conf
+complete -W "$comp_list_fn" fn
+complete -W "$comp_list_setbackground" setbackground
+
 complete -W "list $(cut -d";" -f1 "${XDG_CONFIG_HOME:-$HOME/.config/}/themes")" chcolor
 
 complete -F _tmux-help_completion tmux-help

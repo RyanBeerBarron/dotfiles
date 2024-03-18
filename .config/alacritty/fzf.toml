@@ -1,0 +1,16 @@
+import = [
+	"~/.config/alacritty/alacritty.toml"
+]
+
+[window]
+title = "Alacritty"
+startup_mode = "Windowed"
+decorations = "None"
+
+[window.dimensions]
+columns = 50
+lines = 20
+
+[window.padding]
+x = 10
+y = 20

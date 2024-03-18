@@ -1,0 +1,19 @@
+#!/bin/sh
+
+output_pipe="$XDG_RUNTIME_DIR/fzf-popup-output.pipe"
+input_pipe="$XDG_RUNTIME_DIR/fzf-popup-input.pipe"
+cmd="fzf --multi --bind=ctrl-r:select-all+accept $@ < $input_pipe > $output_pipe"
+
+test -p "$output_pipe" || mkfifo "$output_pipe"
+test -p "$input_pipe"  || mkfifo "$input_pipe"
+
+if test "$TMUX"
+then
+    tmux display-popup -E -d $PWD "$cmd" &
+else
+    alacritty --config-file $XDG_CONFIG_HOME/alacritty/fzf.toml -e sh -c "$cmd" &
+fi
+cat < $output_pipe &
+output_pid=$!
+cat > $input_pipe
+wait $output_pid

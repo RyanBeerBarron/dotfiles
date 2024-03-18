@@ -20,6 +20,8 @@
     pushf = push --force-with-lease
     goners = "!f(){ git for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads | awk '$2 ~ /gone/ { print $1 }' | xargs git branch -D  ; }; f"
     logenv = log --graph --oneline master dev origin/master origin/dev
+    ls-files-root = !git ls-files
+    ls-tree-root = !git ls-tree
 [diff]
     colorMoved = default
     submodule = log

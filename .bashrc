@@ -140,6 +140,16 @@ then
 
     bind -m vi -x '"\er": source $HOME/.bashrc; echo reloaded!'
     bind -m vi-insert -x '"\er": source $HOME/.bashrc; echo reloaded!'
+
+    bind -m vi -x '"\C-jf": rl-fzf-git-files'
+    bind -m vi-insert -x '"\C-jf": rl-fzf-git-files'
+
+    bind -m vi-insert -x '"\C-jd": rl-fzf-dir'
+
+    bind -m vi-insert -x '"\C-j\C-d": rl-fzf-git-tree'
+
+    bind -m vi '"\C-je": nvim $(fzf-git-files)'
+    bind -m vi-insert -x '"\C-je": nvim $(git ls-files-root | fzf-popup-pipe)'
     # }}}
 
     # Shell/Term options {{{
