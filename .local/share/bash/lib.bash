@@ -190,6 +190,13 @@ complete -W "$comp_list_conf" conf
 complete -W "$comp_list_fn" fn
 complete -W "$comp_list_setbackground" setbackground
 
+function cd {
+    command cd "$@";
+    if test "$PWD" != "$OLDPWD"
+    then
+        jumplist_push
+    fi
+}
 complete -W "list $(cut -d";" -f1 "${XDG_CONFIG_HOME:-$HOME/.config/}/themes")" chcolor
 
 complete -F _tmux-help_completion tmux-help

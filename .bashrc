@@ -103,8 +103,8 @@ then
         # PS1_pattern+=("-t" "$timer_show")
         PS1_pattern+=("-c" "$exit_code")
         export PS1=$(prompt "${PS1_pattern[@]@P}")
-        # echo "stoping timer"
         unset timer_start
+        jumplist_unset_vars
     }
 
     trap 'timer_start' DEBUG
@@ -119,11 +119,14 @@ then
     # no matter whats already written in the current line
     # With readline, you'd have to resort to simply outputting the macro
     # to clear the line, type in the command, and enter
+    bind -m vi-insert -x '"\C-o": jumplist_back'
+    bind -m vi -x '"\C-o": jumplist_back'
+
+    bind -m vi-insert -x '"\C-t": jumplist_forward'
+    bind -m vi -x '"\C-t": jumplist_forward'
 
     bind -m vi -x '"\er": source $HOME/.bashrc; echo reloaded!'
     bind -m vi-insert -x '"\er": source $HOME/.bashrc; echo reloaded!'
-
-
     # }}}
 
     # Shell/Term options {{{
