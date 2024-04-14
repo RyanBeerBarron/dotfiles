@@ -2,20 +2,6 @@ import = [
 	"~/.config/alacritty/kanagawa.toml",
     "~/.config/alacritty/local.toml"
 ]
-[font]
-[font.bold]
-family = "IosevkaTerm Nerd Font"
-style = "Bold"
-
-[font.italic]
-family = "IosevkaTerm Nerd Font"
-style = "Italic"
-
-[font.normal]
-family = "IosevkaTerm Nerd Font"
-style = "Regular"
-
-
 [scrolling]
 history = 5000
 
@@ -26,3 +12,9 @@ startup_mode = "Windowed"
 [window.padding]
 x = 1
 y = 0
+
+[keyboard]
+bindings = [
+    { key = ",", mods = "Control", command = {program = "fonts", args = [ "prev" ]}},
+    { key = ".", mods = "Control", command = {program = "fonts", args = [ "next" ]}}
+]

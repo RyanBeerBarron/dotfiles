@@ -1,0 +1,57 @@
+#!/usr/bin/python3
+
+import os
+import re
+import sys
+
+def get_nth_key(dictionary, n=0):
+    if n < 0:
+        n += len(dictionary)
+    for i, key in enumerate(dictionary.keys()):
+        if i == n:
+            return key
+    raise IndexError("dictionary index out of range")
+
+fonts = {
+    "CaskaydiaCove Nerd Font": 17.0,
+    "IosevkaTerm Nerd Font": 18.0,
+    "JetBrainsMono Nerd Font": 16.0,
+    "ProFont IIx Nerd Font": 15.0,
+    "FiraCode Nerd Font": 17.0,
+}
+length = len(fonts)
+
+alacritty_path = f'{os.environ["XDG_CONFIG_HOME"]}/alacritty/local.toml'
+file = open(alacritty_path, mode="rt")
+content = file.read()
+file.close()
+result = re.search('^family = "(.*)"$', content, re.MULTILINE)
+if result is None:
+    print(f'Did not find any current font_name in file {file.name}', file=sys.stderr)
+    exit(1)
+
+font_name = result[1]
+if not font_name in fonts:
+    print(f'Current font {font_name} is unknown', file=sys.stderr)
+    exit(1)
+if len(sys.argv) == 1:
+    print(font_name)
+    exit(0)
+
+index = list(fonts).index(font_name)
+arg = sys.argv[1]
+if "next" in arg.lower():
+    index += 1
+    if index >= length:
+        index = 0
+
+if "prev" in arg.lower():
+    index -= 1
+    if index < 0:
+        index = length-1
+new_font = get_nth_key(fonts, index)
+print(new_font)
+content = re.sub(r'^family .*$', f'family = "{new_font}"', content, count=0, flags=re.MULTILINE)
+content = re.sub(r'^size .*$', f'size = {fonts[new_font]}', content, count=0, flags=re.MULTILINE)
+file = open(alacritty_path, mode="wt")
+file.write(content)
