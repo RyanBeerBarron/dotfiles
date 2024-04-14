@@ -1,7 +1,7 @@
 "basic settings
 set autowrite
 set backupext=.bak
-set cmdheight=1
+set cmdheight=0
 set cmdwinheight=12
 set concealcursor=
 set conceallevel=0
@@ -17,20 +17,20 @@ set foldmethod=expr
 set guifont=CaskaydiaCove\ Nerd\ Font:h16
 "set guifont=IosevkaTerm\ Nerd\ Font:h16
 set incsearch
-set laststatus=2
 set linebreak
 set list
 set listchars=tab:󰌒\ \ ,eol:↲,trail:.,extends:<,precedes:>,nbsp:␣
 set matchtime=1
 set modelineexpr
+set nonumber
+set noruler
 set noshowmode
 set nowrap
-set number
 set path=.,,**
 set scrolloff=8
 set shiftwidth=4
 set showmatch
-set signcolumn=number
+set signcolumn=no
 set smartindent
 set softtabstop=4
 set spell
