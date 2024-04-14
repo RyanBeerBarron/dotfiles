@@ -5,9 +5,9 @@ set cmdheight=0
 set cmdwinheight=12
 set concealcursor=
 set conceallevel=0
-set cursorcolumn
 set completeopt=menu
-set cursorline
+set nocursorcolumn
+set nocursorline
 set expandtab
 set foldclose&
 set foldcolumn=0
