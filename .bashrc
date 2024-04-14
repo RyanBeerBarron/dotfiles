@@ -1,3 +1,4 @@
+# vim: ft=bash foldmethod=marker foldlevel=0
 # Testing for PS1 to check if this is an interactive shell
 # In case of a SSH connection, a non-login, non-interactive shell
 # might still source .bashrc but not .bash_profile.
@@ -43,15 +44,11 @@ then
     # }}}
 
     # Sourcing bash/sh functions and setting completions {{{
-    if test -r /usr/share/bash-completion/bash_completion
-        then source /usr/share/bash-completion/bash_completion
-    fi
-    source /usr/share/bash-completion/completions/git
-    if test -r ~/submodules/alacritty/extra/completions/alacritty.bash
-        then source ~/submodules/alacritty/extra/completions/alacritty.bash
-    fi
+    test -r /usr/share/bash-completion/bash_completion && source /usr/share/bash-completion/bash_completion
+    test -r /usr/share/bash-completion/completions/git && source /usr/share/bash-completion/completions/git
+    test -r ~/submodules/alacritty/extra/completions/alacritty.bash && source ~/submodules/alacritty/extra/completions/alacritty.bash
     test -x /usr/local/bin/kubectl && eval "$(kubectl completion bash)"
-    for file in $BASH_LIBRARY_PATH/*; do source "$FILE"; done
+    for file in $BASH_LIBRARY_PATH/*; do source "$file"; done
     # }}}
 
     # Timer functions {{{
@@ -133,25 +130,19 @@ then
     # With readline, you'd have to resort to simply outputting the macro
     # to clear the line, type in the command, and enter
     bind -m vi-insert -x '"\C-o": jumplist_back'
-    bind -m vi -x '"\C-o": jumplist_back'
 
     bind -m vi-insert -x '"\C-t": jumplist_forward'
-    bind -m vi -x '"\C-t": jumplist_forward'
 
-    bind -m vi -x '"\er": source $HOME/.bashrc; echo reloaded!'
     bind -m vi-insert -x '"\er": source $HOME/.bashrc; echo reloaded!'
 
-    bind -m vi -x '"\e\C-dp": docker ps -a --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.CreatedAt}}\t{{.Status}}"'
     bind -m vi-insert -x '"\e\C-dp": docker ps -a --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.CreatedAt}}\t{{.Status}}"'
 
-    bind -m vi -x '"\C-jf": rl-fzf-git-files'
     bind -m vi-insert -x '"\C-jf": rl-fzf-git-files'
 
     bind -m vi-insert -x '"\C-jd": rl-fzf-dir'
 
     bind -m vi-insert -x '"\C-j\C-d": rl-fzf-git-tree'
 
-    bind -m vi '"\C-je": nvim $(fzf-git-files)'
     bind -m vi-insert -x '"\C-je": nvim $(git ls-files-root | fzf-popup-pipe)'
     # }}}
 
@@ -175,4 +166,3 @@ then
     stty -ixon
     # }}}
 fi
-# vim: ft=bash foldmethod=marker foldlevel=0
