@@ -1,4 +1,5 @@
 local Hydra = require'hydra'
+local colors = require'colors'
 local utils = require'utils'
 
 Hydra({
@@ -36,3 +37,7 @@ utils.createHydra( { name = "Quickfix", key = "q", next = "cnext", prev = "cprev
 utils.createHydra( { name = "Location", key = "l", next = "lnext", prev = "lprev" } )
 utils.createHydra( { name = "Tags", key = "g", next = "tag", prev = "pop" } )
 utils.createHydra( { name = "Marks", key = "m", next = "lua require'marks'.next()", prev = "lua require'marks'.prev()", del = "lua require'marks'.delete_line()"})
+utils.createHydra( { name = "Colorscheme", key = "c", next = "Colornext", prev = "Colorprev" })
+
+vim.api.nvim_create_user_command("Colornext", colors.color_next, {})
+vim.api.nvim_create_user_command("Colorprev", colors.color_prev, {})
