@@ -7,28 +7,31 @@
     default = upstream
     autoSetupRemote = true
 [alias]
-    adog = log --all --decorate --oneline --graph
+    adog = log --exclude=refs/remotes/origin/dependabot/* --all --decorate --oneline --graph
     dog = log --decorate --oneline --graph
     # List untracked
     lu = ls-files --others --exclude-standard
-	blv = branch --sort=committerdate --list -vv
+    blv = branch --sort=committerdate --list -vv
     # Show conflicted files ( can be piped into nvim )
-	conflicts = diff --name-only --diff-filter=U --relative
+    conflicts = diff --name-only --diff-filter=U --relative
     reword = "!f(){ git commit --fixup=reword:$1; }; f"
     lor = log --oneline --reverse
-	app = apply --reject --whitespace=fix
+    app = apply --reject --whitespace=fix
+    pushf = push --force-with-lease
+    goners = "!f(){ git for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads | awk '$2 ~ /gone/ { print $1 }' | xargs git branch -D  ; }; f"
+    logenv = log --graph --oneline master dev origin/master origin/dev
 [diff]
     colorMoved = default
     submodule = log
-	tool = nvimdiff
-	algorithm = histogram
+    tool = nvimdiff
+    algorithm = histogram
 [interactive]
     difffilter = delta --color-only --syntax-theme=gruvbox-dark
 [delta]
     navigate = true
     features = my_feature
 [commit]
-	verbose = true
+    verbose = true
 [status]
     submodulesummary = 1
 [rerere]
@@ -37,13 +40,13 @@
 [rebase]
     autosquash = true
 [init]
-	defaultBranch = master
+    defaultBranch = master
 [difftool]
-	prompt = false
+    prompt = false
 [difftool "nvimdiff"]
-	cmd = nvim -f -d -c \"wincmd l\" -c 'cd \"$GIT_PREFIX\"' \"$LOCAL\" \"$REMOTE\"
+    cmd = nvim -f -d -c \"wincmd l\" -c 'cd \"$GIT_PREFIX\"' \"$LOCAL\" \"$REMOTE\"
 [help]
-	autoCorrect = 10
+    autoCorrect = 10
 [url "git@github.com:"]
     pushInsteadOf = "https://github.com/"
 [includeIf "gitdir:~/*"]
