@@ -1,3 +1,14 @@
+require('tabline').setup({
+    no_name = '[No Name]',
+    modified_icon = '',
+    close_icon = '',
+    separator = "▌",
+    padding = 3,
+    color_all_icons = false,
+    right_separator = false,
+    show_index = false,
+    show_icon = true,
+})
 require('kanagawa').setup({
     undercurl = false,
 })
