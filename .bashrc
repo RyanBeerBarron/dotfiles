@@ -141,6 +141,9 @@ then
     bind -m vi -x '"\er": source $HOME/.bashrc; echo reloaded!'
     bind -m vi-insert -x '"\er": source $HOME/.bashrc; echo reloaded!'
 
+    bind -m vi -x '"\e\C-dp": docker ps -a --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.CreatedAt}}\t{{.Status}}"'
+    bind -m vi-insert -x '"\e\C-dp": docker ps -a --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.CreatedAt}}\t{{.Status}}"'
+
     bind -m vi -x '"\C-jf": rl-fzf-git-files'
     bind -m vi-insert -x '"\C-jf": rl-fzf-git-files'
 
