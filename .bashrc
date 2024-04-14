@@ -29,6 +29,19 @@ then
     fi
     # }}}
 
+    # Projects config {{{
+    mapfile -t result < <(projects)
+    mkdir -p "${result[0]}/bash"
+    export PATH=$PATH:"${result[0]}/bash"
+    # export BASH_LIBRARY_PATH=$BASH_LIBRARY_PATH:"${result[0]}/bash"
+    test -r "${result[0]}/bash/bashrc" && source "${result[0]}/bash/bashrc"
+    bind -m vi-insert -x '"\C-x\C-e": nvim $(projects | head -1)'
+    bind -m vi-insert -x '"\C-x\C-d": cd $(projects | head -1)'
+
+    bind -m vi -x '"\C-x\C-e": nvim $(projects | head -1)'
+    bind -m vi -x '"\C-x\C-d": cd $(projects | head -1)'
+    # }}}
+
     # Sourcing bash/sh functions and setting completions {{{
     if test -r /usr/share/bash-completion/bash_completion
         then source /usr/share/bash-completion/bash_completion
@@ -128,7 +141,6 @@ then
     bind -m vi -x '"\er": source $HOME/.bashrc; echo reloaded!'
     bind -m vi-insert -x '"\er": source $HOME/.bashrc; echo reloaded!'
     # }}}
-
     # Shell/Term options {{{
     shopt -s \
         cdable_vars \

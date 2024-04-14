@@ -1,0 +1,49 @@
+#!/bin/bash
+
+source "$BASH_LIBRARY_PATH"/array.bash
+
+declare -a markers=(".git")
+current_dir="$PWD"
+
+function search_markers {
+    local current_dir="$1"
+    while read file
+    do
+        if contains "markers" "$file"
+        then
+            if test "$file" = ".git"
+            then
+                find_common_worktree "$current_dir" && return 0
+            fi
+            echo "$XDG_STATE_HOME/projects/$(basename $current_dir)"
+            echo "$current_dir"
+            return 0
+        fi
+    done < <(ls -A "$current_dir")
+    return 1
+}
+
+function find_common_worktree {
+    local current_dir git_dir git_common_dir name
+    current_dir="$1"
+    git_dir=$(git -C "$current_dir" rev-parse --git-dir)
+    git_common_dir=$(git -C "$current_dir" rev-parse --git-common-dir)
+    if test "$git_dir" != "$git_common_dir"
+    then
+        name="$(basename $(dirname $git_common_dir))"
+        echo "$XDG_STATE_HOME/projects/$name"
+        echo "$current_dir"
+        return 0
+    fi
+    return 1
+}
+# could be the git folder or others.
+# Check if inside a git worktree and use the canonical git dir as the base, but keep PWD in worktree
+
+while test "$current_dir" != "/"
+do
+    search_markers "$current_dir" && exit 0
+    current_dir=$(dirname "$current_dir")
+done
+
+exit 1

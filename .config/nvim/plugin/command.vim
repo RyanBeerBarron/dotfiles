@@ -8,8 +8,6 @@ command! -nargs=0 Lcd lcd %:h | echo "now current window in directory: " .. getc
 nnoremap <leader>cd <cmd>Cd<cr>
 nnoremap <leader>lcd <cmd>Lcd<cr>
 
-command! -nargs=1 Mksession execute "mksession" stdpath('cache') .. "/<args>.vim"
-
 command! -nargs=1 MoveWin call <SID>moveWinToTab(<args>)
 nnoremap <C-t>m <cmd>execute "MoveWin " .. v:count1<cr>
 
