@@ -1,3 +1,5 @@
 inoreabbrev stdio #include <stdio.h>
 inoreabbrev stdlib #include <stdlib.h>
-inoreabbrev main int main(void) {<CR>}<ESC>kA
+inoreabbrev stringh #include <string.h>
+
+setlocal path+=/usr/include,/usr/local/include
