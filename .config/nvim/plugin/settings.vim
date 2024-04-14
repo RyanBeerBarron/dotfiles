@@ -25,6 +25,8 @@ set modelineexpr
 set nonumber
 set noruler
 set noshowmode
+set ignorecase
+set smartcase
 set nowrap
 set path=.,,**
 set scrolloff=8
