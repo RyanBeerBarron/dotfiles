@@ -5,42 +5,40 @@ set cmdheight=0
 set cmdwinheight=12
 set concealcursor=
 set conceallevel=0
-set completeopt=menu
-set nocursorcolumn
-set nocursorline
 set expandtab
 set foldclose&
 set foldcolumn=0
 set foldexpr=FoldParagraphs(v\:lnum)
 set foldlevel=2
 set foldmethod=expr
+set grepprg=git\ grep\ --line-number
 set guifont=CaskaydiaCove\ Nerd\ Font:h16
 "set guifont=IosevkaTerm\ Nerd\ Font:h16
+set ignorecase
 set incsearch
 set linebreak
 set list
 set listchars=tab:󰌒\ \ ,eol:↲,trail:.,extends:<,precedes:>,nbsp:␣
 set matchtime=1
 set modelineexpr
+set nocursorcolumn
+set nocursorline
 set nonumber
 set noruler
 set noshowmode
-set ignorecase
-set smartcase
 set nowrap
-set path=.,,**
+set path=,,**
 set scrolloff=8
 set shiftwidth=4
 set showmatch
 set signcolumn=no
+set smartcase
 set smartindent
 set softtabstop=4
 set spell
 set spelllang=en,fr
 set tabstop=4
 set tildeop
-set wildignore+=*.class
-set wildignore+=**/target/**
 set wildoptions=fuzzy,pum,tagfile
 
 "netrw settings

@@ -1,5 +1,15 @@
 " Config: open the nvim config folder
-command! -nargs=0 Config execute "edit" stdpath('config')
+command! -nargs=0 Config call <SID>editConfig()
+
+let s:configWinId = -1
+function s:editConfig()
+    if ! win_gotoid(s:configWinId)
+        execute 'tabnew' stdpath('config')
+        execute 'tcd' stdpath('config')
+        let s:configWinId = win_getid()
+        setlocal wildignore+=*/pack/*
+    endif
+endfunction
 nnoremap <leader>cf <cmd>Config<cr>
 
 " CdBuffer: cd in buffer directory
