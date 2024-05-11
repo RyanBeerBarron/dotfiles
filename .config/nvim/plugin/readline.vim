@@ -104,13 +104,13 @@ cnoremap <C-y> <C-\>e<SID>CmdYank()<cr>
 
 
 function! s:InsertKillWord()
-    if Get_char() != ""
+    if GetChar() != ""
         call feedkeys("\<C-o>de")
     endif
 endfunction
 
 function! s:InsertKillLine()
-    if Get_char() != ""
+    if GetChar() != ""
         call feedkeys("\<C-o>d$")
     endif
 endfunction

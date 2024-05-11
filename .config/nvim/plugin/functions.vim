@@ -24,27 +24,27 @@ function RunInTerm(arg = "")
     endif
 endfunction
 
+function FoldParagraphs(lnum)
 " Function to fold paragraph of texts
-function! FoldParagraphs(lnum)
     let line = getline(a:lnum)
     return line =~ '\S'? 1 : '<1'
 endfunction
 
+function GetChar()
 " Return the character on the cursor, or in front for insert mode
-function! Get_char()
-    let [_, l:lnum, l:col, _, _] = getcurpos()
-    return getline('.')[l:col-1]
+    let [_, _, col, _, _] = getcurpos()
+    return getline('.')[col-1]
 endfunction
 
-function! RGBtoBase10(rgb)
-	let i = 0
-	if a:rgb[0] == '#'
-		let i = 1
-	endif
-	let red = str2nr(a:rgb[i:i+1], 16)
-	let green = str2nr(a:rgb[i+2:i+3], 16)
-	let blue = str2nr(a:rgb[i+4:i+5], 16)
-	return red .. ", " .. green .. ", " .. blue
+function RGBtoBase10(rgb)
+    let i = 0
+    if a:rgb[0] == '#'
+        let i = 1
+    endif
+    let red = str2nr(a:rgb[i:i+1], 16)
+    let green = str2nr(a:rgb[i+2:i+3], 16)
+    let blue = str2nr(a:rgb[i+4:i+5], 16)
+    return red .. ", " .. green .. ", " .. blue
 endfunction
 
 function s:openFiles()
@@ -73,7 +73,7 @@ endfunction
 nnoremap <C-x>q <cmd>call <SID>filterQuickfixList()<Cr>
 
 command! -nargs=? -range Dec2hex call s:Dec2hex(<line1>, <line2>, '<args>')
-function! s:Dec2hex(line1, line2, arg) range
+function s:Dec2hex(line1, line2, arg) range
   if empty(a:arg)
     if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
       let cmd = 's/\%V\<\d\+\>/\=printf("0x%x",submatch(0)+0)/g'

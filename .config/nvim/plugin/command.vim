@@ -1,5 +1,5 @@
 " Config: open the nvim config folder
-command! -nargs=0 Config call <SID>editConfig()
+command -bar -nargs=0 Config call <SID>editConfig()
 
 let s:configWinId = -1
 function s:editConfig()
