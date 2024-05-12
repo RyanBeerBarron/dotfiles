@@ -46,5 +46,5 @@
 	autoCorrect = 10
 [url "git@github.com:"]
     pushInsteadOf = "https://github.com/"
-[includeIf "gitdir:~/"]
+[includeIf "gitdir:~/*"]
     path = "~/dotfiles/gitconfig"
