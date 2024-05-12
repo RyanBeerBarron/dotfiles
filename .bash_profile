@@ -32,6 +32,8 @@ export M2=$M2_HOME/bin
 
 # Node stuff
 export NODE_HOME=$HOME/.local/node/current
+export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 
 # Postgres stuff
 export PSQLRC="$XDG_CONFIG_HOME/pg/psqlrc"
