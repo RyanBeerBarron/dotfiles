@@ -141,6 +141,7 @@ then
     bind -m vi -x '"\er": source $HOME/.bashrc; echo reloaded!'
     bind -m vi-insert -x '"\er": source $HOME/.bashrc; echo reloaded!'
     # }}}
+
     # Shell/Term options {{{
     shopt -s \
         cdable_vars \
