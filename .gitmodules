@@ -13,9 +13,6 @@
 [submodule "ii"]
 	path = dotfiles/submodules/ii
 	url = https://git.suckless.org/ii
-[submodule ".config/nvim/pack/git-modules"]
-	path = .config/nvim/pack/git-modules
-    url = https://github.com/ryanbeerbarron/neovim-packages
 [submodule "dmenu"]
 	path = dotfiles/submodules/dmenu
 	url = https://git.suckless.org/dmenu
@@ -37,3 +34,6 @@
 [submodule "dotfiles/submodules/xcwd"]
 	path = dotfiles/submodules/xcwd
 	url = https://github.com/schischi/xcwd
+[submodule "neovim-config"]
+	path = .config/nvim
+	url = gh:ryanbeerbarron/neovim-config
