@@ -36,4 +36,4 @@
 	url = https://github.com/schischi/xcwd
 [submodule "neovim-config"]
 	path = .config/nvim
-	url = gh:ryanbeerbarron/neovim-config
+	url = https://github.com/ryanbeerbarron/neovim-config
