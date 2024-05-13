@@ -20,47 +20,47 @@
 # submodules ignores
 dotfiles/submodules/logs
 
-# .config ignore list
-!.config
-.config/alacritty/local.toml
-.config/dconf
-.config/discord/
-.config/nvim/after/plugin/local.vim
-.config/docker/
-.config/evolution
-.config/go/telemetry
-.config/ibus
-.config/java/
-.config/JetBrains/
-.config/libreoffice
-.config/maven/
-.config/pki/
-.config/pulse
-.config/QtProject.conf
-.config/htop
-.config/remind/
-.config/monitors.xml
-.config/font-manager/
-.config/fontconfig/conf.d/
-.config/cef_user_data/
-.config/ideavim/
-.config/MongoDB\ Compass/
-.config/aws/
-.config/Slack/
-.config/gtk-3.0/bookmarks
-.config/.gsd-keyboard.settings-ported
-.config/gnome-initial-setup-done
-.config/.gsd-keyboard.settings-ported
+# config ignore list
+!config
+config/alacritty/local.toml
+config/dconf
+config/discord/
+config/nvim/after/plugin/local.vim
+config/docker/
+config/evolution
+config/go/telemetry
+config/ibus
+config/java/
+config/JetBrains/
+config/libreoffice
+config/maven/
+config/pki/
+config/pulse
+config/QtProject.conf
+config/htop
+config/remind/
+config/monitors.xml
+config/font-manager/
+config/fontconfig/conf.d/
+config/cef_user_data/
+config/ideavim/
+config/MongoDB\ Compass/
+config/aws/
+config/Slack/
+config/gtk-3.0/bookmarks
+config/.gsd-keyboard.settings-ported
+config/gnome-initial-setup-done
+config/.gsd-keyboard.settings-ported
 
-# .local whitelist
-!.local
-.local/*
-!.local/scripts
-!.local/share
-.local/share/*
-!.local/share/bash
-!.local/share/sh
-!.local/share/awk
-!.local/share/notes
-!.local/share/fonts
-!.local/share/themes
+# local whitelist
+!local
+local/*
+!local/scripts
+!local/share
+local/share/*
+!local/share/bash
+!local/share/sh
+!local/share/awk
+!local/share/notes
+!local/share/fonts
+!local/share/themes

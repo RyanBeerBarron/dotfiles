@@ -1,6 +1,6 @@
 import = [
-	"~/.config/alacritty/kanagawa.toml",
-    "~/.config/alacritty/local.toml"
+	"~/config/alacritty/kanagawa.toml",
+    "~/config/alacritty/local.toml"
 ]
 [scrolling]
 history = 5000

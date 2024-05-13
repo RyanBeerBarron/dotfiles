@@ -1,10 +1,10 @@
 # Store interactive Python shell history in ~/.cache/python_history
 # instead of ~/.python_history.
 #
-# Create the following .config/pythonstartup.py file
+# Create the following config/pythonstartup.py file
 # and export its path using PYTHONSTARTUP environment variable:
 #
-# export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/.config}/pythonstartup.py"
+# export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/config}/pythonstartup.py"
 
 import atexit
 import os

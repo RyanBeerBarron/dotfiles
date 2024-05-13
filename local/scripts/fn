@@ -3,9 +3,9 @@
 if test -z $1
 then
     nvim $BASH_LIBRARY_PATH
-elif test -x "$HOME/.local/scripts/$1"
+elif test -x "$HOME/local/scripts/$1"
 then
-    nvim "$HOME/.local/scripts/$1"
+    nvim "$HOME/local/scripts/$1"
 else
     # Using grep with '-n' to find the line number of the bash function
     # Then using Bash parameter expansion with '%' to extract the line number

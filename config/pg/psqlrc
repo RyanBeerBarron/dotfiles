@@ -1,6 +1,6 @@
 \set ON_ERROR_ROLLBACK interactive
 \set COMP_KEYWORD_CASE upper
-\set HISTFILE ~/.local/state/pg/psql_history- :HOST - :DBNAME
+\set HISTFILE ~/local/state/pg/psql_history- :HOST - :DBNAME
 \set IGNOREEOF 10
 
 \set clear '%[%033[0m%]'

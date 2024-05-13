@@ -32,7 +32,7 @@ function chcolor {
 # TODO: Import the other themes for toml-style alacritty config
 #       and change this to correctly change the colorscheme
 # Function to modify the color of alacritty
-    local FILE=${XDG_CONFIG_HOME:-$HOME/.config/}"/themes"
+    local FILE=${XDG_CONFIG_HOME:-$HOME/config/}"/themes"
     if test "$1" = "list"; then
         cut -d';' -f1 $FILE;
         return 0;
@@ -74,8 +74,8 @@ function git-find-parent-branch {
 function fn {
     if test -z $1; then
         nvim $BASH_LIBRARY_PATH
-    elif test -x "$HOME/.local/scripts/$1"; then
-        nvim "$HOME/.local/scripts/$1"
+    elif test -x "$HOME/local/scripts/$1"; then
+        nvim "$HOME/local/scripts/$1"
     else
         # Using grep with '-n' to find the line number of the bash function
         # Then using Bash parameter expansion with '%' to extract the line number
@@ -208,14 +208,14 @@ function cd {
 }
 
 comp_list_conf=$(find "$XDG_CONFIG_HOME" -maxdepth 1 -type d -exec basename {} \; ; echo "ssh bash dwm")
-comp_list_fn=$(declare -F | cut -d" " -f3 | grep -v "^_.\+$"; find $HOME/.local/scripts/ -executable -type f -exec basename {} \;)
+comp_list_fn=$(declare -F | cut -d" " -f3 | grep -v "^_.\+$"; find $HOME/local/scripts/ -executable -type f -exec basename {} \;)
 comp_list_setbackground=$(find $HOME/dotfiles/img -type f -exec basename {} \; ; echo "next"; echo "prev")
 
 complete -W "$comp_list_conf" conf
 complete -W "$comp_list_fn" fn
 complete -W "$comp_list_setbackground" setbackground
 
-complete -W "list $(cut -d";" -f1 "${XDG_CONFIG_HOME:-$HOME/.config/}/themes")" chcolor
+complete -W "list $(cut -d";" -f1 "${XDG_CONFIG_HOME:-$HOME/config/}/themes")" chcolor
 
 complete -F _tmux-help_completion tmux-help
 complete -F _tmux-option_completion tmux-option

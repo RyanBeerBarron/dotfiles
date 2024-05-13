@@ -11,7 +11,7 @@ help () {
     echo "      -l, --list: print the installed java versions"
     echo "      <version_number>: Will create a symlink to this version of the jdk"
 }
-jdks_path="$HOME/.local/jdks"
+jdks_path="$HOME/local/jdks"
 while test "$#" -gt 0
 do
     case "$1" in

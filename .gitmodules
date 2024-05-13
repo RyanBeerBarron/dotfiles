@@ -35,5 +35,5 @@
 	path = dotfiles/submodules/xcwd
 	url = https://github.com/schischi/xcwd
 [submodule "neovim-config"]
-	path = .config/nvim
+	path = config/nvim
 	url = https://github.com/ryanbeerbarron/neovim-config

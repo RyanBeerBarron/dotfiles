@@ -1,9 +1,9 @@
 # ENV VAR{{{
 # Set up XDG environment variables based on XDG directory specifications
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_STATE_HOME=$HOME/.local/state
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_CACHE_HOME=$HOME/.cache
+export XDG_CONFIG_HOME=$HOME/config
+export XDG_STATE_HOME=$HOME/local/state
+export XDG_DATA_HOME=$HOME/local/share
+export XDG_CACHE_HOME=$HOME/cache
 
 # Linux stuff
 export EDITOR=neovide
@@ -21,17 +21,17 @@ export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 if test -r "$XDG_DATA_HOME/cargo/env"; then
-    . "$HOME/.local/share/cargo/env"
+    . "$HOME/local/share/cargo/env"
 fi
 
 # Java stuff
-export JAVA_HOME=$HOME/.local/jdks/current
+export JAVA_HOME=$HOME/local/jdks/current
 export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
 export M2_HOME="$HOME/tools/"apache-maven-*
 export M2=$M2_HOME/bin
 
 # Node stuff
-export NODE_HOME=$HOME/.local/node/current
+export NODE_HOME=$HOME/local/node/current
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 
@@ -52,8 +52,8 @@ PATH="/usr/local/go/bin"
 PATH=$PATH:"/usr/local/bin:/usr/bin:/bin"
 PATH=$PATH:"/usr/local/sbin:/usr/sbin:/sbin"
 PATH="$CARGO_HOME/bin":$PATH
-PATH="$HOME/.local/bin":$PATH
-PATH="$HOME/.local/scripts":$PATH
+PATH="$HOME/local/bin":$PATH
+PATH="$HOME/local/scripts":$PATH
 PATH=$M2:$PATH
 PATH=$JAVA_HOME/bin:$PATH
 PATH=$NODE_HOME/bin:$PATH
