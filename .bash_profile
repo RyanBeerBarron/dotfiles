@@ -42,7 +42,7 @@ export PGPASSFILE="$XDG_CONFIG_HOME/pg/pgpass"
 export PGSERVICEFILE="$XDG_CONFIG_HOME/pg/pg_service.conf"
 
 # AWS stuff
-export AWS_SHARED_CREDENTIALS="$XDG_CONFIG_HOME/aws/credentials"
+export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
 
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
