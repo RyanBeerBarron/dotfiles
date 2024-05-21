@@ -27,8 +27,15 @@ fi
 # Java stuff
 export JAVA_HOME=$HOME/local/jdks/current
 export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
-export M2_HOME="$HOME/tools/"apache-maven-*
+# the value in a variable assignment does not undergo pathname expansion
+# If I were to set the following variable: M2_HOME="$HOME/tools/apache-maven"-*
+# the variable would still contain the glob '*' in it.
+# Since this is later used inside the PATH variable, the glob would not work there because of the ':' delimiter
+# We need to force the pathname expansion and use that result. We can use array in bash or `set -- ` in POSIX sh
+declare -a array=("$HOME/tools/apache-maven"-*)
+export M2_HOME="${array[0]}"
 export M2=$M2_HOME/bin
+unset array
 
 # Node stuff
 export NODE_HOME=$HOME/local/node/current
@@ -54,7 +61,7 @@ PATH=$PATH:"/usr/local/sbin:/usr/sbin:/sbin"
 PATH="$CARGO_HOME/bin":$PATH
 PATH="$HOME/local/bin":$PATH
 PATH="$HOME/local/scripts":$PATH
-PATH=$M2:$PATH
+PATH=$PATH:${M2}
 PATH=$JAVA_HOME/bin:$PATH
 PATH=$NODE_HOME/bin:$PATH
 PATH=$PATH:/usr/games
