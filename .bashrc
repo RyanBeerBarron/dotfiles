@@ -30,17 +30,20 @@ then
     fi
     # }}}
 
-    # Projects config {{{
-    mapfile -t result < <(projects)
-    mkdir -p "${result[0]}/bash"
-    export PATH=$PATH:"${result[0]}/bash"
-    # export BASH_LIBRARY_PATH=$BASH_LIBRARY_PATH:"${result[0]}/bash"
-    test -r "${result[0]}/bash/bashrc" && source "${result[0]}/bash/bashrc"
-    bind -m vi-insert -x '"\C-x\C-e": nvim $(projects | head -1)'
-    bind -m vi-insert -x '"\C-x\C-d": cd $(projects | head -1)'
+    # Workspace config {{{
+    workspace_location=$(workspace)
+    if test "${workspace_location}"
+    then
+        mkdir -p "${workspace_location}/bash"
+        export PATH="${workspace_location}/bash:${PATH}"
+        # export BASH_LIBRARY_PATH=$BASH_LIBRARY_PATH:"${workspace_location}/bash"
+        test -r "${workspace_location}/bash/bashrc" && source "${workspace_location}/bash/bashrc"
+        bind -m vi-insert -x '"\C-x\C-e": nvim "+cd $(workspace)" "$(workspace)"'
+        bind -m vi-insert -x '"\C-x\C-d": cd $(workspace)'
 
-    bind -m vi -x '"\C-x\C-e": nvim $(projects | head -1)'
-    bind -m vi -x '"\C-x\C-d": cd $(projects | head -1)'
+        bind -m vi -x '"\C-x\C-e": nvim "+cd $(workspace)" "$(workspace)"'
+        bind -m vi -x '"\C-x\C-d": cd $(workspace)'
+    fi
     # }}}
 
     # Sourcing bash/sh functions and setting completions {{{

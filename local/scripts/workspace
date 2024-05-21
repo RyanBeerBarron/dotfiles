@@ -15,8 +15,7 @@ function search_markers {
             then
                 find_common_worktree "$current_dir" && return 0
             fi
-            echo "$XDG_STATE_HOME/projects/$(basename $current_dir)"
-            echo "$current_dir"
+            echo "$XDG_STATE_HOME/workspace/$(basename $current_dir)"
             return 0
         fi
     done < <(ls -A "$current_dir")
@@ -31,8 +30,7 @@ function find_common_worktree {
     if test "$git_dir" != "$git_common_dir"
     then
         name="$(basename $(dirname $git_common_dir))"
-        echo "$XDG_STATE_HOME/projects/$name"
-        echo "$current_dir"
+        echo "$XDG_STATE_HOME/workspace/$name"
         return 0
     fi
     return 1
