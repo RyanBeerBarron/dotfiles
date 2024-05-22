@@ -1,7 +1,7 @@
 # vim: ft=bash fde=FoldBashFunction(v\:lnum)
 #
 # Ideas for improvement:
-# *Can make the view prettier by formatting it a bit
+# * Can make the view prettier by formatting it a bit
 #   - Shorten the path for long dirnames, by using the initials to the first few directory
 #       /home/ryan/data/Jetbrains/IntteliJIdea => /h/r/l/s/j/IntellijIdea
 #   - Align the directories so that the scrolling looks smoother
@@ -24,7 +24,9 @@ function jumplist_push {
     jumplist_calculate_leftboundary
     for (( i = jumplist_index+1; i < ${#jumplist[@]}; i++ ))
     do
-        unset jumplist[i]
+        # Need quotes to prevent pathname expansion from the brackets (character class)
+        # Or can use backslash around the brackets
+        unset 'jumplist[i]'
     done
 }
 
@@ -93,40 +95,31 @@ function jumplist_forward {
 function jumplist_calculate_leftboundary {
     local i columns length len
     columns=$COLUMNS
-    # echo "columns are $columns"
-    # echo "right boundary at ${jumplist[$jumplist_view_rightboundary]} (${#jumplist[$jumplist_view_rightboundary]})"
     let length=${#jumplist[jumplist_view_rightboundary]}
-    # echo "Length is $length and columns: $columns"
     (( i = jumplist_view_rightboundary - 1 ))
     (( len = ${#jumplist[i]} ))
     while (( length + len + 2 <= columns && i >= 0 ))
     do
-        # echo "Adding $length + $len (${jumplist[i]}) + 2"
         let length+=len+2
         let i--
         (( len = ${#jumplist[i]} ))
     done
     let i++
     let jumplist_view_leftboundary=i
-    # echo "length is $length new left boundary index is $jumplist_view_leftboundary"
 }
 
 function jumplist_calculate_rightboundary {
     local i columns length len
     columns=$COLUMNS
-    # echo "columns are $columns"
-    # echo "left boundary at ${jumplist[$jumplist_view_leftboundary]} (${#jumplist[$jumplist_view_leftboundary]})"
     let length=${#jumplist[jumplist_view_leftboundary]}
     (( i = jumplist_view_leftboundary + 1 ))
     (( len = ${#jumplist[i]} ))
     while (( length + len + 2 <= columns && i < ${#jumplist[@]} ))
     do
-        # echo "Adding $length + ${#jumplist[i]} (${jumplist[i]}) + 2"
         let length+=len+2
         let i++
         (( len = ${#jumplist[i]} ))
     done
     let i--
     let jumplist_view_rightboundary=i
-    # echo "length is $length new right boundary index is $jumplist_view_rightboundary"
 }
