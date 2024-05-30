@@ -1,5 +1,6 @@
 #!/bin/sh
 
+set -eu
 JDTLS_HOME=$HOME/tools/jdtls
 mkdir -p "$XDG_STATE_HOME"/jdtls/"$1"
 java \

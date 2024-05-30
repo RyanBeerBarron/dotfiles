@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "$BASH_LIBRARY_PATH"/array.bash
+source "$BASH_LIBRARY_PATH/array.bash"
 
 declare -a markers=(".git")
 current_dir="$PWD"
