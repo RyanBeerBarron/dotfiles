@@ -1,8 +1,8 @@
 # ENV VAR{{{
 # Set up XDG environment variables based on XDG directory specifications
 export XDG_CONFIG_HOME=$HOME/config
-export XDG_STATE_HOME=$HOME/local/state
-export XDG_DATA_HOME=$HOME/local/share
+export XDG_STATE_HOME=$HOME/state
+export XDG_DATA_HOME=$HOME/data
 export XDG_CACHE_HOME=$HOME/cache
 
 # Linux stuff
@@ -21,7 +21,7 @@ export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 if test -r "$XDG_DATA_HOME/cargo/env"; then
-    . "$HOME/local/share/cargo/env"
+    . "$XDG_DATA_HOME/cargo/env"
 fi
 
 # Java stuff

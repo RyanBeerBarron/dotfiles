@@ -3,7 +3,7 @@
 # Ideas for improvement:
 # *Can make the view prettier by formatting it a bit
 #   - Shorten the path for long dirnames, by using the initials to the first few directory
-#       /home/ryan/local/share/Jetbrains/IntteliJIdea => /h/r/l/s/j/IntellijIdea
+#       /home/ryan/data/Jetbrains/IntteliJIdea => /h/r/l/s/j/IntellijIdea
 #   - Align the directories so that the scrolling looks smoother
 #       (the current directory always appear at the same spot on the screen)
 #
