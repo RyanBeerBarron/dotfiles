@@ -66,6 +66,7 @@ PATH=$JAVA_HOME/bin:$PATH
 PATH=$NODE_HOME/bin:$PATH
 PATH=$PATH:/usr/games
 PATH=$PATH:/snap/bin
+PATH=${PATH}:${HOME}/tools/maven-mvnd-1.0-m8-m40-windows-amd64/bin
 export PATH
 # }}}
 
