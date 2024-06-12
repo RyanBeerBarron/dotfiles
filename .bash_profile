@@ -56,18 +56,26 @@ export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 
 # Setting up the PATH
-PATH="/usr/local/go/bin"
-PATH=$PATH:"/usr/local/bin:/usr/bin:/bin"
-PATH=$PATH:"/usr/local/sbin:/usr/sbin:/sbin"
-PATH="$CARGO_HOME/bin":$PATH
-PATH="$HOME/local/bin":$PATH
-PATH="$HOME/local/scripts":$PATH
-PATH=$PATH:${M2}
-PATH=$JAVA_HOME/bin:$PATH
-PATH=$NODE_HOME/bin:$PATH
-PATH=$PATH:/usr/games
-PATH=$PATH:/snap/bin
-PATH=${PATH}:${HOME}/tools/maven-mvnd-1.0-m8-m40-windows-amd64/bin
+# default path
+DEFAULT_PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
+# language specific path
+LANG_PATH="/usr/local/go/bin"
+LANG_PATH="${CARGO_HOME}/bin:${LANG_PATH}"
+LANG_PATH="${JAVA_HOME}/bin:${LANG_PATH}"
+LANG_PATH="${NODE_HOME}/bin:${LANG_PATH}"
+LANG_PATH="${LANG_PATH}:${M2}"
+LANG_PATH="${LANG_PATH}:${HOME}/tools/maven-mvnd-1.0-m8-m40-windows-amd64/bin"
+
+# home directory path
+HOME_PATH="${HOME}/local/bin"
+HOME_PATH="${HOME}/local/scripts:${HOME_PATH}"
+
+# miscellaneous
+DEFAULT_PATH="${DEFAULT_PATH}:/usr/games"
+DEFAULT_PATH="${DEFAULT_PATH}:/snap/bin"
+
+# Combining the path
+PATH="${HOME_PATH}:${LANG_PATH}:${DEFAULT_PATH}"
 export PATH
 # }}}
 
