@@ -36,6 +36,7 @@ declare -a array=("$HOME/tools/apache-maven"-*)
 export M2_HOME="${array[0]}"
 export M2=$M2_HOME/bin
 unset array
+export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"
 
 # Node stuff
 export NODE_HOME=$HOME/local/node/current
