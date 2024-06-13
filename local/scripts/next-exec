@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# Filters the PATH environment variable and returns only the paths that come after $1
+# This is used for wrapper script to prevent infinite recursion
+#
+# Take for exemple a program 'foo' located in /usr/bin/ and a wrapper script also named 'foo' located in say $HOME/bin
+# With both '/usr/bin' and '$HOME/bin' in PATH.
+# The wrapper cleans up the arguments, set some defaults and calls the main program.
+# To allows multiple wrapper script and not having to write the absolute path. We can find the next executable 'foo' in PATH
+# that comes after the current program in the PATH list.
+
+set -eu
+
+path_shortener () {
+    WRAPPER_EXEC_PATH="${1}"
+    shift
+    FOUND="false"
+
+    IFS=:
+    for p in $PATH
+    do
+        if test "${WRAPPER_EXEC_PATH}" = "${p}"
+        then
+            FOUND="true"
+        elif test "${FOUND}" = "true"
+        then
+            set -- "$@" "${p}"
+        fi
+    done
+    echo "$*"
+}
+
+if test "$#" -ne 1
+then
+    exit 1
+fi
+PATH="$(path_shortener ${1%/*})"
+if ! which ${1##*/} > /dev/null
+then
+    echo "Wrapper script has no subsequent program named ${1##*/}. Can not prevent infinite recursion" >&2
+    exit 1
+fi
+
+NEXT_WRAPPER=$(which ${1##*/})
+echo "${NEXT_WRAPPER}"

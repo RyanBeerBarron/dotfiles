@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Nvim wrapper script
+# Main goal is to make tmux focus on existing nvim instance and pass new files via the 'remote' functionality
+# It will start a different nvim server per workspace and encode the tmux pane id in the unix socket created
+set -euo pipefail
+
+NVIM="$(next-exec ${0})"
+if test "${TMUX:+set}" != "set"
+then
+    exec "${NVIM}" "$@"
+fi
+
+if test "${1:+set}" = "set"
+then
+    case "${1}" in
+        *COMMIT_EDITMSG)
+            exec "${NVIM}" --cmd "let NO_WORKSPACE = 1" "$@"
+            ;;
+    esac
+fi
+
+WORKSPACE="$(workspace)"
+PANE_ID="$(tmux display-message -p '#{pane_id}')"
+
+GLOB=("${WORKSPACE}"/server-*.pipe)
+SERVER="${GLOB[0]}"
+
+if test -S "${SERVER}"
+then
+    if test "$@"
+    then
+        "${NVIM}" --server "${SERVER}" --remote "${@}"
+    fi
+    TAIL="${SERVER##*/server-}"
+    PANE_ID="${TAIL%.pipe}"
+    tmux select-window -t "${PANE_ID}"
+    tmux select-pane -t "${PANE_ID}"
+else
+    PANE_ID="$(tmux display-message -p '#{pane_id}')"
+    "${NVIM}" --listen "${WORKSPACE}/server-${PANE_ID}.pipe" "${@}"
+fi
