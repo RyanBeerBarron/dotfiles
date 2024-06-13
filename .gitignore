@@ -25,6 +25,7 @@ dotfiles/submodules/logs
 config/alacritty/local.toml
 config/dconf
 config/discord/
+config/gh/hosts.yml
 config/nvim/after/plugin/local.vim
 config/docker/
 config/evolution
