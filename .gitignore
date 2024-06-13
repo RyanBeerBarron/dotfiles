@@ -22,6 +22,7 @@ dotfiles/submodules/logs
 
 # config ignore list
 !config
+config/pavucontrol.ini
 config/alacritty/local.toml
 config/dconf
 config/discord/
