@@ -45,7 +45,6 @@ config/monitors.xml
 config/font-manager/
 config/fontconfig/conf.d/
 config/cef_user_data/
-config/ideavim/
 config/MongoDB\ Compass/
 config/aws/
 config/Slack/

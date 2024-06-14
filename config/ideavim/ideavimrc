@@ -1,0 +1,94 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Do incremental searching.
+set incsearch
+set ignorecase
+set smartcase
+
+set visualbell
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+imap <C-f> <Right>
+imap <C-b> <Left>
+imap <C-d> <Del>
+imap <C-a> <Home>
+imap <C-e> <End>
+
+nmap <leader>n <action>(NewClass)
+nmap gi <action>(GotoImplementation)
+nmap <C-=> <action>(EditorIncreaseFontSizeGlobal)
+nmap <C--> <action>(EditorDecreaseFontSizeGlobal)
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+nnoremap <leader>y "+y
+nnoremap <leader>Y "+Y
+nnoremap <leader>D "+D
+nnoremap <leader>dd "+dd
+
+vnoremap u <nop>
+vnoremap gu u
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+vnoremap <leader>y "+y
+vnoremap <leader>d "+d)
+
+nmap <C-g>b <action>(Annotate)
+map <leader>b <Action>(ToggleLineBreakpoint)
+nmap <Space>rn <action>(RenameElement)
+nmap <A-m> <action>(Maven.ExecuteGoal)
+nmap <A-t> <action>(RunClass)
+nmap <A-r> <action>(Run)
+nmap <leader>d <action>(Debug)
+nmap <A-d> <action>(DebugClass)
+nmap gr <action>(FindUsages)
+
+nmap ]d <action>(GotoNextError)
+nmap [d <action>(GotoPreviousError)
+nmap m <action>(ToggleBookmarkWithMnemonic)
+nmap dm <action>(ToggleBookmark)
+nmap ' <action>(ShowTypeBookmarks)
+
+nmap <C-w>o <action>(CloseAllEditorsButActive)
+nmap <C-t>o <action>(CloseAllEditorsButActive)
+nmap <C-t>c <action>(CloseAllEditors)
+nmap <C-w>c <action>(CloseEditor)
+nmap <C-f> <action>(FileStructurePopup)
+
+vmap <C-g>l <action>(Vcs.ShowHistoryForBlock)
+
+nmap <leader>e <action>(SelectInProjectView)
+nmap <leader>i <action>(Generate)
+nmap <leader>c <action>(ChangeLaf)
+
+nmap <leader>vv <action>(ChangeView)
+nmap <leader>vd <action>(ToggleDistractionFreeMode)
+nmap <leader>vz <action>(ToggleZenMode)
+nmap <leader>vp <action>(TogglePresentationMode)
+nmap <leader>vf <action>(ToggleFullScreen)
+
+nmap <leader><C-r> <action>(IdeaVim.ReloadVimRc.reload)
+
+nmap <space>jd <action>(ToggleRenderedDocPresentation)
+
+nmap zM <action>(CollapseAllRegions)
+nmap zR <action>(ExpandAllRegions)
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
