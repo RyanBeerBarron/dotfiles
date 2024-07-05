@@ -42,6 +42,7 @@ config/java/
 config/JetBrains/
 config/libreoffice
 config/maven/
+config/molotov/
 config/MongoDB\ Compass/
 config/monitors.xml
 config/nvim/after/plugin/local.vim
