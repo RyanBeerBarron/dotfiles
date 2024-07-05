@@ -147,6 +147,11 @@ then
     bind -m vi-insert -x '"\C-j\C-d": rl-fzf-git-tree'
 
     bind -m vi-insert -x '"\C-je": nvim $(git ls-files-root | fzf-popup-pipe)'
+
+    for keymap in "${XDG_CONFIG_HOME}/bash"/*.bash
+    do
+        source "${keymap}"
+    done
     # }}}
 
     # Shell/Term options {{{
