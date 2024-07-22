@@ -118,6 +118,7 @@ then
         export PS1=$(prompt "${PS1_pattern[@]@P}")
         unset timer_start
         jumplist_unset_vars
+        history -a
     }
 
     trap 'timer_start' DEBUG
@@ -166,6 +167,7 @@ then
         dotglob \
         globasciiranges \
         globstar \
+        histappend \
         no_empty_cmd_completion \
         nocaseglob \
         progcomp_alias

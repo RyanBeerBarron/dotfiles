@@ -9,13 +9,18 @@ export XDG_CACHE_HOME=$HOME/cache
 export EDITOR=neovide
 export VISUAL=neovide
 export SUDO_EDITOR="neovide --no-fork"
-export HISTFILE="$XDG_STATE_HOME/bash/history"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 export LESS="FgMrRS j.25 --mouse"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/pythonstartup.py"
 export BASH_LIBRARY_PATH=$XDG_DATA_HOME/bash
 export ALACRITTY_CONFIG="$XDG_CONFIG_HOME/alacritty/alacritty.toml"
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+
+# Bash history
+export HISTCONTROL="ignoreboth"
+export HISTFILE="$XDG_STATE_HOME/bash/history"
+export HISTIGNORE="clear:history:fg:bg:exit"
+export HISTTIMEFORMAT="%F %T - "
 
 # Rust stuff
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
