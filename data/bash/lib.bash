@@ -1,14 +1,15 @@
-function ll {
+function ll ()
+{
     ls -lh --color "$@" | pretty_ll
 }
 
-function pretty_ll {
-  #
 # Function to prettify the output of 'ls -lh'
 # Setting the separator to '\\' to prevent files with a space in it to screw the 'column' command
 # Assuming that 'ls -lh' won't output a backslash ever
 # Could not use a ';' as a separator because the removes the color from ls, as escape code contain one
 # Neither a ',' since the size value can contain one, e.g. "4,3M"
+function pretty_ll ()
+{
         awk '
         BEGIN {
             OFS = "\\"
@@ -28,7 +29,8 @@ function pretty_ll {
         column -t -s "\\"
 }
 
-function chcolor {
+function chcolor ()
+{
 # TODO: Import the other themes for toml-style alacritty config
 #       and change this to correctly change the colorscheme
 # Function to modify the color of alacritty
@@ -51,7 +53,8 @@ function chcolor {
     fi
 }
 
-function glca {
+function glca ()
+{
     if [ $# -eq 1 ]
     then
         branch=HEAD;
@@ -62,7 +65,8 @@ function glca {
         # lca = "!f(){ if [ $# -eq 1 ]; then branch=HEAD; else branch=$2; fi; git log --graph --oneline $1 $branch ^$(git merge-base $1 $branch)^; }; f"
 }
 
-function git-find-parent-branch {
+function git-find-parent-branch ()
+{
     git show-branch 2> /dev/null |
         sed "s/].*//" |
         grep "\*" |
@@ -71,7 +75,8 @@ function git-find-parent-branch {
         sed "s/^.*\[//"
 }
 
-function fn {
+function fn ()
+{
     if test -z $1; then
         nvim $BASH_LIBRARY_PATH
     elif test -x "$HOME/local/scripts/$1"; then
@@ -87,11 +92,13 @@ function fn {
     fi
 }
 
-function vis {
+function vis ()
+{
     sed -e "s/ /^S/g" -e "s/\t/^T/g" -e "s/\n/^N/g"
 }
 
-function _tmux-help_completion {
+function _tmux-help_completion ()
+{
     if test -z "$TMUX_HELP_COMPLETION"; then
          TMUX_HELP_COMPLETION=$(MANWIDTH=160 man tmux |
                 grep "^[[:space:]]\+[[:alnum:]-]\+\( \[-[[:alnum:]]\+\]\)\+" |
@@ -101,7 +108,8 @@ function _tmux-help_completion {
     COMPREPLY=($(compgen -W "${TMUX_HELP_COMPLETION[*]}" -- "$2"))
 }
 
-function tmux-option {
+function tmux-option ()
+{
     if test -n "$1"; then
     MANWIDTH=160 man tmux |
         sed -n "/^OPTIONS$/,/$SECTIONS/p" |
@@ -111,7 +119,8 @@ function tmux-option {
     fi
 }
 
-function _tmux-option_completion {
+function _tmux-option_completion ()
+{
     if test -z "$TMUX_OPTION_COMPLETION"; then
          TMUX_OPTION_COMPLETION=$(
          MANWIDTH=160 man tmux |
@@ -125,11 +134,13 @@ function _tmux-option_completion {
     COMPREPLY=($(compgen -W "${TMUX_OPTION_COMPLETION[*]}" -- "$2"))
 }
 
-function trim {
+function trim ()
+{
     sed "s/^[[:space:]]*\([[:graph:]].*[[:graph:]]\)[[:space:]]*$/\1/"
 }
 
-function dotfiles_sync {
+function dotfiles_sync ()
+{
     # `diff HEAD` checks in worktree and index for any uncommitted changes
     # `diff @{u}...HEAD` checks for any difference between upstream/remote and HEAD,
     # i.e. if there is any unpushed commits
@@ -149,7 +160,8 @@ function dotfiles_sync {
     return 0;
 }
 
-function logout {
+function logout ()
+{
     # For 'logout' and 'exit', a function is required and this cannot be put inside '.bash_logout'
     # Once '.bash_logout' is executed by bash, we can not revert the end of process
     # Having a function is AFAIK the only known way to execute commands on bash's  exit
@@ -163,7 +175,8 @@ function logout {
     logout
 }
 
-function exit {
+function exit ()
+{
     if test "$SHLVL" = 1 && shopt -q login_shell ; then
         if ! dotfiles_sync; then
             return 0
@@ -173,7 +186,8 @@ function exit {
     exit
 }
 
-function shutdown {
+function shutdown ()
+{
     if test "$SHLVL" = 1; then
         if ! dotfiles_sync; then
             return 0
@@ -182,24 +196,28 @@ function shutdown {
     command shutdown $@
 }
 
-function rl-fzf-git-files {
+function rl-fzf-git-files ()
+{
     file=$(git ls-files-root | fzf-popup-pipe)
     let length=${#file}
     READLINE_LINE="${READLINE_LINE}${file}"
     let READLINE_POINT=READLINE_POINT+length
 }
 
-function rl-fzf-git-tree {
+function rl-fzf-git-tree ()
+{
     local directory=$(git ls-tree-root -dr --name-only HEAD | fzf-popup-pipe)
     test "$directory" && cd "$(git rev-parse --show-toplevel)/$directory"
 }
 
-function rl-fzf-dir {
+function rl-fzf-dir ()
+{
     local directory=$(find -maxdepth 5 -type d | fzf-popup-pipe)
     test "$directory" && cd "$directory"
 }
 
-function cd {
+function cd ()
+{
     command cd "$@";
     if test "$PWD" != "$OLDPWD"
     then
