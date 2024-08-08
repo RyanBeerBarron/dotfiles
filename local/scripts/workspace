@@ -1,47 +1,85 @@
 #!/bin/bash
+# vim: foldexpr=FoldBashFunction(v\:lnum) foldtext=RecursiveFoldText('#')
 
-source "$BASH_LIBRARY_PATH/array.bash"
 
-declare -a markers=(".git")
-current_dir="$PWD"
+function help ()
+{
+    local basename="${0##*/}"
+    echo "usage:"
+    echo "  ${basename}"
+    echo "  ${basename} add"
+    echo "  ${basename} list"
+    echo "Find current workspace or add workspace to global list"
+    echo ""
+    echo "In first usage, find a known workspace that is a parent directory of current working directory"
+    echo "  If a workspace is found, the location for state files is printed out and exit code is 0"
+    echo "  Otherwise, nothing is printed and exit code is 1"
+    echo ""
+    echo "'add' parameter allows to add current working directory to the global list of known workspaces"
+    echo "'list' parameter will list all known workspaces"
+    echo ""
+    echo "Both usage require a list in your 'XDG_CONFIG_HOME' folder, in a file named 'workspaces'"
+    echo "  with an absolute path per line for each workspace"
+}
 
-function search_markers {
-    local current_dir="$1"
-    while read file
+function find_workspace ()
+{
+    mapfile -t workspaces < "$XDG_CONFIG_HOME/workspaces"
+    current_dir="$PWD"
+
+    for workspace in "${workspaces[@]}"
     do
-        if contains "markers" "$file"
+        length="${#workspace}"
+        if test "${workspace}" = "${current_dir:0:length}"
         then
-            if test "$file" = ".git"
-            then
-                find_common_worktree "$current_dir" && return 0
-            fi
-            echo "$XDG_STATE_HOME/workspace/$(basename $current_dir)"
+            find_common_worktree "${current_dir}" && return 0
+            echo "$XDG_DATA_HOME/workspace/${workspace//\//%}"
             return 0
         fi
-    done < <(ls -A "$current_dir")
+    done
     return 1
 }
 
-function find_common_worktree {
+# could be the git folder or others.
+# Check if inside a git worktree and use the canonical git dir as the base, but keep PWD in worktree
+function find_common_worktree ()
+{
     local current_dir git_dir git_common_dir name
     current_dir="$1"
-    git_dir=$(git -C "$current_dir" rev-parse --git-dir)
-    git_common_dir=$(git -C "$current_dir" rev-parse --git-common-dir)
-    if test "$git_dir" != "$git_common_dir"
+    git_dir=$(git -C "${current_dir}" rev-parse --path-format=absolute --git-dir)
+    git_common_dir=$(git -C "${current_dir}" rev-parse --path-format=absolute --git-common-dir)
+    if test "${git_dir}" != "${git_common_dir}"
     then
-        name="$(basename $(dirname $git_common_dir))"
-        echo "$XDG_STATE_HOME/workspace/$name"
+        name="$(dirname ${git_common_dir})"
+        echo "${XDG_DATA_HOME}/workspace/${name//\//%}"
         return 0
     fi
     return 1
 }
-# could be the git folder or others.
-# Check if inside a git worktree and use the canonical git dir as the base, but keep PWD in worktree
+if test "$1" = "-h" -o "$1" = "--help"
+then
+    help
+    exit 0
+fi
 
-while test "$current_dir" != "/"
-do
-    search_markers "$current_dir" && exit 0
-    current_dir=$(dirname "$current_dir")
-done
+if ! test -r "$XDG_CONFIG_HOME/workspaces"
+then
+    echo "Missing workspaces file defining the list of potential workspaces" >&2
+    echo "Please create a workspaces file in your XDG_CONFIG_HOME folder" >&2
+    echo "With on each line an absolute path of a workspace" >&2
+    exit 1
+fi
 
-exit 1
+if test -z "$1"
+then
+    find_workspace
+    exit "$?"
+elif test "$1" = "add"
+then
+    echo "$PWD" >> "$XDG_CONFIG_HOME/workspaces"
+    exit 0
+elif test "$1" = "list"
+then
+    cat "$XDG_CONFIG_HOME/workspaces"
+    exit 0
+fi

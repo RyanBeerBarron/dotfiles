@@ -53,6 +53,7 @@ config/QtProject.conf
 config/remind/
 config/Slack/
 config/tmux/tmux-sessions.d/local-sessions.d/
+config/workspaces
 
 # local whitelist
 !local
