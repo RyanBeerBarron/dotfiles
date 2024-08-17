@@ -32,15 +32,8 @@ fi
 # Java stuff
 export JAVA_HOME=$HOME/local/jdks/current
 export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
-# the value in a variable assignment does not undergo pathname expansion
-# If I were to set the following variable: M2_HOME="$HOME/tools/apache-maven"-*
-# the variable would still contain the glob '*' in it.
-# Since this is later used inside the PATH variable, the glob would not work there because of the ':' delimiter
-# We need to force the pathname expansion and use that result. We can use array in bash or `set -- ` in POSIX sh
-declare -a array=("$HOME/tools/apache-maven"-*)
-export M2_HOME="${array[0]}"
-export M2=$M2_HOME/bin
-unset array
+export M2_HOME="/usr/local/share/maven"
+export M2="$M2_HOME/bin"
 export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"
 
 # Node stuff
@@ -59,6 +52,8 @@ export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
 
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+
+export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
 
 # Setting up the PATH
 # default path
