@@ -25,8 +25,7 @@ then
         test -r "$DIRCOLORS" && eval "$(dircolors -b $DIRCOLORS)" || eval "$(dircolors -b)"
         alias ls='ls --color=auto -FtX'
         alias grep='grep --color=auto'
-        alias fgrep='fgrep --color=auto'
-        alias egrep='egrep --color=auto'
+        alias rgrep='grep --binary-files=without-match --color=auto -rHn'
     fi
     # }}}
 
