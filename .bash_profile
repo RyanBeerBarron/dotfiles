@@ -31,7 +31,6 @@ fi
 
 # Java stuff
 export JAVA_HOME=$HOME/local/jdks/current
-export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
 export M2_HOME="/usr/local/share/maven"
 export M2="$M2_HOME/bin"
 export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"

@@ -17,6 +17,7 @@ then
     alias diff="colordiff"
     alias wget="wget --hsts-file=$XDG_CACHE_HOME/wget_hsts"
     alias gpg="gpg --homedir $XDG_DATA_HOME/gnupg"
+    alias java="java -Djava.util.prefs.userRoot=${XDG_CONFIG_HOME}/java"
     # }}}
 
     # Setting colors{{{
