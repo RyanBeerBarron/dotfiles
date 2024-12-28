@@ -38,11 +38,11 @@ then
         export PATH="${workspace_location}/bin:${PATH}"
         # export BASH_LIBRARY_PATH=$BASH_LIBRARY_PATH:"${workspace_location}/bash"
         test -r "${workspace_location}/bash/bashrc" && source "${workspace_location}/bash/bashrc"
-        bind -m vi-insert -x '"\C-x\C-e": nvim --edit-workspace'
-        bind -m vi-insert -x '"\C-x\C-d": cd $(workspace)'
+        bind -m vi-insert -x '"\C-x\C-e": nvim $(workspace)'
+        bind -m vi-insert -x '"\C-x\C-d": cd $(workspace); echo "cd into $(workspace)"'
 
-        bind -m vi -x '"\C-x\C-e": nvim --edit-workspace'
-        bind -m vi -x '"\C-x\C-d": cd $(workspace)'
+        bind -m vi -x '"\C-x\C-e": nvim $(workspace)'
+        bind -m vi -x '"\C-x\C-d": cd $(workspace); echo "cd into $(workspace)"'
     fi
     # }}}
 
