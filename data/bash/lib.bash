@@ -75,23 +75,6 @@ function git-find-parent-branch ()
         sed "s/^.*\[//"
 }
 
-function fn ()
-{
-    if test -z $1; then
-        nvim $BASH_LIBRARY_PATH
-    elif test -x "$HOME/local/scripts/$1"; then
-        nvim "$HOME/local/scripts/$1"
-    else
-        # Using grep with '-n' to find the line number of the bash function
-        # Then using Bash parameter expansion with '%' to extract the line number
-        # and passing it to neovim.
-        # Neovim accepts a line number prefixed with '+' and will open the file at the line number
-        # The parameter expansion uses '%' to remove a suffix, which matches the pattern ':*'
-        local STRING=$(grep -n "^function $1" $BASH_LIBRARY_PATH/lib.bash);
-        nvim $BASH_LIBRARY_PATH/lib.bash  +${STRING%:*} -c "foldopen" -c "normal zz"
-    fi
-}
-
 function vis ()
 {
     sed -e "s/ /^S/g" -e "s/\t/^T/g" -e "s/\n/^N/g"
@@ -225,9 +208,33 @@ function cd ()
     fi
 }
 
-comp_list_conf=$(find "$XDG_CONFIG_HOME" -maxdepth 1 -type d -exec basename {} \; ; echo "ssh bash dwm")
-comp_list_fn=$(declare -F | cut -d" " -f3 | grep -v "^_.\+$"; find $HOME/local/scripts/ -executable -type f -exec basename {} \;)
-comp_list_setbackground=$(find $HOME/dotfiles/img -type f -exec basename {} \; ; echo "next"; echo "prev")
+function fn ()
+{
+    local extdebug_backup
+    extdebug_backup="$(shopt -p extdebug)"
+    shopt -s extdebug
+
+    if test -z "${1}"
+    then
+        nvim "${BASH_LIBRARY_PATH}"
+    elif test "$(type -t ${1})" = "file"
+    then
+        nvim "$(type -p $1)"
+    elif test "$(type -t ${1})" = "function"
+    then
+        readarray -td' ' arr < <(declare -F "$1")
+        nvim "${arr[2]:0:-1}" "+${arr[1]}" -c "foldopen" -c "normal zt"
+    fi
+    eval "${extdebug_backup}"
+}
+
+comp_list_conf="$(find "$XDG_CONFIG_HOME" -maxdepth 1 -type d -exec basename {} \; ; echo "ssh bash dwm")"
+comp_list_fn="$(
+    declare -F | cut -d" " -f3 | command grep -v "^_.\+$"
+    find "$HOME/local/scripts/" -executable -type f -exec basename {} \;
+    test workspace && find "$(workspace)/bin" -executable -type f -exec basename {} \;
+)"
+comp_list_setbackground="$(find $HOME/dotfiles/img -type f -exec basename {} \; ; echo "next"; echo "prev")"
 
 complete -W "$comp_list_conf" conf
 complete -W "$comp_list_fn" fn
@@ -240,4 +247,4 @@ complete -F _tmux-option_completion tmux-option
 
 __git_complete glca _git_log
 __git_complete gl_bb.bash _git_log
-# vim: ft=bash foldexpr=FoldBashFunction(v\:lnum) foldlevel=0
+# vim: ft=bash foldexpr=FoldBashFunction(v\:lnum) foldlevel=0 foldtext=RecursiveFoldText('#')
