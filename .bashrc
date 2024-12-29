@@ -34,15 +34,23 @@ then
     workspace_location=$(workspace)
     if test "${workspace_location}"
     then
-        mkdir -p ${workspace_location}/{bash,bin}
+        mkdir -p ${workspace_location}/{bash/completions,bin}
         export PATH="${workspace_location}/bin:${PATH}"
         # export BASH_LIBRARY_PATH=$BASH_LIBRARY_PATH:"${workspace_location}/bash"
         test -r "${workspace_location}/bash/bashrc" && source "${workspace_location}/bash/bashrc"
+
         bind -m vi-insert -x '"\C-x\C-e": nvim $(workspace)'
         bind -m vi-insert -x '"\C-x\C-d": cd $(workspace); echo "cd into $(workspace)"'
-
         bind -m vi -x '"\C-x\C-e": nvim $(workspace)'
         bind -m vi -x '"\C-x\C-d": cd $(workspace); echo "cd into $(workspace)"'
+
+        if test -d "${workspace_location}/bash/completions"
+        then
+            for completion in "${workspace_location}/bash/completions"/*
+            do
+                source "$completion"
+            done
+        fi
     fi
     # }}}
 
