@@ -24,7 +24,7 @@ do
             help
             ;;
         [1-2][0-9])
-            ln -fs "$jdks_path/jdk-$1" "$jdks_path/current"
+            ln -fns "$jdks_path/jdk-$1" "$jdks_path/current"
             exit 0
             ;;
         *)
