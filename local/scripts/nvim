@@ -3,22 +3,40 @@
 # Nvim wrapper script
 # Main goal is to make tmux focus on existing nvim instance and pass new files via the 'remote' functionality
 # It will start a different nvim server per workspace and encode the tmux pane id in the unix socket created
+
+# TODO: check if editing from readline, in which case, treat it like git commits => blocking process and no workspace
 set -euo pipefail
 
 NVIM="$(next-exec ${0})"
-if test "${TMUX:+set}" != "set"
-then
-    exec "${NVIM}" "$@"
-fi
+EDIT_WORKSPACE="false"
 
-if test "${1:+set}" = "set"
-then
-    case "${1}" in
-        *COMMIT_EDITMSG)
+while test "$#" -gt 0
+do
+    case "$1" in
+        *COMMIT_EDITMSG|/tmp/*)
             exec "${NVIM}" --cmd "let NO_WORKSPACE = 1" "$@"
             ;;
+        -w|--edit-workspace)
+            EDIT_WORKSPACE="true"
+            shift
+            ;;
+        --no-server)
+            shift
+            exec "${NVIM}" --cmd "let NO_WORKSPACE = 1" "$@"
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -?*)
+            echo "error, unknown option" &>2
+            exit 1
+            ;;
+        *)
+            break
+            ;;
     esac
-fi
+done
 
 WORKSPACE="$(workspace)"
 PANE_ID="$(tmux display-message -p '#{pane_id}')"
@@ -28,15 +46,49 @@ SERVER="${GLOB[0]}"
 
 if test -S "${SERVER}"
 then
-    if test "$@"
-    then
-        "${NVIM}" --server "${SERVER}" --remote "${@}"
-    fi
+    while test "$#" -gt 0
+    do
+        case "${1}" in
+            +*)
+                # echo "${NVIM}" --server "${SERVER}" --remote-send "<cmd>${1:1}<cr>"
+                "${NVIM}" --server "${SERVER}" --remote-send "<cmd>${1:1}<cr>"
+                ;;
+            -c)
+                if test "${2:+set}" != "set"
+                then
+                    echo "error cannot execute Ex command" &>2
+                    exit 1
+                else
+                    cmd="${2}"
+                    shift
+                    # echo "${NVIM}" --server "${SERVER}" --remote-send "<cmd>${cmd}<cr>"
+                    "${NVIM}" --server "${SERVER}" --remote-send "<cmd>${cmd}<cr>"
+                fi
+                ;;
+            scp://*)
+                "${NVIM}" --server "${SERVER}" --remote "${1}"
+                ;;
+            *)
+                "${NVIM}" --server "${SERVER}" --remote "$(readlink -f "${1}")"
+                ;;
+        esac
+        shift
+    done
+    test "${EDIT_WORKSPACE}" = "true" && "${NVIM}" --server "${SERVER}" --remote-send "<cmd>EditWorkspaceState<CR>"
     TAIL="${SERVER##*/server-}"
     PANE_ID="${TAIL%.pipe}"
-    tmux select-window -t "${PANE_ID}"
-    tmux select-pane -t "${PANE_ID}"
+    if test "${TMUX:+set}" = "set"
+    then
+        tmux switch-client -t "${PANE_ID}"
+    else
+        tmux attach-session -t "${PANE_ID}"
+    fi
 else
-    PANE_ID="$(tmux display-message -p '#{pane_id}')"
-    "${NVIM}" --listen "${WORKSPACE}/server-${PANE_ID}.pipe" "${@}"
+    if test "${TMUX:+set}" = "set"
+    then
+        PANE_ID="$(tmux display-message -p '#{pane_id}')"
+        "${NVIM}" --listen "${WORKSPACE}/server-${PANE_ID}.pipe" "${@}"
+    else
+        "${NVIM}" --cmd "let NO_WORKSPACE = 1" "${@}"
+    fi
 fi
