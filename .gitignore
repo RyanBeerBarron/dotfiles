@@ -22,46 +22,47 @@ dotfiles/submodules/logs
 
 # config ignore list
 !config
-config/pavucontrol.ini
 config/alacritty/local.toml
+config/aws/
+config/cef_user_data/
 config/dconf
 config/discord/
-config/gh/hosts.yml
-config/nvim/after/plugin/local.vim
 config/docker/
 config/evolution
+config/fontconfig/conf.d/
+config/font-manager/
+config/gh/hosts.yml
+config/gnome-initial-setup-done
 config/go/telemetry
+config/.gsd-keyboard.settings-ported
+config/gtk-3.0/bookmarks
+config/htop
 config/ibus
 config/java/
 config/JetBrains/
 config/libreoffice
 config/maven/
+config/MongoDB\ Compass/
+config/monitors.xml
+config/nvim/after/plugin/local.vim
+config/pavucontrol.ini
 config/pki/
 config/pulse
 config/QtProject.conf
-config/htop
 config/remind/
-config/monitors.xml
-config/font-manager/
-config/fontconfig/conf.d/
-config/cef_user_data/
-config/MongoDB\ Compass/
-config/aws/
 config/Slack/
-config/gtk-3.0/bookmarks
-config/.gsd-keyboard.settings-ported
-config/gnome-initial-setup-done
-config/.gsd-keyboard.settings-ported
 
 # local whitelist
 !local
 local/*
 !local/scripts
+
+# local whitelist
 !data
 data/*
-!data/bash
-!data/sh
 !data/awk
-!data/notes
+!data/bash
 !data/fonts
+!data/notes
+!data/sh
 !data/themes
