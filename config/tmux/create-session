@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -eu
+
+cd "${XDG_CONFIG_HOME}/tmux"
+set -- tmux-sessions.d/*.sh tmux-sessions.d/local-sessions.d/*.sh
+for session
+do
+    test -r "${session}" && sh "${session}"
+done
+exit 0
